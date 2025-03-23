@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +19,7 @@
 #include "utility/logger.h"
 #include "utility/io/json_serializer.h"
 
-namespace grimm {
+namespace MWG {
 
 using json = nlohmann::json;
 
