@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -111,7 +112,7 @@ class StartViewModel : public QObject
 
 public:
 
-    using DoneCallback = std::function<bool (grimm::wallet::IWalletDB::Ptr db, const std::string& walletPass)>;
+    using DoneCallback = std::function<bool (MWG::wallet::IWalletDB::Ptr db, const std::string& walletPass)>;
 
     StartViewModel();
     ~StartViewModel();
@@ -172,7 +173,7 @@ private:
 
     QList<QObject*> m_recoveryPhrases;
     QList<QObject*> m_checkPhrases;
-    grimm::WordList m_generatedPhrases;
+    MWG::WordList m_generatedPhrases;
     std::string m_password;
 
     QList<WalletDBPathItem*> m_walletDBpaths;
