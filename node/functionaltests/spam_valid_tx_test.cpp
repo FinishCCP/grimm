@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,7 +22,7 @@
 #include <tuple>
 #include <list>
 
-using namespace grimm;
+using namespace MWG;
 using namespace ECC;
 
 class TestNodeConnection : public BaseTestNode
@@ -165,7 +166,7 @@ int main(int argc, char* argv[])
 {
 	int logLevel = LOG_LEVEL_DEBUG;
 	int fileLogLevel = LOG_LEVEL_INFO;
-	auto logger = grimm::Logger::create(logLevel, logLevel, fileLogLevel, "test_");
+	auto logger = MWG::Logger::create(logLevel, logLevel, fileLogLevel, "test_");
 
 	TestNodeConnection connection(argc, argv);
 
