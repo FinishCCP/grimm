@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +24,7 @@
 #	include <unistd.h>
 #endif // WIN32
 
-namespace grimm
+namespace MWG
 {
 	void test_SysRet(bool bFail, const char* str)
 	{
@@ -89,12 +90,12 @@ namespace grimm
 	{
 #ifdef WIN32
 		if (m_pMapping)
-            GRIMM_VERIFY(UnmapViewOfFile(m_pMapping));
+            MWG_VERIFY(UnmapViewOfFile(m_pMapping));
 		if (m_hMapping)
-            GRIMM_VERIFY(CloseHandle(m_hMapping));
+            MWG_VERIFY(CloseHandle(m_hMapping));
 #else // WIN32
 		if (m_pMapping)
-            GRIMM_VERIFY(!munmap(m_pMapping, m_nMapping));
+            MWG_VERIFY(!munmap(m_pMapping, m_nMapping));
 #endif // WIN32
 
 		ResetVarsMapping();
@@ -106,10 +107,10 @@ namespace grimm
 
 #ifdef WIN32
 		if (INVALID_HANDLE_VALUE != m_hFile)
-            GRIMM_VERIFY(CloseHandle(m_hFile));
+            MWG_VERIFY(CloseHandle(m_hFile));
 #else // WIN32
 		if (-1 != m_hFile)
-            GRIMM_VERIFY(!close(m_hFile));
+            MWG_VERIFY(!close(m_hFile));
 #endif // WIN32
 
 		ResetVarsFile();
@@ -640,4 +641,4 @@ namespace grimm
 		}
 	}
 
-} // namespace grimm
+} // namespace MWG
