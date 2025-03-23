@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,9 +21,9 @@
 #include "model/qr.h"
 
 using namespace std;
-using namespace grimm;
-using namespace grimm::wallet;
-using namespace grimmui;
+using namespace MWG;
+using namespace MWG::wallet;
+using namespace MWGui;
 
 namespace
 {
@@ -35,7 +36,7 @@ namespace
     }
 }
 
-AddressItem::AddressItem(const grimm::wallet::WalletAddress& address)
+AddressItem::AddressItem(const MWG::wallet::WalletAddress& address)
     : m_walletAddress(address)
 {
 
@@ -43,7 +44,7 @@ AddressItem::AddressItem(const grimm::wallet::WalletAddress& address)
 
 QString AddressItem::getAddress() const
 {
-    return grimmui::toString(m_walletAddress.m_walletID);
+    return MWGui::toString(m_walletAddress.m_walletID);
 }
 
 QString AddressItem::getName() const
@@ -82,17 +83,17 @@ bool AddressItem::isExpired() const
     return m_walletAddress.isExpired();
 }
 
-grimm::Timestamp AddressItem::getCreateTimestamp() const
+MWG::Timestamp AddressItem::getCreateTimestamp() const
 {
     return m_walletAddress.getCreateTime();
 }
 
-grimm::Timestamp AddressItem::getExpirationTimestamp() const
+MWG::Timestamp AddressItem::getExpirationTimestamp() const
 {
     return m_walletAddress.getExpirationTime();
 }
 
-ContactItem::ContactItem(const grimm::wallet::WalletAddress& address)
+ContactItem::ContactItem(const MWG::wallet::WalletAddress& address)
     : m_walletAddress(address)
 {
 
@@ -100,7 +101,7 @@ ContactItem::ContactItem(const grimm::wallet::WalletAddress& address)
 
 QString ContactItem::getAddress() const
 {
-    return grimmui::toString(m_walletAddress.m_walletID);
+    return MWGui::toString(m_walletAddress.m_walletID);
 }
 
 QString ContactItem::getName() const
@@ -117,12 +118,12 @@ AddressBookViewModel::AddressBookViewModel()
     : m_model{*AppModel::getInstance()->getWallet()}
 {
     connect(&m_model,
-            SIGNAL(walletStatus(const grimm::wallet::WalletStatus&)),
-            SLOT(onStatus(const grimm::wallet::WalletStatus&)));
+            SIGNAL(walletStatus(const MWG::wallet::WalletStatus&)),
+            SLOT(onStatus(const MWG::wallet::WalletStatus&)));
 
     connect(&m_model,
-            SIGNAL(addressesChanged(bool, const std::vector<grimm::wallet::WalletAddress>&)),
-            SLOT(onAddresses(bool, const std::vector<grimm::wallet::WalletAddress>&)));
+            SIGNAL(addressesChanged(bool, const std::vector<MWG::wallet::WalletAddress>&)),
+            SLOT(onAddresses(bool, const std::vector<MWG::wallet::WalletAddress>&)));
 
     getAddressesFromModel();
 
@@ -276,12 +277,12 @@ bool AddressBookViewModel::isAddressWithCommentExist(const QString& comment) con
     return m_model.isAddressWithCommentExist(comment.toStdString());
 }
 
-void AddressBookViewModel::onStatus(const grimm::wallet::WalletStatus&)
+void AddressBookViewModel::onStatus(const MWG::wallet::WalletStatus&)
 {
     getAddressesFromModel();
 }
 
-void AddressBookViewModel::onAddresses(bool own, const std::vector<grimm::wallet::WalletAddress>& addresses)
+void AddressBookViewModel::onAddresses(bool own, const std::vector<MWG::wallet::WalletAddress>& addresses)
 {
     if (own)
     {
