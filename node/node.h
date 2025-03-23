@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +25,7 @@
 #include <condition_variable>
 #include <pow/external_pow.h>
 
-namespace grimm
+namespace MWG
 {
 
 struct Node
@@ -448,7 +449,7 @@ private:
 
 		uint16_t m_Flags;
 		uint16_t m_Port; // to connect to
-		grimm::io::Address m_RemoteAddr; // for logging only
+		MWG::io::Address m_RemoteAddr; // for logging only
 
 		Block::SystemState::Full m_Tip;
 		uint8_t m_LoginFlags;
@@ -554,7 +555,7 @@ private:
 	ECC::Scalar::Native m_MyPrivateID;
 	PeerID m_MyPublicID;
 
-	Peer* AllocPeer(const grimm::io::Address&);
+	Peer* AllocPeer(const MWG::io::Address&);
 
 	void RefreshCongestions();
 
@@ -654,4 +655,4 @@ private:
 	} m_Miner;
 };
 
-} // namespace grimm
+} // namespace MWG
