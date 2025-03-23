@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +15,7 @@
 
 #include "block_crypt.h"
 
-namespace grimm
+namespace MWG
 {
 	/////////////
 	// Transaction
@@ -252,4 +253,4 @@ namespace grimm
 		return true;
 	}
 
-} // namespace grimm
+} // namespace MWG
