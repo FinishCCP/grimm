@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.mw.grimm.grimmwallet.core.entities;
+package com.mw.MWG.MWGwallet.core.entities;
 
 import java.util.*; 
-import com.mw.grimm.grimmwallet.core.entities.dto.WalletAddressDTO;
-import com.mw.grimm.grimmwallet.core.entities.dto.PaymentInfoDTO;
+import com.mw.MWG.MWGwallet.core.entities.dto.WalletAddressDTO;
+import com.mw.MWG.MWGwallet.core.entities.dto.PaymentInfoDTO;
 
 public class Wallet
 {
@@ -44,7 +45,7 @@ public class Wallet
     public native String exportOwnerKey(String pass);
 
     // not implemented
-    public native void changeCurrentWalletIDs(); //const grimm::WalletID& senderID, const grimm::WalletID& receiverID);
+    public native void changeCurrentWalletIDs(); //const MWG::WalletID& senderID, const MWG::WalletID& receiverID);
     public native void setNodeAddress(); //const std::string& addr);
 
 }
