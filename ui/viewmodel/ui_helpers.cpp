@@ -5,23 +5,23 @@
 #include <numeric>
 
 using namespace std;
-using namespace grimm;
+using namespace MWG;
 
-namespace grimmui
+namespace MWGui
 {
-    QString toString(const grimm::wallet::WalletID& walletID)
+    QString toString(const MWG::wallet::WalletID& walletID)
     {
         auto id = std::to_string(walletID);
         return QString::fromStdString(id);
     }
 
-    QString toString(const grimm::Merkle::Hash& walletID)
+    QString toString(const MWG::Merkle::Hash& walletID)
     {
         auto id = std::to_string(walletID);
         return QString::fromStdString(id);
     }
 
-    QString GrimmToString(const Amount& value)
+    QString MWGToString(const Amount& value)
     {
         auto realAmount = double(int64_t(value)) / Rules::Coin;
         QString qstr = QLocale().toString(realAmount, 'f', QLocale::FloatingPointShortest);
@@ -29,7 +29,7 @@ namespace grimmui
         return qstr;
     }
 
-    QString toString(const grimm::Timestamp& ts)
+    QString toString(const MWG::Timestamp& ts)
     {
         QDateTime datetime;
         datetime.setTime_t(ts);
