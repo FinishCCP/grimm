@@ -1,7 +1,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.4
-import Grimm.Wallet 1.0
+import MWG.Wallet 1.0
 import "."
 
 Component
@@ -28,7 +28,7 @@ Component
         {
             Layout.alignment: Qt.AlignHCenter
 
-            //% "GRIMM"
+            //% "MWG"
             text: qsTrId("logo-name")
             color: Style.accent_incoming
             font.pixelSize: 32
