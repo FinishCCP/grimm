@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,8 +21,8 @@
 class CoinsChecker : public BaseNodeConnection
 {
 public:
-	using Inputs = std::vector<grimm::Input>;
-	using Callback = std::function<void(bool, grimm::Height)>;
+	using Inputs = std::vector<MWG::Input>;
+	using Callback = std::function<void(bool, MWG::Height)>;
 public:
 	CoinsChecker(int argc, char* argv[]);
 	void InitChecker();
@@ -29,10 +30,10 @@ public:
 
 protected:
 	void OnConnectedSecure() override;
-    void OnMsg(grimm::proto::Authentication&&) override;
+    void OnMsg(MWG::proto::Authentication&&) override;
 	void OnDisconnect(const DisconnectReason&) override;
-	void OnMsg(grimm::proto::NewTip&&) override;
-	void OnMsg(grimm::proto::ProofUtxo&&) override;
+	void OnMsg(MWG::proto::NewTip&&) override;
+	void OnMsg(MWG::proto::ProofUtxo&&) override;
 
 	void StartChecking();
 	
@@ -41,8 +42,8 @@ protected:
 
 	bool m_IsInitChecker;
 	bool m_IsOk;
-	grimm::Height m_Maturity;
-	grimm::Block::SystemState::Full m_Hdr;
+	MWG::Height m_Maturity;
+	MWG::Block::SystemState::Full m_Hdr;
 	Inputs::const_iterator m_Current;
 	std::deque<std::pair<Inputs, Callback>> m_Queue;
 };
