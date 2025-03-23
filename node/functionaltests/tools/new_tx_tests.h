@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +23,7 @@ class NewTxConnection : public BaseTestNode
 public:
 	NewTxConnection(int argc, char* argv[]);
 protected:
-	void OnMsg(grimm::proto::Status&& msg) override;
+	void OnMsg(::proto::Status&& msg) override;
 
 protected:
 	std::vector<uint8_t> m_Results;
