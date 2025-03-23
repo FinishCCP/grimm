@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +18,7 @@
 #include <sstream>
 #include "block_crypt.h"
 
-namespace grimm
+namespace MWG
 {
 
 	/////////////
@@ -466,7 +467,7 @@ namespace grimm
 				const AssetID& aid = m_Commitment.m_X;
 				if (aid == Zero)
 				{
-					assert(false); // Currently zero kernels are not allowed, but if we change this eventually - this will allow attacker to emit default asset (i.e. Grimms).
+					assert(false); // Currently zero kernels are not allowed, but if we change this eventually - this will allow attacker to emit default asset (i.e. MWGs).
 					// hence - extra verification
 					return false;
 				}
@@ -477,7 +478,7 @@ namespace grimm
 				sc.m_hGen = -sc.m_hGen;
 
 				if (Rules::get().CA.Deposit)
-					sc.m_hGen += ECC::Context::get().m_Ipp.H_; // Asset is traded for grimm!
+					sc.m_hGen += ECC::Context::get().m_Ipp.H_; // Asset is traded for MWG!
 
 				// In case of block validation with multiple asset instructions it's better to calculate this via MultiMac than multiplying each point separately
 				Amount val;
@@ -1035,7 +1036,7 @@ namespace grimm
 			<< (uint32_t) Block::PoW::N
 			<< (uint32_t) Block::PoW::NonceType::nBits
 			<< uint32_t(16) // increment this whenever we change something in the protocol
-#ifndef GRIMM_TESTNET1
+#ifndef MWG_TESTNET1
             << "masternet"
 #endif
 			// out
@@ -1489,7 +1490,7 @@ namespace grimm
 	// Misc
 	Timestamp getTimestamp()
 	{
-		return grimm::Timestamp(std::chrono::seconds(std::time(nullptr)).count());
+		return MWG::Timestamp(std::chrono::seconds(std::time(nullptr)).count());
 	}
 
 	uint32_t GetTime_ms()
@@ -1509,4 +1510,4 @@ namespace grimm
 		return ret ? ret : 1;
 	}
 
-} // namespace grimm
+} // namespace MWG
