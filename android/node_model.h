@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,13 +23,13 @@
 #include "node/node_client.h"
 
 class NodeModel
-    : private grimm::INodeClientObserver
+    : private MWG::INodeClientObserver
 {
 public:
 
     NodeModel(const std::string& appPath);
 
-    void setKdf(grimm::Key::IKdf::Ptr);
+    void setKdf(MWG::Key::IKdf::Ptr);
     void startNode();
     void stopNode();
 
@@ -41,8 +42,8 @@ protected:
     void onStartedNode() override;
     void onStoppedNode() override;
     // void onFailedToStartNode() override;
-    void onFailedToStartNode(grimm::io::ErrorCode errorCode) override;
-    void onSyncError(grimm::Node::IObserver::Error error) override;
+    void onFailedToStartNode(MWG::io::ErrorCode errorCode) override;
+    void onSyncError(MWG::Node::IObserver::Error error) override;
 
     uint16_t getLocalNodePort() override;
     std::string getLocalNodeStorage() override;
@@ -52,6 +53,6 @@ protected:
     void onNodeThreadFinished() override;
 
 private:
-    grimm::NodeClient m_nodeClient;
+    MWG::NodeClient m_nodeClient;
     std::string m_appPath;
 };
