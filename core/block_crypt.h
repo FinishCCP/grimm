@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +19,7 @@
 #include "merkle.h"
 #include "difficulty.h"
 
-namespace grimm
+namespace MWG
 {
 	class IExternalPOW;
 
@@ -126,7 +127,7 @@ namespace grimm
 
 		struct {
 			bool Enabled = false;
-			bool Deposit = true; // CA emission in exchage for grimms. If not specified - the emission is free
+			bool Deposit = true; // CA emission in exchage for MWGs. If not specified - the emission is free
 		} CA;
 
 		struct {
@@ -473,7 +474,7 @@ namespace grimm
 		struct PoW
 		{
 			// equihash parameters.
-			// Parameters recommended by Grimm are 161/6, to make it asic-resistant (~1GB average, spikes about 1.5GB). On CPU solve time less than a 1 minute
+			// Parameters recommended by MWG are 161/6, to make it asic-resistant (~1GB average, spikes about 1.5GB). On CPU solve time less than a 1 minute
 
 			static const uint32_t N = 150;
 			static const uint32_t K = 5;
