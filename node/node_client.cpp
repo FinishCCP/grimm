@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +27,7 @@ namespace
     constexpr int kVerificationThreadsMaxAvailable = -1;
 }
 
-namespace grimm
+namespace MWG
 {
 NodeClient::NodeClient(INodeClientObserver* observer)
     : m_observer(observer)
@@ -64,12 +65,12 @@ NodeClient::~NodeClient()
     }
 }
 
-void NodeClient::setKdf(grimm::Key::IKdf::Ptr kdf)
+void NodeClient::setKdf(MWG::Key::IKdf::Ptr kdf)
 {
     m_pKdf = kdf;
 }
 
-void NodeClient::setOwnerKey(grimm::Key::IPKdf::Ptr key)
+void NodeClient::setOwnerKey(MWG::Key::IPKdf::Ptr key)
 {
     m_ownerKey = key;
 }
