@@ -4,7 +4,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.0
 import "controls"
-import Grimm.Wallet 1.0
+import MWG.Wallet 1.0
 
 Rectangle {
 
@@ -98,17 +98,17 @@ Rectangle {
     function handleExternalLink(mouse, element) {
         if (element.cursorShape == Qt.PointingHandCursor) {
             var externalLink = element.parent.linkAt(mouse.x, mouse.y);
-            if (viewModel.isAllowedgrimmLinks) {
+            if (viewModel.isAllowedMWGLinks) {
                 Qt.openUrlExternally(externalLink);
             } else {
                 externalLinkConfirmation.externalUrl = externalLink;
                 externalLinkConfirmation.onOkClicked = function () {
-                    viewModel.isAllowedgrimmLinks = true;
+                    viewModel.isAllowedMWGLinks = true;
                 };
                 externalLinkConfirmation.open();
             }
         } else {
-            viewModel.isAllowedgrimmLinks = !viewModel.isAllowedgrimmLinks;
+            viewModel.isAllowedMWGLinks = !viewModel.isAllowedMWGLinks;
         }
     }
 
@@ -344,11 +344,11 @@ Rectangle {
 
                                     SFText {
                                         //: general settings, label for alow open external links
-                                        //% "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>Allow access to <a href='https://www.grimmw.com/'>grimmw.com</a> "
-                                        text: qsTrId("settings-general-allow-grimm-label")
+                                        //% "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>Allow access to <a href='https://www.MWGw.com/'>MWGw.com</a> "
+                                        text: qsTrId("settings-general-allow-MWG-label")
                                         textFormat: Text.RichText
                                         font.pixelSize: 14
-                                        color: allowgrimmLinks.palette.text
+                                        color: allowMWGLinks.palette.text
                                         wrapMode: Text.WordWrap
                                         Layout.preferredWidth: generalBlock.width - 95
                                         Layout.preferredHeight: 32
@@ -371,13 +371,13 @@ Rectangle {
                                     }
 
                                     CustomSwitch {
-                                        id: allowgrimmLinks
+                                        id: allowMWGLinks
                                         Layout.preferredWidth: 30
-                                        checked: viewModel.isAllowedgrimmLinks
+                                        checked: viewModel.isAllowedMWGLinks
                                         Binding {
                                             target: viewModel
-                                            property: "isAllowedgrimmLinks"
-                                            value: allowgrimmLinks.checked
+                                            property: "isAllowedMWGLinks"
+                                            value: allowMWGLinks.checked
                                         }
                                     }
                                 }
@@ -724,7 +724,7 @@ Rectangle {
                                     Layout.topMargin: 7
                                     Layout.preferredWidth: 419
                                     //: settings tab, report problem section, message
-                                    //% "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>To report a problem:<br />1. Click “Save wallet logs” and choose a destination folder for log archive<br />2. Send email to <a href='mailto:admin@grimmw.com'>admin@grimmw.com</a> or open a ticket in <a href='https://github.com/freenetcoder'>Github</a><br />3. Don’t forget to attach logs archive"
+                                    //% "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>To report a problem:<br />1. Click “Save wallet logs” and choose a destination folder for log archive<br />2. Send email to <a href='mailto:admin@MWGw.com'>admin@MWGw.com</a> or open a ticket in <a href='https://github.com/freenetcoder'>Github</a><br />3. Don’t forget to attach logs archive"
                                     text: qsTrId("settings-report-problem-message")
                                     textFormat: Text.RichText
                                     color: Style.content_main
