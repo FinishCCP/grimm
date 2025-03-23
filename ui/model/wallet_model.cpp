@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,24 +20,24 @@
 #include "utility/io/asyncevent.h"
 #include "utility/helpers.h"
 
-using namespace grimm;
-using namespace grimm::wallet;
-using namespace grimm::io;
+using namespace MWG;
+using namespace MWG::wallet;
+using namespace MWG::io;
 using namespace std;
 
-WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, grimm::io::Reactor::Ptr reactor)
+WalletModel::WalletModel(IWalletDB::Ptr walletDB, const std::string& nodeAddr, MWG::io::Reactor::Ptr reactor)
     : WalletClient(walletDB, nodeAddr, reactor)
 {
-    qRegisterMetaType<grimm::wallet::WalletStatus>("grimm::wallet::WalletStatus");
-    qRegisterMetaType<grimm::wallet::ChangeAction>("grimm::wallet::ChangeAction");
-    qRegisterMetaType<vector<grimm::wallet::TxDescription>>("std::vector<grimm::wallet::TxDescription>");
-    qRegisterMetaType<grimm::Amount>("grimm::Amount");
-    qRegisterMetaType<vector<grimm::wallet::Coin>>("std::vector<grimm::wallet::Coin>");
-    qRegisterMetaType<vector<grimm::wallet::WalletAddress>>("std::vector<grimm::wallet::WalletAddress>");
-    qRegisterMetaType<grimm::wallet::WalletID>("grimm::wallet::WalletID");
-    qRegisterMetaType<grimm::wallet::WalletAddress>("grimm::wallet::WalletAddress");
-    qRegisterMetaType<grimm::wallet::ErrorType>("grimm::wallet::ErrorType");
-    qRegisterMetaType<grimm::wallet::TxID>("grimm::wallet::TxID");
+    qRegisterMetaType<MWG::wallet::WalletStatus>("MWG::wallet::WalletStatus");
+    qRegisterMetaType<MWG::wallet::ChangeAction>("MWG::wallet::ChangeAction");
+    qRegisterMetaType<vector<MWG::wallet::TxDescription>>("std::vector<MWG::wallet::TxDescription>");
+    qRegisterMetaType<MWG::Amount>("MWG::Amount");
+    qRegisterMetaType<vector<MWG::wallet::Coin>>("std::vector<MWG::wallet::Coin>");
+    qRegisterMetaType<vector<MWG::wallet::WalletAddress>>("std::vector<MWG::wallet::WalletAddress>");
+    qRegisterMetaType<MWG::wallet::WalletID>("MWG::wallet::WalletID");
+    qRegisterMetaType<MWG::wallet::WalletAddress>("MWG::wallet::WalletAddress");
+    qRegisterMetaType<MWG::wallet::ErrorType>("MWG::wallet::ErrorType");
+    qRegisterMetaType<MWG::wallet::TxID>("MWG::wallet::TxID");
 }
 
 WalletModel::~WalletModel()
@@ -44,7 +45,7 @@ WalletModel::~WalletModel()
 
 }
 
-QString WalletModel::GetErrorString(grimm::wallet::ErrorType type)
+QString WalletModel::GetErrorString(MWG::wallet::ErrorType type)
 {
     // TODO: add more detailed error description
     switch (type)
@@ -100,12 +101,12 @@ bool WalletModel::isAddressWithCommentExist(const std::string& comment) const
     return false;
 }
 
-void WalletModel::onStatus(const grimm::wallet::WalletStatus& status)
+void WalletModel::onStatus(const MWG::wallet::WalletStatus& status)
 {
     emit walletStatus(status);
 }
 
-void WalletModel::onTxStatus(grimm::wallet::ChangeAction action, const std::vector<grimm::wallet::TxDescription>& items)
+void WalletModel::onTxStatus(MWG::wallet::ChangeAction action, const std::vector<MWG::wallet::TxDescription>& items)
 {
     emit txStatus(action, items);
 }
@@ -115,17 +116,17 @@ void WalletModel::onSyncProgressUpdated(int done, int total)
     emit syncProgressUpdated(done, total);
 }
 
-void WalletModel::onChangeCalculated(grimm::Amount change)
+void WalletModel::onChangeCalculated(MWG::Amount change)
 {
     emit changeCalculated(change);
 }
 
-void WalletModel::onAllUtxoChanged(const std::vector<grimm::wallet::Coin>& utxos)
+void WalletModel::onAllUtxoChanged(const std::vector<MWG::wallet::Coin>& utxos)
 {
     emit allUtxoChanged(utxos);
 }
 
-void WalletModel::onAddresses(bool own, const std::vector<grimm::wallet::WalletAddress>& addrs)
+void WalletModel::onAddresses(bool own, const std::vector<MWG::wallet::WalletAddress>& addrs)
 {
     if (own)
     {
@@ -134,7 +135,7 @@ void WalletModel::onAddresses(bool own, const std::vector<grimm::wallet::WalletA
     emit addressesChanged(own, addrs);
 }
 
-void WalletModel::onCoinsByTx(const std::vector<grimm::wallet::Coin>& coins)
+void WalletModel::onCoinsByTx(const std::vector<MWG::wallet::Coin>& coins)
 {
 
 }
@@ -144,7 +145,7 @@ void WalletModel::onAddressChecked(const std::string& addr, bool isValid)
     emit addressChecked(QString::fromStdString(addr), isValid);
 }
 
-void WalletModel::onGeneratedNewAddress(const grimm::wallet::WalletAddress& walletAddr)
+void WalletModel::onGeneratedNewAddress(const MWG::wallet::WalletAddress& walletAddr)
 {
     emit generatedNewAddress(walletAddr);
 }
@@ -154,7 +155,7 @@ void WalletModel::onNewAddressFailed()
     emit newAddressFailed();
 }
 
-void WalletModel::onChangeCurrentWalletIDs(grimm::wallet::WalletID senderID, grimm::wallet::WalletID receiverID)
+void WalletModel::onChangeCurrentWalletIDs(MWG::wallet::WalletID senderID, MWG::wallet::WalletID receiverID)
 {
     emit changeCurrentWalletIDs(senderID, receiverID);
 }
@@ -164,7 +165,7 @@ void WalletModel::onNodeConnectionChanged(bool isNodeConnected)
     emit nodeConnectionChanged(isNodeConnected);
 }
 
-void WalletModel::onWalletError(grimm::wallet::ErrorType error)
+void WalletModel::onWalletError(MWG::wallet::ErrorType error)
 {
     emit walletError(error);
 }
@@ -185,11 +186,11 @@ void WalletModel::onCantSendToExpired()
     emit cantSendToExpired();
 }
 
-void WalletModel::onPaymentProofExported(const grimm::wallet::TxID& txID, const grimm::ByteBuffer& proof)
+void WalletModel::onPaymentProofExported(const MWG::wallet::TxID& txID, const MWG::ByteBuffer& proof)
 {
     string str;
     str.resize(proof.size() * 2);
 
-    grimm::to_hex(str.data(), proof.data(), proof.size());
+    MWG::to_hex(str.data(), proof.data(), proof.size());
     emit paymentProofExported(txID, QString::fromStdString(str));
 }
