@@ -2,12 +2,12 @@
 #include <QObject>
 #include "wallet/common.h"
 
-namespace grimmui
+namespace MWGui
 {
-    QString toString(const grimm::wallet::WalletID&);
-    QString toString(const grimm::Merkle::Hash&);
-    QString GrimmToString(const grimm::Amount& value);
-    QString toString(const grimm::Timestamp& ts);
+    QString toString(const MWG::wallet::WalletID&);
+    QString toString(const MWG::Merkle::Hash&);
+    QString MWGToString(const MWG::Amount& value);
+    QString toString(const MWG::Timestamp& ts);
 
     class Filter
     {
