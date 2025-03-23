@@ -5,7 +5,7 @@
 #include <atomic>
 #include "utility/logger.h"
 
-namespace grimm {
+namespace MWG {
 
 class ExternalPOWStub : public IExternalPOW {
 public:
