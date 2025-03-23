@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +21,7 @@
 #include <boost/intrusive/set.hpp>
 #include <boost/intrusive/list.hpp>
 
-namespace grimm {
+namespace MWG {
 
 	class PeerManager
 	{
@@ -172,4 +173,4 @@ namespace grimm {
 
 	std::ostream& operator << (std::ostream& s, const PeerManager::PeerInfo&);
 
-} // namespace grimm
+} // namespace MWG
