@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,7 +34,7 @@
 #include "version.h"
 
 using namespace std;
-using namespace grimm;
+using namespace MWG;
 using namespace ECC;
 
 namespace
@@ -133,7 +134,7 @@ private:
 
 int main_impl(int argc, char* argv[])
 {
-	grimm::Crash::InstallHandler(NULL);
+	MWG::Crash::InstallHandler(NULL);
 
 	try
 	{
@@ -142,7 +143,7 @@ int main_impl(int argc, char* argv[])
 		po::variables_map vm;
 		try
 		{
-			vm = getOptions(argc, argv, "grimm-node.cfg", options);
+			vm = getOptions(argc, argv, "MWG-node.cfg", options);
 		}
 		catch (const po::error& e)
 		{
@@ -178,7 +179,7 @@ int main_impl(int argc, char* argv[])
 #define LOG_FILES_PREFIX "node_"
 
 		const auto path = boost::filesystem::system_complete(LOG_FILES_DIR);
-		auto logger = grimm::Logger::create(logLevel, logLevel, fileLogLevel, LOG_FILES_PREFIX, path.string());
+		auto logger = MWG::Logger::create(logLevel, logLevel, fileLogLevel, LOG_FILES_PREFIX, path.string());
 
 		try
 		{
@@ -189,7 +190,7 @@ int main_impl(int argc, char* argv[])
 			clean_old_logfiles(LOG_FILES_DIR, LOG_FILES_PREFIX, logCleanupPeriod);
 
 			Rules::get().UpdateChecksum();
-            LOG_INFO() << "Grimm Node " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
+            LOG_INFO() << "MWG Node " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
 			LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
 
 			auto port = vm[cli::PORT].as<uint16_t>();
@@ -220,7 +221,7 @@ int main_impl(int argc, char* argv[])
 				}
 
 				{
-					grimm::Node node;
+					MWG::Node node;
 
                     NodeObserver observer(node);
 
@@ -245,7 +246,7 @@ int main_impl(int argc, char* argv[])
 					if (!(sKeyOwner.empty() && sKeyMine.empty()))
 					{
 						SecString pass;
-						if (!grimm::read_wallet_pass(pass, vm))
+						if (!MWG::read_wallet_pass(pass, vm))
 						{
 							LOG_ERROR() << "Please, provide password for the keys.";
 							return -1;
@@ -372,7 +373,7 @@ int main_impl(int argc, char* argv[])
 	{
 		std::cout << e.what() << std::endl;
 	}
-	catch (const grimm::CorruptionException& e)
+	catch (const MWG::CorruptionException& e)
 	{
 		std::cout << "Corruption: " << e.m_sErr << std::endl;
 	}
