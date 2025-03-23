@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,14 +30,14 @@ namespace
     struct Job 
     {
         string jobID;
-        grimm::Merkle::Hash input;
-        grimm::Block::PoW pow;
-        grimm::IExternalPOW::BlockFound callback;
+        MWG::Merkle::Hash input;
+        MWG::Block::PoW pow;
+        MWG::IExternalPOW::BlockFound callback;
     };
 
     using SolutionCallback = function<void(Job&& job)>;
 
-    class WorkProvider : public grimmMiner::minerBridge
+    class WorkProvider : public MWGMiner::minerBridge
     {
     public:
         WorkProvider(SolutionCallback&& solutionCallback)
@@ -84,9 +85,9 @@ namespace
             Job job;
             auto compressed = GetMinimalFromIndices(indices, 25);
             copy(compressed.begin(), compressed.end(), job.pow.m_Indices.begin());
-            grimm::Block::PoW::NonceType t((const uint8_t*)&nonce);
+            MWG::Block::PoW::NonceType t((const uint8_t*)&nonce);
             job.pow.m_Nonce = t;
-            job.pow.m_Difficulty = grimm::Difficulty(difficulty);
+            job.pow.m_Difficulty = MWG::Difficulty(difficulty);
             job.jobID = to_string(workId);
             _solutionCallback(move(job));
         }
@@ -102,7 +103,7 @@ namespace
     };
 }
 
-namespace grimm {
+namespace MWG {
 
     class OpenCLMiner : public IExternalPOW
     {
@@ -187,7 +188,7 @@ namespace grimm {
             while (true)
             {
                 vector<Job> jobs;
-                grimm::IExternalPOW::BlockFound callback;
+                MWG::IExternalPOW::BlockFound callback;
                 {
                     unique_lock<mutex> lock(_mutex);
 
@@ -264,7 +265,7 @@ namespace grimm {
         mutex _mutex;
         condition_variable _cond;
         WorkProvider _workProvider;
-        grimmMiner::clHost _ClHost;
+        MWGMiner::clHost _ClHost;
         vector<Job> _solvedJobs;
         const vector<int32_t> _devices;
         
