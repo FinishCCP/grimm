@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 #include "utility/helpers.h"
 #include "utility/logger.h"
 
-namespace grimm {
+namespace MWG {
 
 static const size_t CREATOR_FRAGMENT_SIZE = 1000;
 static const size_t READER_FRAGMENT_SIZE = 8192;
