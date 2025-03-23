@@ -104,7 +104,7 @@ Rectangle {
                     color: Style.content_main
                     opacity: 0.6
                     //% "BALANCE"
-                    text: "GRIMM BALANCE"
+                    text: "MWG BALANCE"
                 }
             }
 
