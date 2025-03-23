@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,8 +37,8 @@ public:
     bool isPasswordReqiredToSpendMoney() const;
     void setPasswordReqiredToSpendMoney(bool value);
 
-    bool isAllowedgrimmLinks() const;
-    void setAllowedgrimmLinks(bool value);
+    bool isAllowedMWGLinks() const;
+    void setAllowedMWGLinks(bool value);
 
     void initModel(WalletModel::Ptr model);
     std::string getWalletStorage() const;
