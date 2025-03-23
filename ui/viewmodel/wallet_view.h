@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,7 +51,7 @@ class TxObject : public QObject
 public:
 
     TxObject(QObject* parent = nullptr);
-    TxObject(const grimm::wallet::TxDescription& tx, QObject* parent = nullptr);
+    TxObject(const MWG::wallet::TxDescription& tx, QObject* parent = nullptr);
 
     bool income() const;
     QString date() const;
@@ -66,7 +67,7 @@ public:
     QString getSendingAddress() const;
     QString getReceivingAddress() const;
     QString getFee() const;
-    grimm::wallet::WalletID peerId() const;
+    MWG::wallet::WalletID peerId() const;
     QString getKernelID() const;
     void setKernelID(const QString& value);
     QString getTransactionID() const;
@@ -75,12 +76,12 @@ public:
 
     void setUserName(const QString& name);
     void setDisplayName(const QString& name);
-    void setStatus(grimm::wallet::TxStatus status);
-    void setFailureReason(grimm::wallet::TxFailureReason reason);
+    void setStatus(MWG::wallet::TxStatus status);
+    void setFailureReason(MWG::wallet::TxFailureReason reason);
 
-    void update(const grimm::wallet::TxDescription& tx);
+    void update(const MWG::wallet::TxDescription& tx);
 
-    const grimm::wallet::TxDescription& getTxDescription() const;
+    const MWG::wallet::TxDescription& getTxDescription() const;
 
     Q_INVOKABLE bool inProgress() const;
     Q_INVOKABLE bool isCompleted() const;
@@ -99,7 +100,7 @@ signals:
     void kernelIDChanged();
     void failureReasonChanged();
 private:
-    grimm::wallet::TxDescription m_tx;
+    MWG::wallet::TxDescription m_tx;
     QString m_userName;
     QString m_displayName;
     QString m_kernelID;
@@ -130,16 +131,16 @@ signals:
     void paymentProofChanged();
 private:
     QString m_paymentProof;
-    grimm::wallet::storage::PaymentInfo m_paymentInfo;
+    MWG::wallet::storage::PaymentInfo m_paymentInfo;
 };
 
 class MyPaymentInfoItem : public PaymentInfoItem
 {
     Q_OBJECT
 public:
-    MyPaymentInfoItem(const grimm::wallet::TxID& txID, QObject* parent = nullptr);
+    MyPaymentInfoItem(const MWG::wallet::TxID& txID, QObject* parent = nullptr);
 private slots:
-    void onPaymentProofExported(const grimm::wallet::TxID& txID, const QString& proof);
+    void onPaymentProofExported(const MWG::wallet::TxID& txID, const QString& proof);
 };
 
 class WalletViewModel : public QObject
@@ -185,7 +186,7 @@ class WalletViewModel : public QObject
     Q_PROPERTY(int minimumFeeInCentum READ getMinFeeInCentum CONSTANT)
 
     Q_PROPERTY(int expires READ getExpires WRITE setExpires NOTIFY expiresChanged)
-    Q_PROPERTY(bool isAllowedgrimmLinks READ isAllowedgrimmLinks WRITE allowgrimmLinks NOTIFY grimmLinksAllowed)
+    Q_PROPERTY(bool isAllowedMWGLinks READ isAllowedMWGLinks WRITE allowMWGLinks NOTIFY MWGLinksAllowed)
 
 public:
 
@@ -252,17 +253,17 @@ public:
     void setExpires(int value);
     int getExpires() const;
 
-    bool isAllowedgrimmLinks() const;
-    void allowgrimmLinks(bool value);
+    bool isAllowedMWGLinks() const;
+    void allowMWGLinks(bool value);
 
 public slots:
-    void onStatus(const grimm::wallet::WalletStatus& amount);
-    void onTxStatus(grimm::wallet::ChangeAction action, const std::vector<grimm::wallet::TxDescription>& items);
+    void onStatus(const MWG::wallet::WalletStatus& amount);
+    void onTxStatus(MWG::wallet::ChangeAction action, const std::vector<MWG::wallet::TxDescription>& items);
     void sendMoney();
-    void onChangeCalculated(grimm::Amount change);
-    void onChangeCurrentWalletIDs(grimm::wallet::WalletID senderID, grimm::wallet::WalletID receiverID);
-    void onAddresses(bool own, const std::vector<grimm::wallet::WalletAddress>& addresses);
-    void onGeneratedNewAddress(const grimm::wallet::WalletAddress& addr);
+    void onChangeCalculated(MWG::Amount change);
+    void onChangeCurrentWalletIDs(MWG::wallet::WalletID senderID, MWG::wallet::WalletID receiverID);
+    void onAddresses(bool own, const std::vector<MWG::wallet::WalletAddress>& addresses);
+    void onGeneratedNewAddress(const MWG::wallet::WalletAddress& addr);
     void onNewAddressFailed();
     void onSendMoneyVerified();
     void onCantSendToExpired();
@@ -285,12 +286,12 @@ signals:
     void sendMoneyVerified();
     void cantSendToExpired();
     void newAddressFailed();
-    void grimmLinksAllowed();
+    void MWGLinksAllowed();
 
 private:
-    grimm::Amount calcSendAmount() const;
-    grimm::Amount calcFeeAmount() const;
-    grimm::Amount calcTotalAmount() const;
+    MWG::Amount calcSendAmount() const;
+    MWG::Amount calcFeeAmount() const;
+    MWG::Amount calcTotalAmount() const;
 
     void sortTx();
 
@@ -301,18 +302,18 @@ private:
     WalletModel& _model;
     WalletSettings& _settings;
 
-    grimm::wallet::WalletStatus _status ;
+    MWG::wallet::WalletStatus _status ;
 
     QString _sendAmount;
     double _amountForReceive;
     QString _feeCentumes;
 
-    grimm::Amount _change;
+    MWG::Amount _change;
 
     TxList _txList;
 
     QString _receiverAddr;
-    grimm::wallet::WalletAddress _newReceiverAddr;
+    MWG::wallet::WalletAddress _newReceiverAddr;
     QString _newReceiverName;
     QString _comment;
 
