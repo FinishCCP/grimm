@@ -1,7 +1,8 @@
-// GRIMM OpenCL Miner
+// MWG OpenCL Miner
 // Stratum interface class
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team	
 // Copyright 2018 Wilke Trei
+// Copyright 2025 MWG Team
 #pragma once
 #include "minerBridge.h"
 
@@ -30,12 +31,12 @@ using namespace boost::asio;
 using boost::asio::ip::tcp;
 namespace pt = boost::property_tree;
 
-namespace grimmMiner {
+namespace MWGMiner {
 
-#ifndef grimmMiner_H 
-#define grimmMiner_H 
+#ifndef MWGMiner_H 
+#define MWGMiner_H 
 
-class grimmStratum : public minerBridge {
+class MWGStratum : public minerBridge {
 	private:
 
 	// Definitions belonging to the physical connection
@@ -56,7 +57,7 @@ class grimmStratum : public minerBridge {
 	int64_t workId;
 	std::vector<uint8_t> serverWork;
 	std::atomic<uint64_t> nonce;
-	grimm::Difficulty powDiff;
+	MWG::Difficulty powDiff;
 
 	//Stratum sending subsystem
 	bool activeWrite = false;
@@ -80,7 +81,7 @@ class grimmStratum : public minerBridge {
 	void testAndSubmit(int64_t, uint64_t, std::vector<uint32_t>);
 
 	public:
-    grimmStratum(string, string, string, bool);
+    MWGStratum(string, string, string, bool);
 	void startWorking();
 
 	bool hasWork() override;
