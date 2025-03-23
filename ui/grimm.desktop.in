@@ -1,11 +1,11 @@
 [Desktop Entry]
 Version=1.0
-Name=Grimm Wallet@GRIMM_DISPLAY_SUFFIX@
+Name=MWG Wallet@MWG_DISPLAY_SUFFIX@
 Comment=No one will ever know
-Exec=/usr/bin/GrimmWallet@GRIMM_SUFFIX_UPPER_CASE@ %U
-Icon=grimm
+Exec=/usr/bin/MWGWallet@MWG_SUFFIX_UPPER_CASE@ %U
+Icon=MWG
 Terminal=false
 Type=Application
 Categories=Network
-MimeType=application/x-grimm-item;
-GenericName=Grimm Wallet@GRIMM_DISPLAY_SUFFIX@
+MimeType=application/x-MWG-item;
+GenericName=MWG Wallet@MWG_DISPLAY_SUFFIX@
