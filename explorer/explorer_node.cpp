@@ -16,7 +16,7 @@
 
 #include "version.h"
 
-using namespace grimm;
+using namespace MWG;
 using namespace std;
 
 #define LOG_FILES_DIR "logs"
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
         LOG_ERROR() << "EXCEPTION: " << e.what();
         retCode = 255;
 	}
-	catch (const grimm::CorruptionException& e) {
+	catch (const MWG::CorruptionException& e) {
 		LOG_ERROR() << "Corruption: " << e.m_sErr;
 		retCode = 255;
     } catch (...) {
@@ -141,7 +141,7 @@ bool parse_cmdline(int argc, char* argv[], Options& o) {
         if (!keyOwner.empty())
         {
             SecString pass;
-            if (!grimm::read_wallet_pass(pass, vm))
+            if (!MWG::read_wallet_pass(pass, vm))
                 throw std::runtime_error("Please, provide password for the keys.");
 
             KeyString ks;
@@ -200,7 +200,7 @@ bool parse_cmdline(int argc, char* argv[], Options& o) {
 
 void setup_node(Node& node, const Options& o) {
     Rules::get().UpdateChecksum();
-    LOG_INFO() << "Grimm Node Explorer " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
+    LOG_INFO() << "MWG Node Explorer " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
     LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
 
     node.m_Cfg.m_sPathLocal = o.nodeDbFilename;
