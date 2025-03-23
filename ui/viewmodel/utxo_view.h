@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +31,7 @@ class UtxoItem : public QObject
 public:
 
     UtxoItem() = default;
-    UtxoItem(const grimm::wallet::Coin& coin);
+    UtxoItem(const MWG::wallet::Coin& coin);
     virtual ~UtxoItem();
 
     QString amount() const;
@@ -38,15 +39,15 @@ public:
     UtxoViewStatus::EnStatus status() const;
     UtxoViewType::EnType type() const;
 
-    grimm::Amount rawAmount() const;
-    grimm::Height rawMaturity() const;
-	const grimm::wallet::Coin::ID& get_ID() const;
+    MWG::Amount rawAmount() const;
+    MWG::Height rawMaturity() const;
+	const MWG::wallet::Coin::ID& get_ID() const;
 
 signals:
     void changed();
 
 private:
-    grimm::wallet::Coin _coin;
+    MWG::wallet::Coin _coin;
 };
 
 class UtxoViewModel : public QObject
@@ -77,8 +78,8 @@ public:
     Qt::SortOrder sortOrder() const;
     void setSortOrder(Qt::SortOrder);
 public slots:
-    void onAllUtxoChanged(const std::vector<grimm::wallet::Coin>& utxos);
-    void onStatus(const grimm::wallet::WalletStatus& status);
+    void onAllUtxoChanged(const std::vector<MWG::wallet::Coin>& utxos);
+    void onStatus(const MWG::wallet::WalletStatus& status);
 signals:
     void allUtxoChanged();
     void stateChanged();
