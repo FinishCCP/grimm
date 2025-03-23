@@ -1,4 +1,5 @@
 ﻿// Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +15,7 @@
 
 #include "block_crypt.h"
 
-namespace grimm
+namespace MWG
 {
 	//////////////////////////
 	// ChainWorkProof
@@ -118,7 +119,7 @@ namespace grimm
 
 			bool bAllCovered = (range >= m_Begin);
 
-            GRIMM_VERIFY(UniformRandom(out, range));
+            MWG_VERIFY(UniformRandom(out, range));
 
 			range.Negate(); // convert to -range
 
@@ -474,4 +475,4 @@ namespace grimm
 		m_Proof.m_vData.clear();
 	}
 
-} // namespace grimm
+} // namespace MWG
