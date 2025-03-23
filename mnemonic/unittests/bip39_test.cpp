@@ -13,7 +13,7 @@
 
 #include <boost/algorithm/string.hpp>
 
-using namespace grimm;
+using namespace MWG;
 using namespace ECC;
 
 WALLET_TEST_INIT
