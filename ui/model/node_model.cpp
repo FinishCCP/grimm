@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,8 +23,8 @@
 #include <boost/filesystem.hpp>
 
 
-using namespace grimm;
-using namespace grimm::io;
+using namespace MWG;
+using namespace MWG::io;
 using namespace std;
 
 NodeModel::NodeModel()
@@ -32,12 +33,12 @@ NodeModel::NodeModel()
 
 }
 
-void NodeModel::setKdf(grimm::Key::IKdf::Ptr kdf)
+void NodeModel::setKdf(MWG::Key::IKdf::Ptr kdf)
 {
     m_nodeClient.setKdf(kdf);
 }
 
-void NodeModel::setOwnerKey(grimm::Key::IPKdf::Ptr key)
+void NodeModel::setOwnerKey(MWG::Key::IPKdf::Ptr key)
 {
     m_nodeClient.setOwnerKey(key);
 }
@@ -82,7 +83,7 @@ void NodeModel::onFailedToStartNode(io::ErrorCode errorCode)
     emit failedToStartNode(wallet::getWalletError(errorCode));
 }
 
-void NodeModel::onSyncError(grimm::Node::IObserver::Error error)
+void NodeModel::onSyncError(MWG::Node::IObserver::Error error)
 {
     switch(error)
     {
