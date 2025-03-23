@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 #include "../utility/logger.h"
 #include "../utility/logger_checkpoints.h"
 
-namespace grimm {
+namespace MWG {
 
 template <typename Archive, typename TPtr>
 void save_VecPtr(Archive& ar, const std::vector<TPtr>& v)
@@ -299,4 +300,4 @@ TxPool::Stem::Element* TxPool::Stem::get_NextTimeout(uint32_t& nTimeout_ms)
 	return &ret;
 }
 
-} // namespace grimm
+} // namespace MWG
