@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +21,7 @@
 #include <thread>
 #include <future>
 
-using namespace grimm;
+using namespace MWG;
 using namespace ECC;
 
 class TestNodeConnection : public BaseTestNode
