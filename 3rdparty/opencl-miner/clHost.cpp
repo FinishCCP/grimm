@@ -1,7 +1,8 @@
-// GRIMM OpenCL Miner
+// MWG OpenCL Miner
 // OpenCL Host Interface
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
 // Copyright 2018 Wilke Trei
+// Copyright 2025 MWG Team
 
 #include "clHost.h"
 #include <thread>
@@ -13,7 +14,7 @@
 
 #include "utility/logger.h"
 
-namespace grimmMiner {
+namespace MWGMiner {
 
 using namespace std;
 
@@ -58,7 +59,7 @@ void CL_CALLBACK CCallbackFunc(cl_event ev, cl_int err , void* data) {
 
 // Function to load the OpenCL kernel and prepare our device for mining
 void clHost::loadAndCompileKernel(cl::Device &device, uint32_t pl) {
-	LOG_INFO() << "Loading and compiling Grimm OpenCL Kernel";
+	LOG_INFO() << "Loading and compiling MWG OpenCL Kernel";
 
 	// reading the kernel file
 	cl_int err;
