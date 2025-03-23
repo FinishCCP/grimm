@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +26,7 @@
 
 
 
-using namespace grimm;
+using namespace MWG;
 using namespace ECC;
 using namespace std;
 
@@ -194,18 +195,18 @@ void SettingsViewModel::setPasswordReqiredToSpendMoney(bool value)
     }
 }
 
-bool SettingsViewModel::isAllowedgrimmLinks() const
+bool SettingsViewModel::isAllowedMWGLinks() const
 {
-    return m_isAllowedgrimmLinks;
+    return m_isAllowedMWGLinks;
 }
 
-void SettingsViewModel::allowgrimmLinks(bool value)
+void SettingsViewModel::allowMWGLinks(bool value)
 {
-    if (value != m_isAllowedgrimmLinks)
+    if (value != m_isAllowedMWGLinks)
     {
-        m_isAllowedgrimmLinks = value;
-        m_settings.setAllowedgrimmLinks(m_isAllowedgrimmLinks);
-        emit grimmLinksAllowed();
+        m_isAllowedMWGLinks = value;
+        m_settings.setAllowedMWGLinks(m_isAllowedMWGLinks);
+        emit MWGLinksAllowed();
     }
 }
 
@@ -340,7 +341,7 @@ void SettingsViewModel::undoChanges()
     setLocalNodePeers(m_settings.getLocalNodePeers());
 
     setPasswordReqiredToSpendMoney(m_settings.isPasswordReqiredToSpendMoney());
-    allowgrimmLinks(m_settings.isAllowedgrimmLinks());
+    allowMWGLinks(m_settings.isAllowedMWGLinks());
     setCurrentLanguageIndex(
             m_supportedLanguages.indexOf(m_settings.getLanguageName()));
 }
