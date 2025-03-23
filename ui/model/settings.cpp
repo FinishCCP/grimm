@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,7 +35,7 @@ namespace
     const char* kLocaleName = "locale";
     const char* kLockTimeoutName = "lock_timeout";
     const char* kRequirePasswordToSpendMoney = "require_password_to_spend_money";
-    const char* kIsAlowedgrimmLink = "grimm_mw_links_allowed";
+    const char* kIsAlowedMWGLink = "MWG_mw_links_allowed";
     const char* LocalNodeMiningThreads = "localnode/mining_threads";
 
     const char* kLocalNodeRun = "localnode/run";
@@ -51,7 +52,7 @@ namespace
     };
 }
 
-const char* WalletSettings::WalletCfg = "grimm-wallet.cfg";
+const char* WalletSettings::WalletCfg = "MWG-wallet.cfg";
 const char* WalletSettings::LogsFolder = "logs";
 const char* WalletSettings::SettingsFile = "settings.ini";
 const char* WalletSettings::WalletDBFile = "wallet.db";
@@ -138,16 +139,16 @@ void WalletSettings::setPasswordReqiredToSpendMoney(bool value)
     m_data.setValue(kRequirePasswordToSpendMoney, value);
 }
 
-bool WalletSettings::isAllowedgrimmLinks() const
+bool WalletSettings::isAllowedMWGLinks() const
 {
     Lock lock(m_mutex);
-    return m_data.value(kIsAlowedgrimmLink, false).toBool();
+    return m_data.value(kIsAlowedMWGLink, false).toBool();
 }
 
-void WalletSettings::setAllowedgrimmLinks(bool value)
+void WalletSettings::setAllowedMWGLinks(bool value)
 {
     Lock lock(m_mutex);
-    m_data.setValue(kIsAlowedgrimmLink, value);
+    m_data.setValue(kIsAlowedMWGLink, value);
 }
 
 bool WalletSettings::getRunLocalNode() const
@@ -168,11 +169,11 @@ void WalletSettings::setRunLocalNode(bool value)
 uint WalletSettings::getLocalNodePort() const
 {
     Lock lock(m_mutex);
-#ifdef GRIMM_TESTNET
+#ifdef MWG_TESTNET
     return m_data.value(kLocalNodePort, 11005).toUInt();
 #else
     return m_data.value(kLocalNodePort, 10005).toUInt();
-#endif // GRIMM_TESTNET
+#endif // MWG_TESTNET
 }
 
 void WalletSettings::setLocalNodePort(uint port)
@@ -310,7 +311,7 @@ void WalletSettings::reportProblem()
 {
     auto logsFolder = QString::fromStdString(LogsFolder) + "/";
 
-    QFile zipFile = m_appDataDir.filePath("grimm v" + QString::fromStdString(PROJECT_VERSION)
+    QFile zipFile = m_appDataDir.filePath("MWG v" + QString::fromStdString(PROJECT_VERSION)
         + " " + QSysInfo::productType().toLower() + " report.zip");
 
     QuaZip zip(zipFile.fileName());
