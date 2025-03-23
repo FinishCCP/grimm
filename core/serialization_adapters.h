@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -165,31 +166,31 @@ namespace detail
 
         /// ECC::uintBig serialization
         template<typename Archive, uint32_t nBytes_>
-        static Archive& save(Archive& ar, const grimm::uintBig_t<nBytes_>& val)
+        static Archive& save(Archive& ar, const MWG::uintBig_t<nBytes_>& val)
         {
             ar & val.m_pData;
             return ar;
         }
 
         template<typename Archive, uint32_t nBytes_>
-        static Archive& load(Archive& ar, grimm::uintBig_t<nBytes_>& val)
+        static Archive& load(Archive& ar, MWG::uintBig_t<nBytes_>& val)
         {
             ar & val.m_pData;
             return ar;
         }
 
-		/// grimm::FourCC serialization
+		/// MWG::FourCC serialization
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::FourCC& val)
+		static Archive& save(Archive& ar, const MWG::FourCC& val)
 		{
-			ar & grimm::uintBigFrom(val.V);
+			ar & MWG::uintBigFrom(val.V);
 			return ar;
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::FourCC& val)
+		static Archive& load(Archive& ar, MWG::FourCC& val)
 		{
-			grimm::uintBigFor<uint32_t>::Type x;
+			MWG::uintBigFor<uint32_t>::Type x;
 			ar & x;
 			x.Export(val.V);
 			return ar;
@@ -516,12 +517,12 @@ namespace detail
         }
 
         ///////////////////////////////////////////////////////////
-        /// Common Grimm serialization adapters
+        /// Common MWG serialization adapters
         ///////////////////////////////////////////////////////////
 
-        /// grimm::Input serialization
+        /// MWG::Input serialization
         template<typename Archive>
-        static Archive& save(Archive& ar, const grimm::Input& input)
+        static Archive& save(Archive& ar, const MWG::Input& input)
         {
 			uint8_t nFlags =
 				(input.m_Commitment.m_Y ? 1 : 0);
@@ -534,7 +535,7 @@ namespace detail
         }
 
         template<typename Archive>
-        static Archive& load(Archive& ar, grimm::Input& input)
+        static Archive& load(Archive& ar, MWG::Input& input)
         {
 			uint8_t nFlags;
 			ar
@@ -546,9 +547,9 @@ namespace detail
             return ar;
         }
 
-        /// grimm::Output serialization
+        /// MWG::Output serialization
         template<typename Archive>
-        static Archive& save(Archive& ar, const grimm::Output& output)
+        static Archive& save(Archive& ar, const MWG::Output& output)
         {
 			uint8_t nFlags =
 				(output.m_Commitment.m_Y ? 1 : 0) |
@@ -556,7 +557,7 @@ namespace detail
 				(output.m_pConfidential ? 4 : 0) |
 				(output.m_pPublic ? 8 : 0) |
 				(output.m_Incubation ? 0x10 : 0) |
-				((output.m_AssetID == grimm::Zero) ? 0 : 0x20) |
+				((output.m_AssetID == MWG::Zero) ? 0 : 0x20) |
 				(output.m_RecoveryOnly ? 0x40 : 0);
 
 			ar
@@ -579,7 +580,7 @@ namespace detail
         }
 
         template<typename Archive>
-        static Archive& load(Archive& ar, grimm::Output& output)
+        static Archive& load(Archive& ar, MWG::Output& output)
         {
 			uint8_t nFlags;
 			ar
@@ -608,14 +609,14 @@ namespace detail
 			if (0x20 & nFlags)
 				ar & output.m_AssetID;
 			else
-				output.m_AssetID = grimm::Zero;
+				output.m_AssetID = MWG::Zero;
 
             return ar;
         }
 
-		/// grimm::TxKernel::HashLock serialization
+		/// MWG::TxKernel::HashLock serialization
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::TxKernel::HashLock& val)
+		static Archive& save(Archive& ar, const MWG::TxKernel::HashLock& val)
 		{
 			ar
 				& val.m_Preimage
@@ -625,7 +626,7 @@ namespace detail
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::TxKernel::HashLock& val)
+		static Archive& load(Archive& ar, MWG::TxKernel::HashLock& val)
 		{
 			ar
 				& val.m_Preimage
@@ -634,9 +635,9 @@ namespace detail
 			return ar;
 		}
 
-		/// grimm::TxKernel::RelativeLock serialization
+		/// MWG::TxKernel::RelativeLock serialization
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::TxKernel::RelativeLock& val)
+		static Archive& save(Archive& ar, const MWG::TxKernel::RelativeLock& val)
 		{
 			ar
 				& val.m_ID
@@ -647,7 +648,7 @@ namespace detail
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::TxKernel::RelativeLock& val)
+		static Archive& load(Archive& ar, MWG::TxKernel::RelativeLock& val)
 		{
 			ar
 				& val.m_ID
@@ -657,9 +658,9 @@ namespace detail
 			return ar;
 		}
 
-        /// grimm::TxKernel serialization
+        /// MWG::TxKernel serialization
         template<typename Archive>
-        static Archive& save(Archive& ar, const grimm::TxKernel& val)
+        static Archive& save(Archive& ar, const MWG::TxKernel& val)
         {
 			uint8_t nFlags2 =
 				(val.m_AssetEmission ? 1 : 0) |
@@ -670,7 +671,7 @@ namespace detail
 				(val.m_Commitment.m_Y ? 1 : 0) |
 				(val.m_Fee ? 2 : 0) |
 				(val.m_Height.m_Min ? 4 : 0) |
-				((val.m_Height.m_Max != grimm::Height(-1)) ? 8 : 0) |
+				((val.m_Height.m_Max != MWG::Height(-1)) ? 8 : 0) |
 				(val.m_Signature.m_NoncePub.m_Y ? 0x10 : 0) |
 				(val.m_pHashLock ? 0x20 : 0) |
 				(val.m_vNested.empty() ? 0 : 0x40) |
@@ -688,7 +689,7 @@ namespace detail
 				ar & val.m_Height.m_Min;
 			if (8 & nFlags)
 			{
-				grimm::Height dh = val.m_Height.m_Max - val.m_Height.m_Min;
+				MWG::Height dh = val.m_Height.m_Max - val.m_Height.m_Min;
 				ar & dh;
 			}
 			if (0x20 & nFlags)
@@ -717,7 +718,7 @@ namespace detail
         }
 
         template<typename Archive>
-        static Archive& load_Recursive(Archive& ar, grimm::TxKernel& val, uint32_t nRecusion)
+        static Archive& load_Recursive(Archive& ar, MWG::TxKernel& val, uint32_t nRecusion)
         {
 			uint8_t nFlags;
 			ar
@@ -740,24 +741,24 @@ namespace detail
 
 			if (8 & nFlags)
 			{
-				grimm::Height dh;
+				MWG::Height dh;
 				ar & dh;
 				val.m_Height.m_Max = val.m_Height.m_Min + dh;
 			}
 			else
-				val.m_Height.m_Max = grimm::Height(-1);
+				val.m_Height.m_Max = MWG::Height(-1);
 
 			val.m_Signature.m_NoncePub.m_Y = ((0x10 & nFlags) != 0);
 
 			if (0x20 & nFlags)
 			{
-				val.m_pHashLock.reset(new grimm::TxKernel::HashLock);
+				val.m_pHashLock.reset(new MWG::TxKernel::HashLock);
 				ar & *val.m_pHashLock;
 			}
 
 			if (0x40 & nFlags)
 			{
-				grimm::TxKernel::TestRecursion(++nRecusion);
+				MWG::TxKernel::TestRecursion(++nRecusion);
 
 				uint32_t nCount;
 				ar & nCount;
@@ -765,8 +766,8 @@ namespace detail
 
 				for (uint32_t i = 0; i < nCount; i++)
 				{
-					std::unique_ptr<grimm::TxKernel>& v = val.m_vNested[i];
-					v = std::make_unique<grimm::TxKernel>();
+					std::unique_ptr<MWG::TxKernel>& v = val.m_vNested[i];
+					v = std::make_unique<MWG::TxKernel>();
 					load_Recursive(ar, *v, nRecusion);
 				}
 			}
@@ -783,7 +784,7 @@ namespace detail
 
 				if (2 & nFlags2)
 				{
-					val.m_pRelativeLock.reset(new grimm::TxKernel::RelativeLock);
+					val.m_pRelativeLock.reset(new MWG::TxKernel::RelativeLock);
 					ar & *val.m_pRelativeLock;
 				}
 
@@ -795,14 +796,14 @@ namespace detail
         }
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::TxKernel& val)
+		static Archive& load(Archive& ar, MWG::TxKernel& val)
 		{
 			return load_Recursive(ar, val, 0);
 		}
 
-        /// grimm::Transaction serialization
+        /// MWG::Transaction serialization
         template<typename Archive>
-        static Archive& save(Archive& ar, const grimm::TxBase& txb)
+        static Archive& save(Archive& ar, const MWG::TxBase& txb)
         {
             ar
 				& txb.m_Offset;
@@ -811,7 +812,7 @@ namespace detail
         }
 
         template<typename Archive>
-        static Archive& load(Archive& ar, grimm::TxBase& txb)
+        static Archive& load(Archive& ar, MWG::TxBase& txb)
         {
             ar
 				& txb.m_Offset;
@@ -823,7 +824,7 @@ namespace detail
 		static void save_VecPtr(Archive& ar, const std::vector<TPtr>& v)
 		{
 			uint32_t nSize = static_cast<uint32_t>(v.size());
-			ar & grimm::uintBigFrom(nSize);
+			ar & MWG::uintBigFrom(nSize);
 
 			for (uint32_t i = 0; i < nSize; i++)
 				ar & *v[i];
@@ -832,7 +833,7 @@ namespace detail
 		template <typename Archive, typename TPtr>
 		static void load_VecPtr(Archive& ar, std::vector<TPtr>& v)
 		{
-			grimm::uintBigFor<uint32_t>::Type x;
+			MWG::uintBigFor<uint32_t>::Type x;
 			ar & x;
 			
 			uint32_t nSize;
@@ -847,7 +848,7 @@ namespace detail
 		}
 
         template<typename Archive>
-        static Archive& save(Archive& ar, const grimm::TxVectors::Perishable& txv)
+        static Archive& save(Archive& ar, const MWG::TxVectors::Perishable& txv)
         {
 			save_VecPtr(ar, txv.m_vInputs);
 			save_VecPtr(ar, txv.m_vOutputs);
@@ -855,7 +856,7 @@ namespace detail
         }
 
         template<typename Archive>
-        static Archive& load(Archive& ar, grimm::TxVectors::Perishable& txv)
+        static Archive& load(Archive& ar, MWG::TxVectors::Perishable& txv)
         {
 			load_VecPtr(ar, txv.m_vInputs);
 			load_VecPtr(ar, txv.m_vOutputs);
@@ -863,43 +864,43 @@ namespace detail
         }
 
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::TxVectors::Eternal& txv)
+		static Archive& save(Archive& ar, const MWG::TxVectors::Eternal& txv)
 		{
 			save_VecPtr(ar, txv.m_vKernels);
 			return ar;
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::TxVectors::Eternal& txv)
+		static Archive& load(Archive& ar, MWG::TxVectors::Eternal& txv)
 		{
 			load_VecPtr(ar, txv.m_vKernels);
 			return ar;
 		}
 
 		template<typename Archive>
-        static Archive& save(Archive& ar, const grimm::Transaction& tx)
+        static Archive& save(Archive& ar, const MWG::Transaction& tx)
         {
 			ar
-				& Cast::Down<grimm::TxVectors::Perishable>(tx)
-				& Cast::Down<grimm::TxVectors::Eternal>(tx)
-				& Cast::Down<grimm::TxBase>(tx);
+				& Cast::Down<MWG::TxVectors::Perishable>(tx)
+				& Cast::Down<MWG::TxVectors::Eternal>(tx)
+				& Cast::Down<MWG::TxBase>(tx);
 
             return ar;
         }
 
         template<typename Archive>
-        static Archive& load(Archive& ar, grimm::Transaction& tx)
+        static Archive& load(Archive& ar, MWG::Transaction& tx)
         {
 			ar
-				& Cast::Down<grimm::TxVectors::Perishable>(tx)
-				& Cast::Down<grimm::TxVectors::Eternal>(tx)
-				& Cast::Down<grimm::TxBase>(tx);
+				& Cast::Down<MWG::TxVectors::Perishable>(tx)
+				& Cast::Down<MWG::TxVectors::Eternal>(tx)
+				& Cast::Down<MWG::TxBase>(tx);
 
             return ar;
         }
 
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::Block::PoW& pow)
+		static Archive& save(Archive& ar, const MWG::Block::PoW& pow)
 		{
 			ar
 				& pow.m_Indices
@@ -910,7 +911,7 @@ namespace detail
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::Block::PoW& pow)
+		static Archive& load(Archive& ar, MWG::Block::PoW& pow)
 		{
 			ar
 				& pow.m_Indices
@@ -921,7 +922,7 @@ namespace detail
 		}
 
 		template<typename Archive>
-        static Archive& save(Archive& ar, const grimm::Block::SystemState::ID& v)
+        static Archive& save(Archive& ar, const MWG::Block::SystemState::ID& v)
         {
             ar
 				& v.m_Height
@@ -931,7 +932,7 @@ namespace detail
         }
 
         template<typename Archive>
-        static Archive& load(Archive& ar, grimm::Block::SystemState::ID& v)
+        static Archive& load(Archive& ar, MWG::Block::SystemState::ID& v)
         {
 			ar
 				& v.m_Height
@@ -941,7 +942,7 @@ namespace detail
         }
 
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::Block::SystemState::Sequence::Prefix& v)
+		static Archive& save(Archive& ar, const MWG::Block::SystemState::Sequence::Prefix& v)
 		{
 			ar
 				& v.m_Height
@@ -952,7 +953,7 @@ namespace detail
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::Block::SystemState::Sequence::Prefix& v)
+		static Archive& load(Archive& ar, MWG::Block::SystemState::Sequence::Prefix& v)
 		{
 			ar
 				& v.m_Height
@@ -963,7 +964,7 @@ namespace detail
 		}
 
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::Block::SystemState::Sequence::Element& v)
+		static Archive& save(Archive& ar, const MWG::Block::SystemState::Sequence::Element& v)
 		{
 			ar
 				& v.m_Kernels
@@ -975,7 +976,7 @@ namespace detail
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::Block::SystemState::Sequence::Element& v)
+		static Archive& load(Archive& ar, MWG::Block::SystemState::Sequence::Element& v)
 		{
 			ar
 				& v.m_Kernels
@@ -987,53 +988,53 @@ namespace detail
 		}
 
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::Block::SystemState::Full& v)
+		static Archive& save(Archive& ar, const MWG::Block::SystemState::Full& v)
 		{
-			save(ar, Cast::Down<grimm::Block::SystemState::Sequence::Prefix>(v));
-			save(ar, Cast::Down<grimm::Block::SystemState::Sequence::Element>(v));
+			save(ar, Cast::Down<MWG::Block::SystemState::Sequence::Prefix>(v));
+			save(ar, Cast::Down<MWG::Block::SystemState::Sequence::Element>(v));
 
 			return ar;
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::Block::SystemState::Full& v)
+		static Archive& load(Archive& ar, MWG::Block::SystemState::Full& v)
 		{
-			load(ar, Cast::Down<grimm::Block::SystemState::Sequence::Prefix>(v));
-			load(ar, Cast::Down<grimm::Block::SystemState::Sequence::Element>(v));
+			load(ar, Cast::Down<MWG::Block::SystemState::Sequence::Prefix>(v));
+			load(ar, Cast::Down<MWG::Block::SystemState::Sequence::Element>(v));
 
 			return ar;
 		}
 
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::Block::BodyBase& bb)
+		static Archive& save(Archive& ar, const MWG::Block::BodyBase& bb)
 		{
-			ar & Cast::Down<grimm::TxBase>(bb);
+			ar & Cast::Down<MWG::TxBase>(bb);
 			return ar;
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::Block::BodyBase& bb)
+		static Archive& load(Archive& ar, MWG::Block::BodyBase& bb)
 		{
-			ar & Cast::Down<grimm::TxBase>(bb);
+			ar & Cast::Down<MWG::TxBase>(bb);
 			return ar;
 		}
 
 		template<typename Archive>
-		static Archive& save(Archive& ar, const grimm::Block::Body& bb)
+		static Archive& save(Archive& ar, const MWG::Block::Body& bb)
 		{
-			ar & Cast::Down<grimm::Block::BodyBase>(bb);
-			ar & Cast::Down<grimm::TxVectors::Perishable>(bb);
-			ar & Cast::Down<grimm::TxVectors::Eternal>(bb);
+			ar & Cast::Down<MWG::Block::BodyBase>(bb);
+			ar & Cast::Down<MWG::TxVectors::Perishable>(bb);
+			ar & Cast::Down<MWG::TxVectors::Eternal>(bb);
 
 			return ar;
 		}
 
 		template<typename Archive>
-		static Archive& load(Archive& ar, grimm::Block::Body& bb)
+		static Archive& load(Archive& ar, MWG::Block::Body& bb)
 		{
-			ar & Cast::Down<grimm::Block::BodyBase>(bb);
-			ar & Cast::Down<grimm::TxVectors::Perishable>(bb);
-			ar & Cast::Down<grimm::TxVectors::Eternal>(bb);
+			ar & Cast::Down<MWG::Block::BodyBase>(bb);
+			ar & Cast::Down<MWG::TxVectors::Perishable>(bb);
+			ar & Cast::Down<MWG::TxVectors::Eternal>(bb);
 
 			return ar;
 		}
