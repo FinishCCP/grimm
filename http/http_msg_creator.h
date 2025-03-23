@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 #include "utility/io/fragment_writer.h"
 #include "nlohmann/json_fwd.hpp"
 
-namespace grimm {
+namespace MWG {
 
 struct HeaderPair {
     const char* head;
