@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,31 +18,31 @@
 #include "wallet/wallet_client.h"
 
 class WalletModel
-    : public grimm::wallet::WalletClient
+    : public MWG::wallet::WalletClient
 {
 public:
 
     using Ptr = std::shared_ptr<WalletModel>;
 
-    WalletModel(grimm::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, grimm::io::Reactor::Ptr reactor);
+    WalletModel(MWG::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, MWG::io::Reactor::Ptr reactor);
     ~WalletModel() override;
 
 private:
-    void onStatus(const grimm::wallet::WalletStatus& status) override;
-    void onTxStatus(grimm::wallet::ChangeAction, const std::vector<grimm::wallet::TxDescription>& items) override;
+    void onStatus(const MWG::wallet::WalletStatus& status) override;
+    void onTxStatus(MWG::wallet::ChangeAction, const std::vector<MWG::wallet::TxDescription>& items) override;
     void onSyncProgressUpdated(int done, int total) override;
-    void onChangeCalculated(grimm::Amount change) override;
-    void onAllUtxoChanged(const std::vector<grimm::wallet::Coin>& utxos) override;
-    void onAddresses(bool own, const std::vector<grimm::wallet::WalletAddress>& addrs) override;
-    void onGeneratedNewAddress(const grimm::wallet::WalletAddress& walletAddr) override;
+    void onChangeCalculated(MWG::Amount change) override;
+    void onAllUtxoChanged(const std::vector<MWG::wallet::Coin>& utxos) override;
+    void onAddresses(bool own, const std::vector<MWG::wallet::WalletAddress>& addrs) override;
+    void onGeneratedNewAddress(const MWG::wallet::WalletAddress& walletAddr) override;
     void onNewAddressFailed() override;
-    void onChangeCurrentWalletIDs(grimm::wallet::WalletID senderID, grimm::wallet::WalletID receiverID) override;
+    void onChangeCurrentWalletIDs(MWG::wallet::WalletID senderID, MWG::wallet::WalletID receiverID) override;
     void onNodeConnectionChanged(bool isNodeConnected) override;
-    void onWalletError(grimm::wallet::ErrorType error) override;
+    void onWalletError(MWG::wallet::ErrorType error) override;
     void FailedToStartWallet() override;
     void onSendMoneyVerified() override;
     void onCantSendToExpired() override;
-    void onPaymentProofExported(const grimm::wallet::TxID& txID, const grimm::ByteBuffer& proof) override;
-    void onCoinsByTx(const std::vector<grimm::wallet::Coin>& coins) override;
+    void onPaymentProofExported(const MWG::wallet::TxID& txID, const MWG::ByteBuffer& proof) override;
+    void onCoinsByTx(const std::vector<MWG::wallet::Coin>& coins) override;
     void onAddressChecked(const std::string& addr, bool isValid) override;
 };
