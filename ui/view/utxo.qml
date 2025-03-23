@@ -3,7 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.0
 import QtQuick.Controls.Styles 1.2
 import "controls"
-import Grimm.Wallet 1.0;
+import MWG.Wallet 1.0;
 
 ColumnLayout {
     anchors.fill: parent
