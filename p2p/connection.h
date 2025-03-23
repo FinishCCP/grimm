@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 #include "utility/io/base_connection.h"
 #include "msg_reader.h"
 
-namespace grimm {
+namespace MWG {
 
 /// Reads-writes messages from-to connected stream
 class Connection : public BaseConnection {
