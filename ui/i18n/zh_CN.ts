@@ -162,8 +162,8 @@
         <translation>申请</translation>
     </message>
     <message id="logo-name">
-        <source>GRIMM</source>
-        <translation>GRIMM</translation>
+        <source>MWG</source>
+        <translation>MWG</translation>
     </message>
     <message id="logo-description">
         <source>No one will ever know</source>
@@ -487,8 +487,8 @@
         <translation type="vanished">钱包</translation>
     </message>
     <message id="wallet-receive-title">
-        <source>Receive Grimm</source>
-        <translation>接收Grimm</translation>
+        <source>Receive MWG</source>
+        <translation>接收MWG</translation>
     </message>
     <message id="wallet-receive-my-addr-label">
         <source>My address</source>
@@ -535,8 +535,8 @@
         <translation>删除</translation>
     </message>
     <message id="send-title">
-        <source>Send Grimm</source>
-        <translation>支付Grimm</translation>
+        <source>Send MWG</source>
+        <translation>支付MWG</translation>
     </message>
     <message id="send-send-to-label">
         <source>Send To:</source>
@@ -555,8 +555,8 @@
         <translation>交易数量</translation>
     </message>
     <message id="send-curency-name">
-        <source>GRIMM</source>
-        <translation>GRIMM</translation>
+        <source>MWG</source>
+        <translation>MWG</translation>
     </message>
     <message id="send-founds-fail">
         <source>Insufficient funds: you would need %1 to complete the transaction</source>
@@ -660,8 +660,8 @@
         <translation>我同意</translation>
     </message>
     <message id="start-restore-message-line">
-        <source>You are trying to restore an existing Grimm Wallet. Please notice that if you use your wallet on another device, your balance will be up to date, but  transaction history and addresses will be kept separately on each device.</source>
-        <translation>您正在尝试还原已存在的Grimm钱包。请注意：如果您在其他设备上使用该钱包，您的余额将是最新的，但交易历史和地址将分别保存在每个设备上</translation>
+        <source>You are trying to restore an existing MWG Wallet. Please notice that if you use your wallet on another device, your balance will be up to date, but  transaction history and addresses will be kept separately on each device.</source>
+        <translation>您正在尝试还原已存在的MWG钱包。请注意：如果您在其他设备上使用该钱包，您的余额将是最新的，但交易历史和地址将分别保存在每个设备上</translation>
     </message>
     <message id="start-create-button">
         <source>create new wallet</source>
@@ -918,24 +918,24 @@
         <translation>钱包未连接到节点</translation>
     </message>
     <message id="tx-failture-undefined">
-        <source>Unexpected reason, please send wallet logs to Grimm support</source>
-        <translation>异常原因，请将钱包日志发送到Grimm技术小组</translation>
+        <source>Unexpected reason, please send wallet logs to MWG support</source>
+        <translation>异常原因，请将钱包日志发送到MWG技术小组</translation>
     </message>
     <message id="tx-failture-cancelled">
         <source>Transaction cancelled</source>
         <translation>交易已取消</translation>
     </message>
     <message id="tx-failture-receiver-signature-invalid">
-        <source>Receiver signature in not valid, please send wallet logs to Grimm support</source>
-        <translation>收款人签名无效，请将钱包日志发送到Grimm技术小组</translation>
+        <source>Receiver signature in not valid, please send wallet logs to MWG support</source>
+        <translation>收款人签名无效，请将钱包日志发送到MWG技术小组</translation>
     </message>
     <message id="tx-failture-not-registered-in-blockchain">
         <source>Failed to register transaction with the blockchain, see node logs for details</source>
         <translation>向区块链注册交易失败，请参阅节点日志了解详细信息</translation>
     </message>
     <message id="tx-failture-not-valid">
-        <source>Transaction is not valid, please send wallet logs to Grimm support</source>
-        <translation>交易无效，请将钱包日志发送到Grimm技术小组</translation>
+        <source>Transaction is not valid, please send wallet logs to MWG support</source>
+        <translation>交易无效，请将钱包日志发送到MWG技术小组</translation>
     </message>
     <message id="tx-failture-kernel-invalid">
         <source>Invalid kernel proof provided</source>
@@ -962,8 +962,8 @@
         <translation>交易超时</translation>
     </message>
     <message id="tx-failture-not-signed-by-receiver">
-        <source>Payment not signed by the receiver, please send wallet logs to Grimm support</source>
-        <translation>付款未被收款人签名，请发送钱包日志至Grimm技术小组</translation>
+        <source>Payment not signed by the receiver, please send wallet logs to MWG support</source>
+        <translation>付款未被收款人签名，请发送钱包日志至MWG技术小组</translation>
     </message>
     <message id="tx-failture-max-height-to-high">
         <source>Kernel maximum height is too high</source>
@@ -974,8 +974,8 @@
         <translation>交易状态无效</translation>
     </message>
     <message id="tx-curency-name">
-        <source>grimms</source>
-        <translation>grimms</translation>
+        <source>MWGs</source>
+        <translation>MWGs</translation>
     </message>
     <message id="tx-curency-sub-name">
         <source>centums</source>
@@ -1151,8 +1151,8 @@
         <translation>语言</translation>
     </message>
     <message id="available-panel-where-to-buy">
-        <source>Get GRIMM?</source>
-        <translation>Get GRIMM?</translation>
+        <source>Get MWG?</source>
+        <translation>Get MWG?</translation>
     </message>
     <message id="open-external-open">
         <source>open</source>
@@ -1163,8 +1163,8 @@
         <translation>外部链接</translation>
     </message>
     <message id="open-external-message">
-        <source>Grimm Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose -Cancel-. You can chage your choice in app setting anytime.</source>
-        <translation>Grimm钱包需要获取权限以在浏览器中打开外部链接。在浏览器中打开外部外链会暴露您的IP地址；如不想暴露IP地址，请选择“取消”；您可以随时在设置中修改该选项</translation>
+        <source>MWG Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose -Cancel-. You can chage your choice in app setting anytime.</source>
+        <translation>MWG钱包需要获取权限以在浏览器中打开外部链接。在浏览器中打开外部外链会暴露您的IP地址；如不想暴露IP地址，请选择“取消”；您可以随时在设置中修改该选项</translation>
     </message>
     <message id="start-restore-message-title">
         <source>Restore wallet</source>
@@ -1247,11 +1247,11 @@
         <extracomment>Entry in adress table context menu to show QR</extracomment>
         <translation>显示二维码</translation>
     </message>
-    <message id="settings-general-allow-grimm-label-p1">
-        <source>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.grimmw.com/&apos;&gt;grimmw.com&lt;/a&gt;</source>
-        <oldsource>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.grimmw.com/&apos;&gt;grimmw.com&lt;/a&gt;</oldsource>
-        <extracomment>general settings, label for alow access grimmw.com part 1</extracomment>
-        <translation type="obsolete">&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.grimmw.com/&apos;&gt;grimmw.com&lt;/a&gt;</translation>
+    <message id="settings-general-allow-MWG-label-p1">
+        <source>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.MWGw.com/&apos;&gt;MWGw.com&lt;/a&gt;</source>
+        <oldsource>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.MWGw.com/&apos;&gt;MWGw.com&lt;/a&gt;</oldsource>
+        <extracomment>general settings, label for alow access MWGw.com part 1</extracomment>
+        <translation type="obsolete">&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.MWGw.com/&apos;&gt;MWGw.com&lt;/a&gt;</translation>
     </message>
     <message id="settings-peers-title">
         <source>Peers</source>
@@ -1273,16 +1273,16 @@
         <extracomment>settings tab, general section, show data folder link</extracomment>
         <translation>在文件夹中显示</translation>
     </message>
-    <message id="settings-general-allow-grimm-label">
-        <source>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.grimmw.com/&apos;&gt;grimmw.com&lt;/a&gt; </source>
-        <oldsource>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.grimmw.com/&apos;&gt;grimmw.com&lt;/a&gt;</oldsource>
+    <message id="settings-general-allow-MWG-label">
+        <source>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.MWGw.com/&apos;&gt;MWGw.com&lt;/a&gt; </source>
+        <oldsource>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.MWGw.com/&apos;&gt;MWGw.com&lt;/a&gt;</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation type="unfinished">&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.grimmw.com/&apos;&gt;grimmw.com&lt;/a&gt;</translation>
+        <translation type="unfinished">&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;Allow access to &lt;a href=&apos;https://www.MWGw.com/&apos;&gt;MWGw.com&lt;/a&gt;</translation>
     </message>
     <message id="settings-report-problem-message">
-        <source>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;To report a problem:&lt;br /&gt;1. Click “Save wallet logs” and choose a destination folder for log archive&lt;br /&gt;2. Send email to &lt;a href=&apos;mailto:admin@grimmw.com&apos;&gt;admin@grimmw.com&lt;/a&gt; or open a ticket in &lt;a href=&apos;https://github.com/freenetcoder&apos;&gt;Github&lt;/a&gt;&lt;br /&gt;3. Don’t forget to attach logs archive</source>
+        <source>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;To report a problem:&lt;br /&gt;1. Click “Save wallet logs” and choose a destination folder for log archive&lt;br /&gt;2. Send email to &lt;a href=&apos;mailto:admin@MWGw.com&apos;&gt;admin@MWGw.com&lt;/a&gt; or open a ticket in &lt;a href=&apos;https://github.com/freenetcoder&apos;&gt;Github&lt;/a&gt;&lt;br /&gt;3. Don’t forget to attach logs archive</source>
         <extracomment>settings tab, report problem section, message</extracomment>
-        <translation>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;To report a problem:&lt;br /&gt;1. Click “Save wallet logs” and choose a destination folder for log archive&lt;br /&gt;2. Send email to &lt;a href=&apos;mailto:admin@grimmw.com&apos;&gt;admin@grimmw.com&lt;/a&gt; or open a ticket in &lt;a href=&apos;https://github.com/freenetcoder&apos;&gt;Github&lt;/a&gt;&lt;br /&gt;3. Don’t forget to attach logs archive</translation>
+        <translation>&lt;style&gt;a:link {color: &apos;#00f6d2&apos;; text-decoration: none;}&lt;/style&gt;To report a problem:&lt;br /&gt;1. Click “Save wallet logs” and choose a destination folder for log archive&lt;br /&gt;2. Send email to &lt;a href=&apos;mailto:admin@MWGw.com&apos;&gt;admin@MWGw.com&lt;/a&gt; or open a ticket in &lt;a href=&apos;https://github.com/freenetcoder&apos;&gt;Github&lt;/a&gt;&lt;br /&gt;3. Don’t forget to attach logs archive</translation>
     </message>
     <message id="edit-addr-24-option">
         <source>in 24 hours from now</source>
@@ -1385,17 +1385,17 @@
         <translation>在文件夹中显示</translation>
     </message>
     <message id="contribute">
-        <source>Send Grimm</source>
+        <source>Send MWG</source>
         <oldsource>Contribute</oldsource>
         <translation type="unfinished">Contribute</translation>
     </message>
     <message id="contribute_text">
-        <source>Send Grimm</source>
-        <oldsource>Grimm is nonprofit project. Fully decentralized. No pre-mine. No ICO.</oldsource>
-        <translation type="unfinished">Grimm is nonprofit project. Fully decentralized. No pre-mine. No ICO.</translation>
+        <source>Send MWG</source>
+        <oldsource>MWG is nonprofit project. Fully decentralized. No pre-mine. No ICO.</oldsource>
+        <translation type="unfinished">MWG is nonprofit project. Fully decentralized. No pre-mine. No ICO.</translation>
     </message>
     <message id="contribute_text_next">
-        <source>Send Grimm</source>
+        <source>Send MWG</source>
         <oldsource>Donations help our developers pay the bills and listing fees, doing PR, enable new developers to join the project</oldsource>
         <translation type="unfinished">Donations help our developers pay the bills and listing fees, doing PR, enable new developers to join the project</translation>
     </message>
