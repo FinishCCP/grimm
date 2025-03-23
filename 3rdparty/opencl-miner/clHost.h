@@ -1,7 +1,8 @@
-// GRIMM OpenCL Miner
+// MWG OpenCL Miner
 // OpenCL Host Interface
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team	
 // Copyright 2018 Wilke Trei
+// Copyright 2025 MWG Team
 
 #pragma once
 #include "minerBridge.h"
@@ -35,7 +36,7 @@
 #include <cstdlib>
 #include <climits>
 
-namespace grimmMiner {
+namespace MWGMiner {
 
 using std::vector;
 
