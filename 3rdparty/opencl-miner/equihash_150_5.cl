@@ -1,7 +1,8 @@
-// GRIMM OpenCL Miner
+// MWG OpenCL Miner
 // OpenCL Mining Sources for Equihash 150/5
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
 // Copyright 2018 Wilke Trei
+// Copyright 2025 MWG Team
 
 __kernel void clearCounter (
 		__global uint4 * counters,
@@ -109,7 +110,7 @@ ulong8 initBlake() {
 	result.s4 = blake_iv[4];
 	result.s5 = blake_iv[5];
 
-	result.s6 = blake_iv[6] ^ 0x574f506d6d697247;   // Equals personalization string "GrimmPOW"
+	result.s6 = blake_iv[6] ^ 0x574f506d6d697247;   // Equals personalization string "MwgPOW"
 
 	ulong value = 5;				// k
 	value = value << 32;
