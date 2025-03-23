@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +15,7 @@
 
 #include "fly_client.h"
 
-namespace grimm {
+namespace MWG {
 namespace proto {
 
 FlyClient::NetworkStd::~NetworkStd()
@@ -665,7 +666,7 @@ FlyClient::Request& FlyClient::NetworkStd::Connection::get_FirstRequestStrict(Re
 void FlyClient::NetworkStd::Connection::OnMsg(msgIn&& msg) \
 {  \
     Request##type& req = Cast::Up<Request##type>(get_FirstRequestStrict(Request::Type::type)); \
-    GrimmNodeMsg_##msgIn(THE_MACRO_SWAP_FIELD) \
+    MWGNodeMsg_##msgIn(THE_MACRO_SWAP_FIELD) \
     OnRequestData(req); \
     OnFirstRequestDone(IsSupported(req)); \
 }
@@ -856,4 +857,4 @@ void FlyClient::NetworkStd::Connection::OnMsg(BbsMsg&& msg)
 }
 
 } // namespace proto
-} // namespace grimm
+} // namespace MWG
