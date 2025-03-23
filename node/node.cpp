@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +28,7 @@
 
 #include "pow/external_pow.h"
 
-namespace grimm {
+namespace MWG {
 
 bool Node::SyncStatus::operator == (const SyncStatus& x) const
 {
@@ -895,7 +896,7 @@ void Node::Processor::FlushDB()
     }
 }
 
-Node::Peer* Node::AllocPeer(const grimm::io::Address& addr)
+Node::Peer* Node::AllocPeer(const MWG::io::Address& addr)
 {
     Peer* pPeer = new Peer(*this);
     m_lstPeers.push_back(*pPeer);
@@ -2867,7 +2868,7 @@ void Node::Peer::OnMsg(proto::GetProofChainWork&& msg)
     if (!p.IsFastSync() && p.BuildCwp())
     {
         msgOut.m_Proof.m_LowerBound = msg.m_LowerBound;
-        GRIMM_VERIFY(msgOut.m_Proof.Crop(p.m_Cwp));
+        MWG_VERIFY(msgOut.m_Proof.Crop(p.m_Cwp));
     }
 
     Send(msgOut);
@@ -4011,4 +4012,4 @@ bool Node::GenerateRecoveryInfo(const char* szPath)
 	return true;
 }
 
-} // namespace grimm
+} // namespace MWG
