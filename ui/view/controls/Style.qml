@@ -1,6 +1,6 @@
 pragma Singleton
 import QtQuick 2.11
-import Grimm.Wallet 1.0
+import MWG.Wallet 1.0
 import "../color_themes"
 
 AbstractColors {
