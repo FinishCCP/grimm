@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,7 +51,7 @@
 #include "utility/string_helpers.h"
 #include "utility/helpers.h"
 
-#if defined(GRIMM_USE_STATIC)
+#if defined(MWG_USE_STATIC)
 
 #if defined Q_OS_WIN
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
@@ -77,14 +78,14 @@ Q_IMPORT_PLUGIN(QtQuickTemplates2Plugin)
 
 #endif
 
-using namespace grimm;
+using namespace MWG;
 using namespace std;
 using namespace ECC;
 
 #ifdef APP_NAME
 static const char* AppName = APP_NAME;
 #else
-static const char* AppName = "Grimm Wallet Mainnet";
+static const char* AppName = "MWG Wallet Mainnet";
 #endif
 
 int main (int argc, char* argv[])
@@ -155,12 +156,12 @@ int main (int argc, char* argv[])
         int logLevel = getLogLevel(cli::LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
         int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
 
-        grimm::Crash::InstallHandler(appDataDir.filePath(AppName).toStdString().c_str());
+        MWG::Crash::InstallHandler(appDataDir.filePath(AppName).toStdString().c_str());
 
-#define LOG_FILES_PREFIX "grimm_ui_"
+#define LOG_FILES_PREFIX "MWG_ui_"
 
         const auto logFilesPath = appDataDir.filePath(WalletSettings::LogsFolder).toStdString();
-        auto logger = grimm::Logger::create(logLevel, logLevel, fileLogLevel, LOG_FILES_PREFIX, logFilesPath);
+        auto logger = MWG::Logger::create(logLevel, logLevel, fileLogLevel, LOG_FILES_PREFIX, logFilesPath);
 
         unsigned logCleanupPeriod = vm[cli::LOG_CLEANUP_DAYS].as<uint32_t>() * 24 * 3600;
 
@@ -169,7 +170,7 @@ int main (int argc, char* argv[])
         try
         {
             Rules::get().UpdateChecksum();
-            LOG_INFO() << "Grimm Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
+            LOG_INFO() << "MWG Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
             LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
 
             WalletSettings settings(appDataDir);
@@ -186,34 +187,34 @@ int main (int argc, char* argv[])
             }
 
             qmlRegisterSingletonType<Theme>(
-                    "Grimm.Wallet", 1, 0, "Theme",
+                    "MWG.Wallet", 1, 0, "Theme",
                     [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
                         Q_UNUSED(engine)
                         Q_UNUSED(scriptEngine)
                         return new Theme;
                     });
-            qmlRegisterType<StartViewModel>("Grimm.Wallet", 1, 0, "StartViewModel");
-            qmlRegisterType<LoadingViewModel>("Grimm.Wallet", 1, 0, "LoadingViewModel");
-            qmlRegisterType<MainViewModel>("Grimm.Wallet", 1, 0, "MainViewModel");
-            qmlRegisterType<DashboardViewModel>("Grimm.Wallet", 1, 0, "DashboardViewModel");
-            qmlRegisterType<WalletViewModel>("Grimm.Wallet", 1, 0, "WalletViewModel");
-            qmlRegisterType<UtxoViewStatus>("Grimm.Wallet", 1, 0, "UtxoStatus");
-            qmlRegisterType<UtxoViewType>("Grimm.Wallet", 1, 0, "UtxoType");
-            qmlRegisterType<UtxoViewModel>("Grimm.Wallet", 1, 0, "UtxoViewModel");
-            qmlRegisterType<SettingsViewModel>("Grimm.Wallet", 1, 0, "SettingsViewModel");
-            qmlRegisterType<AddressBookViewModel>("Grimm.Wallet", 1, 0, "AddressBookViewModel");
-            qmlRegisterType<NotificationsViewModel>("Grimm.Wallet", 1, 0, "NotificationsViewModel");
-            qmlRegisterType<HelpViewModel>("Grimm.Wallet", 1, 0, "HelpViewModel");
-            qmlRegisterType<MessagesViewModel>("Grimm.Wallet", 1, 0, "MessagesViewModel");
-            qmlRegisterType<StatusbarViewModel>("Grimm.Wallet", 1, 0, "StatusbarViewModel");
+            qmlRegisterType<StartViewModel>("MWG.Wallet", 1, 0, "StartViewModel");
+            qmlRegisterType<LoadingViewModel>("MWG.Wallet", 1, 0, "LoadingViewModel");
+            qmlRegisterType<MainViewModel>("MWG.Wallet", 1, 0, "MainViewModel");
+            qmlRegisterType<DashboardViewModel>("MWG.Wallet", 1, 0, "DashboardViewModel");
+            qmlRegisterType<WalletViewModel>("MWG.Wallet", 1, 0, "WalletViewModel");
+            qmlRegisterType<UtxoViewStatus>("MWG.Wallet", 1, 0, "UtxoStatus");
+            qmlRegisterType<UtxoViewType>("MWG.Wallet", 1, 0, "UtxoType");
+            qmlRegisterType<UtxoViewModel>("MWG.Wallet", 1, 0, "UtxoViewModel");
+            qmlRegisterType<SettingsViewModel>("MWG.Wallet", 1, 0, "SettingsViewModel");
+            qmlRegisterType<AddressBookViewModel>("MWG.Wallet", 1, 0, "AddressBookViewModel");
+            qmlRegisterType<NotificationsViewModel>("MWG.Wallet", 1, 0, "NotificationsViewModel");
+            qmlRegisterType<HelpViewModel>("MWG.Wallet", 1, 0, "HelpViewModel");
+            qmlRegisterType<MessagesViewModel>("MWG.Wallet", 1, 0, "MessagesViewModel");
+            qmlRegisterType<StatusbarViewModel>("MWG.Wallet", 1, 0, "StatusbarViewModel");
 
-            qmlRegisterType<AddressItem>("Grimm.Wallet", 1, 0, "AddressItem");
-            qmlRegisterType<ContactItem>("Grimm.Wallet", 1, 0, "ContactItem");
-            qmlRegisterType<TxObject>("Grimm.Wallet", 1, 0, "TxObject");
-            qmlRegisterType<UtxoItem>("Grimm.Wallet", 1, 0, "UtxoItem");
+            qmlRegisterType<AddressItem>("MWG.Wallet", 1, 0, "AddressItem");
+            qmlRegisterType<ContactItem>("MWG.Wallet", 1, 0, "ContactItem");
+            qmlRegisterType<TxObject>("MWG.Wallet", 1, 0, "TxObject");
+            qmlRegisterType<UtxoItem>("MWG.Wallet", 1, 0, "UtxoItem");
             
-            qmlRegisterType<PaymentInfoItem>("Grimm.Wallet", 1, 0, "PaymentInfoItem");
-            qmlRegisterType<WalletDBPathItem>("Grimm.Wallet", 1, 0, "WalletDBPathItem");
+            qmlRegisterType<PaymentInfoItem>("MWG.Wallet", 1, 0, "PaymentInfoItem");
+            qmlRegisterType<WalletDBPathItem>("MWG.Wallet", 1, 0, "WalletDBPathItem");
 
             engine.load(QUrl("qrc:/root.qml"));
 
