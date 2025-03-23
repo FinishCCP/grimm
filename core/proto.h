@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,35 +25,35 @@
 #include "aes.h"
 #include "block_crypt.h"
 
-namespace grimm {
+namespace MWG {
 namespace proto {
 
-#define GrimmNodeMsg_NewTip(macro) \
+#define MWGNodeMsg_NewTip(macro) \
     macro(Block::SystemState::Full, Description)
 
-#define GrimmNodeMsg_GetHdr(macro) \
+#define MWGNodeMsg_GetHdr(macro) \
     macro(Block::SystemState::ID, ID)
 
-#define GrimmNodeMsg_Hdr(macro) \
+#define MWGNodeMsg_Hdr(macro) \
     macro(Block::SystemState::Full, Description)
 
-#define GrimmNodeMsg_GetHdrPack(macro) \
+#define MWGNodeMsg_GetHdrPack(macro) \
     macro(Block::SystemState::ID, Top) \
     macro(uint32_t, Count)
 
-#define GrimmNodeMsg_HdrPack(macro) \
+#define MWGNodeMsg_HdrPack(macro) \
     macro(Block::SystemState::Sequence::Prefix, Prefix) \
     macro(std::vector<Block::SystemState::Sequence::Element>, vElements)
 
-#define GrimmNodeMsg_DataMissing(macro)
+#define MWGNodeMsg_DataMissing(macro)
 
-#define GrimmNodeMsg_Status(macro) \
+#define MWGNodeMsg_Status(macro) \
     macro(uint8_t, Value)
 
-#define GrimmNodeMsg_GetBody(macro) \
+#define MWGNodeMsg_GetBody(macro) \
     macro(Block::SystemState::ID, ID)
 
-#define GrimmNodeMsg_GetBodyPack(macro) \
+#define MWGNodeMsg_GetBodyPack(macro) \
     macro(Block::SystemState::ID, Top) \
     macro(uint8_t, FlagP) \
     macro(uint8_t, FlagE) \
@@ -61,158 +62,158 @@ namespace proto {
     macro(Height, HorizonLo1) \
     macro(Height, HorizonHi1)
 
-#define GrimmNodeMsg_Body(macro) \
+#define MWGNodeMsg_Body(macro) \
     macro(BodyBuffers, Body)
 
-#define GrimmNodeMsg_BodyPack(macro) \
+#define MWGNodeMsg_BodyPack(macro) \
     macro(std::vector<BodyBuffers>, Bodies)
 
-#define GrimmNodeMsg_GetProofState(macro) \
+#define MWGNodeMsg_GetProofState(macro) \
     macro(Height, Height)
 
-#define GrimmNodeMsg_GetCommonState(macro) \
+#define MWGNodeMsg_GetCommonState(macro) \
     macro(std::vector<Block::SystemState::ID>, IDs)
 
-#define GrimmNodeMsg_GetProofKernel(macro) \
+#define MWGNodeMsg_GetProofKernel(macro) \
     macro(Merkle::Hash, ID)
 
-#define GrimmNodeMsg_GetProofKernel2(macro) \
+#define MWGNodeMsg_GetProofKernel2(macro) \
     macro(Merkle::Hash, ID) \
     macro(bool, Fetch)
 
-#define GrimmNodeMsg_GetProofUtxo(macro) \
+#define MWGNodeMsg_GetProofUtxo(macro) \
     macro(ECC::Point, Utxo) \
     macro(Height, MaturityMin) /* set to non-zero in case the result is too big, and should be retrieved within multiple queries */
 
-#define GrimmNodeMsg_GetProofChainWork(macro) \
+#define MWGNodeMsg_GetProofChainWork(macro) \
     macro(Difficulty::Raw, LowerBound)
 
-#define GrimmNodeMsg_ProofKernel(macro) \
+#define MWGNodeMsg_ProofKernel(macro) \
     macro(TxKernel::LongProof, Proof)
 
-#define GrimmNodeMsg_ProofKernel2(macro) \
+#define MWGNodeMsg_ProofKernel2(macro) \
     macro(Merkle::Proof, Proof) \
     macro(Height, Height) \
     macro(TxKernel::Ptr, Kernel)
 
-#define GrimmNodeMsg_ProofUtxo(macro) \
+#define MWGNodeMsg_ProofUtxo(macro) \
     macro(std::vector<Input::Proof>, Proofs)
 
-#define GrimmNodeMsg_ProofState(macro) \
+#define MWGNodeMsg_ProofState(macro) \
     macro(Merkle::HardProof, Proof)
 
-#define GrimmNodeMsg_ProofCommonState(macro) \
+#define MWGNodeMsg_ProofCommonState(macro) \
     macro(Block::SystemState::ID, ID) \
     macro(Merkle::HardProof, Proof)
 
-#define GrimmNodeMsg_ProofChainWork(macro) \
+#define MWGNodeMsg_ProofChainWork(macro) \
     macro(Block::ChainWorkProof, Proof)
 
-#define GrimmNodeMsg_Login0(macro) \
+#define MWGNodeMsg_Login0(macro) \
     macro(ECC::Hash::Value, CfgChecksum) \
     macro(uint8_t, Flags)
 
-#define GrimmNodeMsg_Login(macro) \
+#define MWGNodeMsg_Login(macro) \
     macro(std::vector<ECC::Hash::Value>, Cfgs) \
     macro(uint32_t, Flags)
 
-#define GrimmNodeMsg_Ping(macro)
-#define GrimmNodeMsg_Pong(macro)
+#define MWGNodeMsg_Ping(macro)
+#define MWGNodeMsg_Pong(macro)
 
-#define GrimmNodeMsg_NewTransaction(macro) \
+#define MWGNodeMsg_NewTransaction(macro) \
     macro(Transaction::Ptr, Transaction) \
     macro(bool, Fluff)
 
-#define GrimmNodeMsg_HaveTransaction(macro) \
+#define MWGNodeMsg_HaveTransaction(macro) \
     macro(Transaction::KeyType, ID)
 
-#define GrimmNodeMsg_GetTransaction(macro) \
+#define MWGNodeMsg_GetTransaction(macro) \
     macro(Transaction::KeyType, ID)
 
-#define GrimmNodeMsg_Bye(macro) \
+#define MWGNodeMsg_Bye(macro) \
     macro(uint8_t, Reason)
 
-#define GrimmNodeMsg_PeerInfoSelf(macro) \
+#define MWGNodeMsg_PeerInfoSelf(macro) \
     macro(uint16_t, Port)
 
-#define GrimmNodeMsg_PeerInfo(macro) \
+#define MWGNodeMsg_PeerInfo(macro) \
     macro(PeerID, ID) \
     macro(io::Address, LastAddr)
 
-#define GrimmNodeMsg_GetTime(macro)
+#define MWGNodeMsg_GetTime(macro)
 
-#define GrimmNodeMsg_Time(macro) \
+#define MWGNodeMsg_Time(macro) \
     macro(Timestamp, Value)
 
-#define GrimmNodeMsg_GetExternalAddr(macro)
+#define MWGNodeMsg_GetExternalAddr(macro)
 
-#define GrimmNodeMsg_ExternalAddr(macro) \
+#define MWGNodeMsg_ExternalAddr(macro) \
     macro(uint32_t, Value)
 
-#define GrimmNodeMsg_BbsMsgV0(macro) \
+#define MWGNodeMsg_BbsMsgV0(macro) \
     macro(BbsChannel, Channel) \
     macro(Timestamp, TimePosted) \
     macro(ByteBuffer, Message)
 
-#define GrimmNodeMsg_BbsMsg(macro) \
+#define MWGNodeMsg_BbsMsg(macro) \
     macro(BbsChannel, Channel) \
     macro(Timestamp, TimePosted) \
     macro(ByteBuffer, Message) \
     macro(Bbs::NonceType, Nonce)
 
-#define GrimmNodeMsg_BbsHaveMsg(macro) \
+#define MWGNodeMsg_BbsHaveMsg(macro) \
     macro(BbsMsgID, Key)
 
-#define GrimmNodeMsg_BbsGetMsg(macro) \
+#define MWGNodeMsg_BbsGetMsg(macro) \
     macro(BbsMsgID, Key)
 
-#define GrimmNodeMsg_BbsSubscribe(macro) \
+#define MWGNodeMsg_BbsSubscribe(macro) \
     macro(BbsChannel, Channel) \
     macro(Timestamp, TimeFrom) \
     macro(bool, On)
 
-#define GrimmNodeMsg_BbsResetSync(macro) \
+#define MWGNodeMsg_BbsResetSync(macro) \
     macro(Timestamp, TimeFrom)
 
-#define GrimmNodeMsg_BbsPickChannelV0(macro)
+#define MWGNodeMsg_BbsPickChannelV0(macro)
 
-#define GrimmNodeMsg_BbsPickChannelResV0(macro) \
+#define MWGNodeMsg_BbsPickChannelResV0(macro) \
     macro(BbsChannel, Channel)
 
-#define GrimmNodeMsg_SChannelInitiate(macro) \
+#define MWGNodeMsg_SChannelInitiate(macro) \
     macro(ECC::uintBig, NoncePub)
 
-#define GrimmNodeMsg_SChannelReady(macro)
+#define MWGNodeMsg_SChannelReady(macro)
 
-#define GrimmNodeMsg_Authentication(macro) \
+#define MWGNodeMsg_Authentication(macro) \
     macro(PeerID, ID) \
     macro(uint8_t, IDType) \
     macro(ECC::Signature, Sig)
 
-#define GrimmNodeMsg_MacroblockGet(macro) \
+#define MWGNodeMsg_MacroblockGet(macro) \
     macro(Block::SystemState::ID, ID) \
     macro(uint8_t, Data) \
     macro(uint64_t, Offset)
 
-#define GrimmNodeMsg_Macroblock(macro) \
+#define MWGNodeMsg_Macroblock(macro) \
     macro(Block::SystemState::ID, ID) \
     macro(ByteBuffer, Portion) \
     macro(uint64_t, SizeTotal)
 
-#define GrimmNodeMsg_GetUtxoEvents(macro) \
+#define MWGNodeMsg_GetUtxoEvents(macro) \
     macro(Height, HeightMin)
 
-#define GrimmNodeMsg_UtxoEvents(macro) \
+#define MWGNodeMsg_UtxoEvents(macro) \
     macro(std::vector<UtxoEvent>, Events)
 
-#define GrimmNodeMsg_GetBlockFinalization(macro) \
+#define MWGNodeMsg_GetBlockFinalization(macro) \
     macro(Height, Height) \
     macro(Amount, Fees)
 
-#define GrimmNodeMsg_BlockFinalization(macro) \
+#define MWGNodeMsg_BlockFinalization(macro) \
     macro(Transaction::Ptr, Value)
 
-#define GrimmNodeMsgsAll(macro) \
+#define MWGNodeMsgsAll(macro) \
     /* general msgs */ \
     macro(0x00, Login0) \
     macro(0x01, Bye) \
@@ -420,17 +421,17 @@ namespace proto {
     struct msg \
     { \
         static const uint8_t s_Code = code; \
-        GrimmNodeMsg_##msg(THE_MACRO2) \
-        template <typename Archive> void serialize(Archive& ar) { ar GrimmNodeMsg_##msg(THE_MACRO3); } \
-        msg(Zero_ = Zero) { GrimmNodeMsg_##msg(THE_MACRO4) } /* default c'tor, zero-init everything */ \
+        MWGNodeMsg_##msg(THE_MACRO2) \
+        template <typename Archive> void serialize(Archive& ar) { ar MWGNodeMsg_##msg(THE_MACRO3); } \
+        msg(Zero_ = Zero) { MWGNodeMsg_##msg(THE_MACRO4) } /* default c'tor, zero-init everything */ \
         msg(Uninitialized_) { } /* don't init members */ \
-        msg(GrimmNodeMsg_##msg(THE_MACRO5) Unused_ = Unused) { GrimmNodeMsg_##msg(THE_MACRO6) } /* explicit init */ \
+        msg(MWGNodeMsg_##msg(THE_MACRO5) Unused_ = Unused) { MWGNodeMsg_##msg(THE_MACRO6) } /* explicit init */ \
     }; \
     struct msg##_NoInit :public msg { \
         msg##_NoInit() :msg(Uninitialized) {} \
     }; \
 
-    GrimmNodeMsgsAll(THE_MACRO1)
+    MWGNodeMsgsAll(THE_MACRO1)
 #undef THE_MACRO1
 #undef THE_MACRO2
 #undef THE_MACRO3
@@ -495,7 +496,7 @@ namespace proto {
             OnMsg(std::move(v)); \
             return true; \
         }
-        GrimmNodeMsgsAll(THE_MACRO)
+        MWGNodeMsgsAll(THE_MACRO)
 #undef THE_MACRO
     };
 
@@ -543,7 +544,7 @@ namespace proto {
         virtual void on_connection_error(uint64_t, io::ErrorCode errorCode) override;
 
 #define THE_MACRO(code, msg) bool OnMsgInternal(uint64_t, msg##_NoInit&& v);
-        GrimmNodeMsgsAll(THE_MACRO)
+        MWGNodeMsgsAll(THE_MACRO)
 #undef THE_MACRO
 
         void HashAddNonce(ECC::Hash::Processor&, bool bRemote);
@@ -646,7 +647,7 @@ namespace proto {
         void OnProcessingExc(const NodeProcessingException& exception);
 
 #define THE_MACRO(code, msg) void Send(const msg& v);
-        GrimmNodeMsgsAll(THE_MACRO)
+        MWGNodeMsgsAll(THE_MACRO)
 #undef THE_MACRO
 
         struct Server
@@ -661,4 +662,4 @@ namespace proto {
     std::ostream& operator << (std::ostream& s, const NodeConnection::DisconnectReason&);
 
 } // namespace proto
-} // namespace grimm
+} // namespace MWG
