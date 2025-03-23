@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,7 +40,7 @@
 #include <boost/filesystem.hpp>
 #include <thread>
 
-using namespace grimm;
+using namespace MWG;
 using namespace ECC;
 using namespace std;
 
@@ -107,11 +108,11 @@ namespace
             string nodePath = AppModel::getInstance()->getSettings().getLocalNodeStorage();
             try
             {
-                grimm::NodeDB nodeDB;
+                MWG::NodeDB nodeDB;
                 nodeDB.Open(nodePath.c_str());
                 return;
             }
-            catch (const grimm::NodeDBUpgradeException&)
+            catch (const MWG::NodeDBUpgradeException&)
             {
             }
 
@@ -291,7 +292,7 @@ const QList<QObject*>& StartViewModel::getRecoveryPhrases()
     {
         if (!m_isRecoveryMode)
         {
-            m_generatedPhrases = grimm::createMnemonic(grimm::getEntropy(), grimm::language::en);
+            m_generatedPhrases = MWG::createMnemonic(MWG::getEntropy(), MWG::language::en);
         }
         else
         {
@@ -512,7 +513,7 @@ bool StartViewModel::createWallet()
             m_generatedPhrases[i] = s.toStdString();
         }
     }
-    auto buf = grimm::decodeMnemonic(m_generatedPhrases);
+    auto buf = MWG::decodeMnemonic(m_generatedPhrases);
 
     SecString secretSeed;
     secretSeed.assign(buf.data(), buf.size());
@@ -634,20 +635,20 @@ QString StartViewModel::selectCustomWalletDB()
 
 QString StartViewModel::defaultPortToListen() const
 {
-#ifdef GRIMM_TESTNET
+#ifdef MWG_TESTNET
     return "11005";
 #else
     return "10005";
-#endif  // GRIMM_TESTNET
+#endif  // MWG_TESTNET
 }
 
 QString StartViewModel::defaultRemoteNodeAddr() const
 {
-#ifdef GRIMM_TESTNET
+#ifdef MWG_TESTNET
     return "127.0.0.1:11005";
 #else
     return "127.0.0.1:10005";
-#endif // GRIMM_TESTNET
+#endif // MWG_TESTNET
 }
 
 void StartViewModel::checkCapsLock()
