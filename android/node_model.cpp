@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,8 +26,8 @@
 #include <jni.h>
 #include "common.h"
 
-using namespace grimm;
-using namespace grimm::io;
+using namespace MWG;
+using namespace MWG::io;
 using namespace std;
 
 NodeModel::NodeModel(const std::string& appPath)
@@ -35,7 +36,7 @@ NodeModel::NodeModel(const std::string& appPath)
 {
 }
 
-void NodeModel::setKdf(grimm::Key::IKdf::Ptr kdf)
+void NodeModel::setKdf(MWG::Key::IKdf::Ptr kdf)
 {
     m_nodeClient.setKdf(kdf);
 }
@@ -98,7 +99,7 @@ void NodeModel::onStoppedNode()
 //     env->CallStaticVoidMethod(WalletListenerClass, callback);
 // }
 
-void NodeModel::onSyncError(grimm::Node::IObserver::Error error)
+void NodeModel::onSyncError(MWG::Node::IObserver::Error error)
 {
 }
 
