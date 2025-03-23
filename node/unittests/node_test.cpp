@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -61,7 +62,7 @@ namespace ECC {
 		HKdf::Create(pRes, seed);
 	}
 
-	void SetRandom(grimm::Node& n)
+	void SetRandom(MWG::Node& n)
 	{
 		uintBig seed;
 		SetRandom(seed);
@@ -91,7 +92,7 @@ void TestFailed(const char* szExpr, uint32_t nLine)
 
 #define fail_test(msg) TestFailed(msg, __LINE__)
 
-namespace grimm
+namespace MWG
 {
 	ByteBuffer g_Treasury;
 
@@ -188,7 +189,7 @@ namespace grimm
 		data.m_sCustomMsg = "test treasury";
 		tres.Build(data);
 
-		grimm::Serializer ser;
+		MWG::Serializer ser;
 		ser & data;
 
 		ser.swap_buf(g_Treasury);
@@ -2280,82 +2281,82 @@ namespace grimm
 
 int main()
 {
-	//auto logger = grimm::Logger::create(LOG_LEVEL_DEBUG, LOG_LEVEL_DEBUG);
-	grimm::PrintEmissionSchedule();
+	//auto logger = MWG::Logger::create(LOG_LEVEL_DEBUG, LOG_LEVEL_DEBUG);
+	MWG::PrintEmissionSchedule();
 
-	grimm::Rules::get().AllowPublicUtxos = true;
-	grimm::Rules::get().FakePoW = true;
-	grimm::Rules::get().Macroblock.MaxRollback = 10;
-	grimm::Rules::get().DA.WindowWork = 35;
-	grimm::Rules::get().Maturity.Coinbase = 35; // lowered to see more txs
-	grimm::Rules::get().Emission.Drop0 = 5;
-	grimm::Rules::get().Emission.Drop1 = 8;
-	grimm::Rules::get().CA.Enabled = true;
-	grimm::Rules::get().pForks[1].m_Height = 16;
-	grimm::Rules::get().UpdateChecksum();
+	MWG::Rules::get().AllowPublicUtxos = true;
+	MWG::Rules::get().FakePoW = true;
+	MWG::Rules::get().Macroblock.MaxRollback = 10;
+	MWG::Rules::get().DA.WindowWork = 35;
+	MWG::Rules::get().Maturity.Coinbase = 35; // lowered to see more txs
+	MWG::Rules::get().Emission.Drop0 = 5;
+	MWG::Rules::get().Emission.Drop1 = 8;
+	MWG::Rules::get().CA.Enabled = true;
+	MWG::Rules::get().pForks[1].m_Height = 16;
+	MWG::Rules::get().UpdateChecksum();
 
-	grimm::PrepareTreasury();
+	MWG::PrepareTreasury();
 
-	grimm::TestHalving();
-	grimm::TestChainworkProof();
+	MWG::TestHalving();
+	MWG::TestChainworkProof();
 
 	// Make sure this test doesn't run in parallel. We have the following potential collisions for Nodes:
 	//	.db files
 	//	ports, wrong beacon and etc.
-	verify_test(grimm::helpers::ProcessWideLock("/tmp/GRIMM_node_test_lock"));
+	verify_test(MWG::helpers::ProcessWideLock("/tmp/MWG_node_test_lock"));
 
-	grimm::DeleteFile(grimm::g_sz);
-	grimm::DeleteFile(grimm::g_sz2);
+	MWG::DeleteFile(MWG::g_sz);
+	MWG::DeleteFile(MWG::g_sz2);
 
 	printf("NodeDB test...\n");
 	fflush(stdout);
 
-	grimm::TestNodeDB();
-	grimm::DeleteFile(grimm::g_sz);
+	MWG::TestNodeDB();
+	MWG::DeleteFile(MWG::g_sz);
 
 	{
 		printf("NodeProcessor test1...\n");
 		fflush(stdout);
 
 
-		std::vector<grimm::BlockPlus::Ptr> blockChain;
-		grimm::TestNodeProcessor1(blockChain);
-		grimm::DeleteFile(grimm::g_sz);
-		grimm::DeleteFile(grimm::g_sz2);
+		std::vector<MWG::BlockPlus::Ptr> blockChain;
+		MWG::TestNodeProcessor1(blockChain);
+		MWG::DeleteFile(MWG::g_sz);
+		MWG::DeleteFile(MWG::g_sz2);
 
 		printf("NodeProcessor test2...\n");
 		fflush(stdout);
 
-		grimm::TestNodeProcessor2(blockChain);
-		grimm::DeleteFile(grimm::g_sz);
+		MWG::TestNodeProcessor2(blockChain);
+		MWG::DeleteFile(MWG::g_sz);
 
 		printf("NodeProcessor test3...\n");
 		fflush(stdout);
 
-		grimm::TestNodeProcessor3(blockChain);
-		grimm::DeleteFile(grimm::g_sz);
-		grimm::DeleteFile(grimm::g_sz2);
+		MWG::TestNodeProcessor3(blockChain);
+		MWG::DeleteFile(MWG::g_sz);
+		MWG::DeleteFile(MWG::g_sz2);
 	}
 
 	printf("NodeX2 concurrent test...\n");
 	fflush(stdout);
 
-	grimm::TestNodeConversation();
-	grimm::DeleteFile(grimm::g_sz);
-	grimm::DeleteFile(grimm::g_sz2);
+	MWG::TestNodeConversation();
+	MWG::DeleteFile(MWG::g_sz);
+	MWG::DeleteFile(MWG::g_sz2);
 
 	printf("Node <---> Client test (with proofs)...\n");
 	fflush(stdout);
 
-	grimm::TestNodeClientProto();
-	grimm::DeleteFile(grimm::g_sz);
-	grimm::DeleteFile(grimm::g_sz2);
+	MWG::TestNodeClientProto();
+	MWG::DeleteFile(MWG::g_sz);
+	MWG::DeleteFile(MWG::g_sz2);
 
 	printf("Node <---> FlyClient test...\n");
 	fflush(stdout);
 
-	grimm::TestFlyClient();
-	grimm::DeleteFile(grimm::g_sz);
+	MWG::TestFlyClient();
+	MWG::DeleteFile(MWG::g_sz);
 
 	return g_TestsFailed ? -1 : 0;
 }
