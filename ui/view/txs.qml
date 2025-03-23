@@ -4,7 +4,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
-import Grimm.Wallet 1.0
+import MWG.Wallet 1.0
 import "controls"
 
 Item {
@@ -422,7 +422,7 @@ Item {
                     font.pixelSize: 18
                     font.styleName: "Bold"; font.weight: Font.Bold
                     color: Style.content_main
-                    //% "Receive Grimm"
+                    //% "Receive MWG"
                     text: qsTrId("wallet-receive-title")
                 }
 
@@ -625,7 +625,7 @@ Item {
                     font.pixelSize: 18
                     font.styleName: "Bold"; font.weight: Font.Bold
                     color: Style.content_main
-                    //% "Send Grimm"
+                    //% "Send MWG"
                     text: qsTrId("send-title")
                 }
 
@@ -760,7 +760,7 @@ Item {
                                 SFText {
                                     font.pixelSize: 24
                                     color: Style.content_main
-                                    //% "GRIMM"
+                                    //% "MWG"
                                     text: qsTrId("send-curency-name")
                                 }
                             }
@@ -1062,7 +1062,7 @@ Item {
                         onClicked: {
                             if (viewModel.isValidReceiverAddress(viewModel.receiverAddr)) {
                                 confirmationDialog.addressText = viewModel.receiverAddr;
-                                //% "GRIMM"
+                                //% "MWG"
                                 confirmationDialog.amountText = amount_input.amount.toLocaleString(Qt.locale(), 'f', -128) + " " + qsTrId("send-curency-name");
                                 //% "CENTUM"
                                 confirmationDialog.feeText = fee_input.amount.toLocaleString(Qt.locale(), 'f', -128) + " " + qsTrId("send-curency-sub-name");
@@ -1144,7 +1144,7 @@ Item {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.left: parent.left
                                 anchors.leftMargin: 26
-                                source: "qrc:/assets/grimm-circle.svg"
+                                source: "qrc:/assets/MWG-circle.svg"
                             }
                         }
                     }
