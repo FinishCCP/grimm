@@ -1,6 +1,6 @@
 #include "dictionary.h"
 
-namespace grimm
+namespace MWG
 {
     namespace language
     {
