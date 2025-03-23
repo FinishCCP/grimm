@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,7 +16,7 @@
 #include "protocol_base.h"
 #include "utility/logger.h"
 
-namespace grimm {
+namespace MWG {
 
 bool ProtocolBase::on_new_message(uint64_t fromStream, MsgType type, const void* data, size_t size) {
     OnRawMessage callback = _dispatchTable[type].callback;
