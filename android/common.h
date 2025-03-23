@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,11 +27,11 @@
 #define DEF2STR2(x) #x
 #define DEF2STR(x) DEF2STR2(x)
 
-#define GRIMM_JAVA_PACKAGE(sep)                     com ## sep ## mw ## sep ## grimm ## sep ## grimmwallet ## sep ## core
-#define GRIMM_JAVA_PREFIX                         GRIMM_JAVA_PACKAGE(_)
-#define GRIMM_JAVA_PATH                             "com/mw/grimm/grimmwallet/core" // doesn't work on clang DEF2STR(GRIMM_JAVA_PACKAGE(/))
-#define GRIMM_JAVA_API_INTERFACE(function)         CONCAT1(GRIMM_JAVA_PREFIX, Api, function)
-#define GRIMM_JAVA_WALLET_INTERFACE(function)     CONCAT1(GRIMM_JAVA_PREFIX, entities_Wallet, function)
+#define MWG_JAVA_PACKAGE(sep)                     com ## sep ## mw ## sep ## MWG ## sep ## MWGwallet ## sep ## core
+#define MWG_JAVA_PREFIX                         MWG_JAVA_PACKAGE(_)
+#define MWG_JAVA_PATH                             "com/mw/MWG/MWGwallet/core" // doesn't work on clang DEF2STR(MWG_JAVA_PACKAGE(/))
+#define MWG_JAVA_API_INTERFACE(function)         CONCAT1(MWG_JAVA_PREFIX, Api, function)
+#define MWG_JAVA_WALLET_INTERFACE(function)     CONCAT1(MWG_JAVA_PREFIX, entities_Wallet, function)
 
 extern JavaVM* JVM;
 
