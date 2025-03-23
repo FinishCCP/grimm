@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +25,7 @@ namespace ECC
 	void GenRandom(void*, uint32_t nSize); // with OS support
 
 	template <uint32_t nBytes_>
-	inline void GenRandom(grimm::uintBig_t<nBytes_>& x) { GenRandom(x.m_pData, x.nBytes); }
+	inline void GenRandom(MWG::uintBig_t<nBytes_>& x) { GenRandom(x.m_pData, x.nBytes); }
 
 	struct Mode {
 		enum Enum {
@@ -47,8 +48,8 @@ namespace ECC
 	};
 
 	// Syntactic sugar!
-	using grimm::Zero_;
-	using grimm::Zero;
+	using MWG::Zero_;
+	using MWG::Zero;
 	enum Two_ { Two };
 
 	struct Op
@@ -87,7 +88,7 @@ namespace ECC
 
 	static const uint32_t nBytes = 32;
 	static const uint32_t nBits = nBytes << 3;
-	typedef grimm::uintBig_t<nBytes> uintBig;
+	typedef MWG::uintBig_t<nBytes> uintBig;
 
 
 	class Commitment;
@@ -149,7 +150,7 @@ namespace ECC
 		class Mac;
 	};
 
-	typedef grimm::Amount Amount;
+	typedef MWG::Amount Amount;
 
 	struct Signature
 	{
@@ -177,7 +178,7 @@ namespace ECC
 		typedef uint32_t Index; // a 'short ID' used when different children are given different sub-keys.
 
 		struct Type
-			:public grimm::FourCC
+			:public MWG::FourCC
 		{
 			Type() {}
 			Type(uint32_t x) :FourCC(x) {}
@@ -217,9 +218,9 @@ namespace ECC
 #pragma pack (push, 1)
 			struct Packed
 			{
-				grimm::uintBigFor<uint64_t>::Type m_Idx;
-				grimm::uintBigFor<uint32_t>::Type m_Type;
-				grimm::uintBigFor<uint32_t>::Type m_SubIdx;
+				MWG::uintBigFor<uint64_t>::Type m_Idx;
+				MWG::uintBigFor<uint32_t>::Type m_Type;
+				MWG::uintBigFor<uint32_t>::Type m_SubIdx;
 				void operator = (const ID&);
 			};
 #pragma pack (pop)
@@ -250,7 +251,7 @@ namespace ECC
 			struct Packed
 				:public ID::Packed
 			{
-				grimm::uintBigFor<Amount>::Type m_Value;
+				MWG::uintBigFor<Amount>::Type m_Value;
 				void operator = (const IDV&);
 			};
 #pragma pack (pop)
