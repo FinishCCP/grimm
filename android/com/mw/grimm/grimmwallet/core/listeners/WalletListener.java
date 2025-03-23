@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,15 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.mw.grimm.grimmwallet.core.listeners;
+package com.mw.MWG.MWGwallet.core.listeners;
 
-import com.mw.grimm.grimmwallet.core.entities.dto.WalletStatusDTO;
-import com.mw.grimm.grimmwallet.core.entities.dto.UtxoDTO;
-import com.mw.grimm.grimmwallet.core.entities.dto.TxDescriptionDTO;
-import com.mw.grimm.grimmwallet.core.entities.dto.WalletAddressDTO;
-import com.mw.grimm.grimmwallet.core.entities.dto.PaymentInfoDTO;
+import com.mw.MWG.MWGwallet.core.entities.dto.WalletStatusDTO;
+import com.mw.MWG.MWGwallet.core.entities.dto.UtxoDTO;
+import com.mw.MWG.MWGwallet.core.entities.dto.TxDescriptionDTO;
+import com.mw.MWG.MWGwallet.core.entities.dto.WalletAddressDTO;
+import com.mw.MWG.MWGwallet.core.entities.dto.PaymentInfoDTO;
 
-import com.mw.grimm.grimmwallet.core.entities.Wallet;
+import com.mw.MWG.MWGwallet.core.entities.Wallet;
 
 public class WalletListener
 {
@@ -28,7 +29,7 @@ public class WalletListener
 
 	static void onStatus(WalletStatusDTO status)
 	{
-		System.out.println(">>>>>>>>>>>>>> async status in Java, available=" + status.available/1000000 + " GRIMM and " + status.available%1000000 + " CENTUM, maturing=" + status.maturing);
+		System.out.println(">>>>>>>>>>>>>> async status in Java, available=" + status.available/1000000 + " MWG and " + status.available%1000000 + " CENTUM, maturing=" + status.maturing);
 		System.out.println("height is " + status.system.height);
 	}
 
