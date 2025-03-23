@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +21,7 @@
 #include "utility/logger.h"
 #include <mutex>
 
-namespace grimm
+namespace MWG
 {
 
 struct Block::PoW::Helper
@@ -50,7 +51,7 @@ bool Block::PoW::Solve(const void* pInput, uint32_t nSizeInput, const Cancel& fn
 {
 	Helper hlp;
 
-	std::function<bool(const grimm::ByteBuffer&)> fnValid = [this, &hlp](const grimm::ByteBuffer& solution)
+	std::function<bool(const MWG::ByteBuffer&)> fnValid = [this, &hlp](const MWG::ByteBuffer& solution)
 		{
     		if (!hlp.TestDifficulty(&solution.front(), (uint32_t) solution.size(), m_Difficulty))
 				return false;
@@ -97,5 +98,5 @@ bool Block::PoW::IsValid(const void* pInput, uint32_t nSizeInput) const
 		hlp.TestDifficulty(&m_Indices.front(), (uint32_t) m_Indices.size(), m_Difficulty);
 }
 
-} // namespace grimm
+} // namespace MWG
 
