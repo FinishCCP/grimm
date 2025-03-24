@@ -8,10 +8,10 @@
 #include <future>
 
 using namespace std;
-using namespace grimm;
+using namespace MWG;
 using namespace ECC;
 
-namespace grimm {
+namespace MWG {
 
 bool ReadTreasury(ByteBuffer& bb, const string& sPath)
 {
