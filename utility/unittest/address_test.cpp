@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,15 +17,15 @@
 #include <iostream>
 #include <assert.h>
 
-using namespace grimm::io;
+using namespace MWG::io;
 using namespace std;
 
 void address_test() {
     Address a;
     // getaddrinfo leaks memory
-    for (int i=0; i<100; ++i) a.resolve("grimm-mw.com");
+    for (int i=0; i<100; ++i) a.resolve("MWG-mw.com");
     Address b;
-    b.resolve("grimm-mw.com:666");
+    b.resolve("MWG-mw.com:666");
     cout << a.str() << " " << b.str() << endl;
     assert(a.port() == 0 && b.port() == 666 && a.ip() != 0 && b.ip() != 0);
     Address c;
