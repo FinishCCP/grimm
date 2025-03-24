@@ -43,7 +43,7 @@ We designed MWG so that it doesn’t depend on any one person. We don’t contro
 - Emission / Deflationary
 - Block Reward / 100 MWG, Rewards halving after 1 year and then halvings every 4 years 33 times in total. All mining
 - rewards go directly to the miners.
-- Max Supply / 262.8M
+- Max Supply / 21M
 - Governance / Community
 - Blocktime / 60 sec
 - Block size / 2 Mb
