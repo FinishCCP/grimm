@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +25,8 @@
 #endif
 #include "utility/logger.h"
 
-using namespace grimm;
-using namespace grimm::io;
+using namespace MWG;
+using namespace MWG::io;
 using namespace std;
 
 std::vector<TcpStream::Ptr> streams;
@@ -51,7 +52,7 @@ int calc_errors() {
     return retCode;
 }
 
-#define DOMAIN_NAME "grimmw.com"
+#define DOMAIN_NAME "MWG.com"
 
 bool on_recv(ErrorCode what, void* data, size_t size) {
     if (data && size) {
