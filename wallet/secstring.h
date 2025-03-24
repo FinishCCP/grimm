@@ -2,7 +2,7 @@
 #include "core/ecc_native.h"
 #include <string_view>
 
-namespace grimm {
+namespace MWG {
 
 class SecString {
 public:
