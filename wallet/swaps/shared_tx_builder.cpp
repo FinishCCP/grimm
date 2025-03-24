@@ -1,4 +1,5 @@
 // Copyright 2019 The Grimm Team
+// Copyright 2025 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +18,7 @@
 
 using namespace ECC;
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     namespace
     {
@@ -51,8 +52,8 @@ namespace grimm::wallet
 
     bool SharedTxBuilder::GetSharedParameters()
     {
-        return m_Tx.GetParameter(TxParameterID::SharedBlindingFactor, m_SharedBlindingFactor, SubTxIndex::GRIMM_LOCK_TX)
-            && m_Tx.GetParameter(TxParameterID::PeerPublicSharedBlindingFactor, m_PeerPublicSharedBlindingFactor, SubTxIndex::GRIMM_LOCK_TX);
+        return m_Tx.GetParameter(TxParameterID::SharedBlindingFactor, m_SharedBlindingFactor, SubTxIndex::MWG_LOCK_TX)
+            && m_Tx.GetParameter(TxParameterID::PeerPublicSharedBlindingFactor, m_PeerPublicSharedBlindingFactor, SubTxIndex::MWG_LOCK_TX);
     }
 
     ECC::Point::Native SharedTxBuilder::GetPublicExcess() const
@@ -128,9 +129,9 @@ namespace grimm::wallet
             // Get MinHeight from main TX
             minHeight = m_Tx.GetMandatoryParameter<Height>(TxParameterID::MinHeight);
 
-            if (SubTxIndex::GRIMM_REFUND_TX == m_SubTxID)
+            if (SubTxIndex::MWG_REFUND_TX == m_SubTxID)
             {
-                minHeight += kGrimmLockTimeInBlocks;
+                minHeight += kMWGLockTimeInBlocks;
             }
             m_Tx.SetParameter(TxParameterID::MinHeight, minHeight, m_SubTxID);
         }
