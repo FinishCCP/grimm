@@ -1,4 +1,5 @@
 // Copyright 2019 The Grimm Team
+// Copyright 2025 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 
 #include "../bitcoin/bitcoin_side.h"
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     using LitecoinSide = BitcoinSide;
 }
