@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +19,7 @@
 #include "wallet/wallet_db.h"
 #include "wallet/wallet_network.h"
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
 
     struct IWalletModelAsync
@@ -44,7 +45,7 @@ namespace grimm::wallet
 
         virtual void setNodeAddress(const std::string& addr) = 0;
 
-        virtual void changeWalletPassword(const grimm::SecString& password) = 0;
+        virtual void changeWalletPassword(const MWG::SecString& password) = 0;
 
         virtual void getNetworkStatus() = 0;
         virtual void refresh() = 0;
