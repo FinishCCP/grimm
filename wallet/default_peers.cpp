@@ -1,4 +1,5 @@
 // Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,13 +14,13 @@
 
 #include "default_peers.h"
 
-namespace grimm
+namespace MWG
 {
     std::vector<std::string> getDefaultPeers()
     {
         std::vector<std::string> result
         {
-#ifdef GRIMM_TESTNET
+#ifdef MWG_TESTNET
 
             "159.65.53.233:10000",
             "159.65.61.159:10000"
