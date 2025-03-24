@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,8 +49,8 @@ using json = nlohmann::json;
 
 static const unsigned LOG_ROTATION_PERIOD = 3 * 60 * 60 * 1000; // 3 hours
 static const size_t PACKER_FRAGMENTS_SIZE = 4096;
-    using namespace grimm;
-    using namespace grimm::wallet;
+    using namespace MWG;
+    using namespace MWG::wallet;
 namespace
 {
     const char* MinimumFeeError = "Failed to initiate the send operation. The minimum fee is 100 Centum.";
@@ -480,7 +481,7 @@ namespace
 
             void onMessage(int id, const StartSwap& data) override
             {
-                LOG_DEBUG() << "StartSwap(id = " << id << " amount = " << data.amount << " fee = " << data.fee << " address = " << std::to_string(data.address) << " swap amount = " << data.swapAmount << " isGrimmSide = " << data.grimmSide << ")";
+                LOG_DEBUG() << "StartSwap(id = " << id << " amount = " << data.amount << " fee = " << data.fee << " address = " << std::to_string(data.address) << " swap amount = " << data.swapAmount << " isMWGSide = " << data.MWGSide << ")";
 
                 try
                 {
@@ -491,7 +492,7 @@ namespace
 
                     from = senderAddress.m_walletID;
 
-                    auto txId = _wallet.swap_coins(from, data.address, data.amount, data.fee, data.swapCoin, data.swapAmount, data.grimmSide);
+                    auto txId = _wallet.swap_coins(from, data.address, data.amount, data.fee, data.swapCoin, data.swapAmount, data.MWGSide);
                     doResponse(id, StartSwap::Response{ txId });
                 }
                 catch (...)
@@ -502,11 +503,11 @@ namespace
 
             void onMessage(int id, const AcceptSwap& data) override
             {
-                LOG_DEBUG() << "AcceptSwap(id = " << id << " amount = " << data.amount << " swap amount = " << data.swapAmount << " isGrimmSide = " << data.grimmSide << ")";
+                LOG_DEBUG() << "AcceptSwap(id = " << id << " amount = " << data.amount << " swap amount = " << data.swapAmount << " isMWGSide = " << data.MWGSide << ")";
 
                 try
                 {
-                    _wallet.initSwapConditions(data.amount, data.swapAmount, data.swapCoin, data.grimmSide);
+                    _wallet.initSwapConditions(data.amount, data.swapAmount, data.swapCoin, data.MWGSide);
                     doResponse(id, AcceptSwap::Response{});
                 }
                 catch (...)
@@ -971,11 +972,11 @@ namespace
 
 int main(int argc, char* argv[])
 {
-    using namespace grimm;
+    using namespace MWG;
     namespace po = boost::program_options;
 
     const auto path = boost::filesystem::system_complete("./logs");
-    auto logger = grimm::Logger::create(LOG_LEVEL_DEBUG, LOG_LEVEL_DEBUG, LOG_LEVEL_DEBUG, "api_", path.string());
+    auto logger = MWG::Logger::create(LOG_LEVEL_DEBUG, LOG_LEVEL_DEBUG, LOG_LEVEL_DEBUG, "api_", path.string());
 
     try
     {
@@ -1061,7 +1062,7 @@ int main(int argc, char* argv[])
             getRulesOptions(vm);
 
             Rules::get().UpdateChecksum();
-            LOG_INFO() << "Grimm Wallet API " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
+            LOG_INFO() << "MWG Wallet API " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
             LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
 
             if (options.useAcl)
@@ -1127,7 +1128,7 @@ int main(int argc, char* argv[])
             }
 
             SecString pass;
-            if (!grimm::read_wallet_pass(pass, vm))
+            if (!MWG::read_wallet_pass(pass, vm))
             {
                 LOG_ERROR() << "Please, provide password for the wallet.";
                 return -1;
