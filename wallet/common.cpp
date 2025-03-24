@@ -1,4 +1,5 @@
 // Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,16 +22,16 @@
 
 using namespace std;
 using namespace ECC;
-using namespace grimm;
+using namespace MWG;
 
 namespace std
 {
-    string to_string(const grimm::wallet::WalletID& id)
+    string to_string(const MWG::wallet::WalletID& id)
     {
         static_assert(sizeof(id) == sizeof(id.m_Channel) + sizeof(id.m_Pk), "");
 
         char szBuf[sizeof(id) * 2 + 1];
-        grimm::to_hex(szBuf, &id, sizeof(id));
+        MWG::to_hex(szBuf, &id, sizeof(id));
 
         const char* szPtr = szBuf;
         while (*szPtr == '0')
@@ -49,13 +50,13 @@ namespace std
         return string(sz);
     }
 
-    string to_string(grimm::wallet::AtomicSwapCoin value)
+    string to_string(MWG::wallet::AtomicSwapCoin value)
     {
         switch (value)
         {
-        case grimm::wallet::AtomicSwapCoin::Bitcoin:
+        case MWG::wallet::AtomicSwapCoin::Bitcoin:
             return "btc";
-        case grimm::wallet::AtomicSwapCoin::Litecoin:
+        case MWG::wallet::AtomicSwapCoin::Litecoin:
             return "ltc";
         default:
             return "";
@@ -63,7 +64,7 @@ namespace std
     }
 }
 
-namespace grimm
+namespace MWG
 {
     std::ostream& operator<<(std::ostream& os, const wallet::TxID& uuid)
     {
@@ -90,7 +91,7 @@ namespace grimm
         {
             if (amount.m_value >= Rules::Coin)
             {
-                ss << Amount(amount.m_value / Rules::Coin) << " grimms ";
+                ss << Amount(amount.m_value / Rules::Coin) << " MWGs ";
             }
             Amount c = amount.m_value % Rules::Coin;
             if (c > 0 || amount.m_value == 0)
@@ -104,7 +105,7 @@ namespace grimm
     }
 }
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     AtomicSwapCoin from_string(const std::string& value)
     {
