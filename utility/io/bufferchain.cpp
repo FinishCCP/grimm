@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+//Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,7 +16,7 @@
 #include "bufferchain.h"
 #include <assert.h>
 
-namespace grimm { namespace io {
+namespace MWG { namespace io {
 
 void BufferChain::append(const void* data, size_t len, SharedMem guard, bool tryToJoin) {
     if (len == 0) return;
