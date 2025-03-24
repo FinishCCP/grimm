@@ -6,34 +6,34 @@ set(VERSION_REVISION 0)
 set(GIT_COMMIT_HASH "unknown")
 
 # uncoment next line for testnet
-# set(GRIMM_TESTNET TRUE)
+# set(MWG_TESTNET TRUE)
 
-if(GRIMM_TESTNET)
-    add_definitions(-DGRIMM_TESTNET)
-    set(GRIMM_SUFFIX_LOWER_CASE "testnet")
-    set(GRIMM_SUFFIX_UPPER_CASE "Testnet")
-    set(GRIMM_TARGET_SUFFIX "-${GRIMM_SUFFIX_LOWER_CASE}")
-    set(GRIMM_DISPLAY_SUFFIX " ${GRIMM_SUFFIX_UPPER_CASE}")
+if(MWG_TESTNET)
+    add_definitions(-DMWG_TESTNET)
+    set(MWG_SUFFIX_LOWER_CASE "testnet")
+    set(MWG_SUFFIX_UPPER_CASE "Testnet")
+    set(MWG_TARGET_SUFFIX "-${MWG_SUFFIX_LOWER_CASE}")
+    set(MWG_DISPLAY_SUFFIX " ${MWG_SUFFIX_UPPER_CASE}")
 else()
-    set(GRIMM_SUFFIX_LOWER_CASE "mainnet")
-    set(GRIMM_SUFFIX_UPPER_CASE "Mainnet")
-    set(GRIMM_TARGET_SUFFIX "-${GRIMM_SUFFIX_LOWER_CASE}")
-    set(GRIMM_DISPLAY_SUFFIX " ${GRIMM_SUFFIX_UPPER_CASE}")
+    set(MWG_SUFFIX_LOWER_CASE "mainnet")
+    set(MWG_SUFFIX_UPPER_CASE "Mainnet")
+    set(MWG_TARGET_SUFFIX "-${MWG_SUFFIX_LOWER_CASE}")
+    set(MWG_DISPLAY_SUFFIX " ${MWG_SUFFIX_UPPER_CASE}")
 
 endif()
 
 
 
-if (GRIMM_SIGN_PACKAGE AND WIN32)
-  #  add_custom_target(signing ALL DEPENDS grimm-wallet-ui COMMENT "Signing Package...")
+if (MWG_SIGN_PACKAGE AND WIN32)
+  #  add_custom_target(signing ALL DEPENDS MWG-wallet-ui COMMENT "Signing Package...")
 
     find_program(SIGNTOOL_EXECUTABLE signtool.exe)
     message("SignTool: ${SIGNTOOL_EXECUTABLE}" )
 
     set(WINDOWS_IDENTITIY_PFX_FILE "THE_PFX_FILE_IS_MISSING_HERE!" CACHE STRING "PFX file, which represents the identity of the developer.")
     set(WINDOWS_IDENTITIY_PFX_PASSWORD "" CACHE STRING "Password, which unlocks the PFX file (optional)")
-    set(GRIMM_SIGN_SUBJECT_NAME "" CACHE STRING "Grimm subjet")
-    set(SIGNTOOL_OPTIONS /tr http://timestamp.digicert.com /td sha256 /fd sha256 /n "${GRIMM_SIGN_SUBJECT_NAME}")
+    set(MWG_SIGN_SUBJECT_NAME "" CACHE STRING "MWG subjet")
+    set(SIGNTOOL_OPTIONS /tr http://timestamp.digicert.com /td sha256 /fd sha256 /n "${MWG_SIGN_SUBJECT_NAME}")
 
     #set(SIGNTOOL_OPTIONS /fd SHA256 /a /f ${WINDOWS_IDENTITIY_PFX_FILE} /tr http://timestamp.digicert.com  )
 
@@ -97,11 +97,11 @@ endif()
 
 message("BRANCH_NAME: ${BRANCH_NAME}")
 
-project(grimm VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_REVISION})
+project(MWG VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_REVISION})
 
-message("GRIMM_VERSION: ${PROJECT_VERSION}")
+message("MWG_VERSION: ${PROJECT_VERSION}")
 
-file(WRITE ${PROJECT_SOURCE_DIR}/grimm_version.gen "${PROJECT_VERSION}")
+file(WRITE ${PROJECT_SOURCE_DIR}/MWG_version.gen "${PROJECT_VERSION}")
 
 if(UNIX AND NOT APPLE AND NOT ANDROID)
     set(LINUX TRUE)
@@ -119,27 +119,27 @@ endfunction()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(GRIMM_USE_AVX FALSE)
-if (GRIMM_CPU_ARCH MATCHES "avx")
-    set(GRIMM_USE_AVX TRUE)
+set(MWG_USE_AVX FALSE)
+if (MWG_CPU_ARCH MATCHES "avx")
+    set(MWG_USE_AVX TRUE)
 endif()
 
-if(GRIMM_USE_AVX)
-    add_definitions(-DGRIMM_USE_AVX)
+if(MWG_USE_AVX)
+    add_definitions(-DMWG_USE_AVX)
 endif()
 
-set(GRIMM_QT_UI_WALLET TRUE)
-if (GRIMM_NO_QT_UI_WALLET)
-    set(GRIMM_QT_UI_WALLET FALSE)
+set(MWG_QT_UI_WALLET TRUE)
+if (MWG_NO_QT_UI_WALLET)
+    set(MWG_QT_UI_WALLET FALSE)
 endif()
 
-set(GRIMM_USE_STATIC FALSE)
-if(GRIMM_LINK_TYPE MATCHES "Static")
-    set(GRIMM_USE_STATIC TRUE)
+set(MWG_USE_STATIC FALSE)
+if(MWG_LINK_TYPE MATCHES "Static")
+    set(MWG_USE_STATIC TRUE)
 endif()
 
-if(GRIMM_USE_STATIC)
-    add_definitions(-DGRIMM_USE_STATIC)
+if(MWG_USE_STATIC)
+    add_definitions(-DMWG_USE_STATIC)
 endif()
 
 #it's enabled by default for testnet
@@ -173,7 +173,7 @@ if(MSVC)
 
     add_definitions(-D_WIN32_WINNT=0x0600)
 
-    if(GRIMM_USE_STATIC)
+    if(MWG_USE_STATIC)
         # use static runtime
         foreach(flag_var CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
             CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO
@@ -236,7 +236,7 @@ else()
 
     find_package(Boost REQUIRED)
 
-    if(GRIMM_USE_STATIC)
+    if(MWG_USE_STATIC)
         include(FindBoost)
 
         set(Boost_USE_MULTITHREADED ON)
@@ -255,7 +255,7 @@ add_definitions(-DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
 
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty)
 
-if(GRIMM_USE_STATIC)
+if(MWG_USE_STATIC)
 
     if(MSVC)
         include_directories($ENV{OPENSSL_ROOT_DIR}/include)
@@ -333,16 +333,16 @@ add_subdirectory(node)
 add_subdirectory(mnemonic)
 
 
-if(ANDROID OR GRIMM_BUILD_JNI)
+if(ANDROID OR MWG_BUILD_JNI)
     add_subdirectory(android)
 endif()
 
 # TODO: uncomment this later
 if(NOT ANDROID)
-    add_subdirectory(grimm)
+    add_subdirectory(MWG)
     add_subdirectory(explorer)
 
-    if(GRIMM_QT_UI_WALLET)
+    if(MWG_QT_UI_WALLET)
         add_subdirectory(3rdparty/qrcode)
         add_subdirectory(3rdparty/quazip)
         add_subdirectory(ui)
@@ -359,58 +359,58 @@ if (WIN32)
     set(CPACK_NSIS_MUI_ICON "${PROJECT_SOURCE_DIR}/ui/icon.ico")
     set(CPACK_NSIS_MUI_UNIICON "${PROJECT_SOURCE_DIR}/ui/icon.ico")
     set(CPACK_NSIS_INSTALLED_ICON_NAME "${PROJECT_SOURCE_DIR}/ui/icon.ico")
-    set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "CreateShortCut \\\"$DESKTOP\\\\Grimm Wallet${GRIMM_DISPLAY_SUFFIX}.lnk\\\" \\\"$INSTDIR\\\\Grimm Wallet${GRIMM_DISPLAY_SUFFIX}.exe\\\"")
-    set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Grimm Wallet${GRIMM_DISPLAY_SUFFIX}.lnk\\\" \\\"$INSTDIR\\\\Grimm Wallet${GRIMM_DISPLAY_SUFFIX}.exe\\\"")
-    set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "Delete \\\"$DESKTOP\\\\Grimm Wallet${GRIMM_DISPLAY_SUFFIX}.lnk\\\"")
-    set(CPACK_NSIS_DELETE_ICONS_EXTRA "Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Grimm Wallet${GRIMM_DISPLAY_SUFFIX}.lnk\\\"")
+    set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "CreateShortCut \\\"$DESKTOP\\\\MWG Wallet${MWG_DISPLAY_SUFFIX}.lnk\\\" \\\"$INSTDIR\\\\MWG Wallet${MWG_DISPLAY_SUFFIX}.exe\\\"")
+    set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\MWG Wallet${MWG_DISPLAY_SUFFIX}.lnk\\\" \\\"$INSTDIR\\\\MWG Wallet${MWG_DISPLAY_SUFFIX}.exe\\\"")
+    set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "Delete \\\"$DESKTOP\\\\MWG Wallet${MWG_DISPLAY_SUFFIX}.lnk\\\"")
+    set(CPACK_NSIS_DELETE_ICONS_EXTRA "Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\MWG Wallet${MWG_DISPLAY_SUFFIX}.lnk\\\"")
 
     set(CPACK_NSIS_EXECUTABLES_DIRECTORY .)
-    set(CPACK_NSIS_MUI_FINISHPAGE_RUN "Grimm Wallet${GRIMM_DISPLAY_SUFFIX}.exe")
-    set(CPACK_NSIS_PACKAGE_NAME "Grimm Wallet${GRIMM_DISPLAY_SUFFIX}")
+    set(CPACK_NSIS_MUI_FINISHPAGE_RUN "MWG Wallet${MWG_DISPLAY_SUFFIX}.exe")
+    set(CPACK_NSIS_PACKAGE_NAME "MWG Wallet${MWG_DISPLAY_SUFFIX}")
 
 elseif (APPLE)
     set(CPACK_GENERATOR "Bundle")
-    set(CPACK_BUNDLE_NAME "Grimm Wallet${GRIMM_DISPLAY_SUFFIX}")
+    set(CPACK_BUNDLE_NAME "MWG Wallet${MWG_DISPLAY_SUFFIX}")
     set(CPACK_BUNDLE_PLIST ui/Info.plist)
-    set(CPACK_BUNDLE_ICON ui/grimm.icns)
-    set(CPACK_BUNDLE_STARTUP_COMMAND "ui/Grimm Wallet${GRIMM_DISPLAY_SUFFIX}")
+    set(CPACK_BUNDLE_ICON ui/MWG.icns)
+    set(CPACK_BUNDLE_STARTUP_COMMAND "ui/MWG Wallet${MWG_DISPLAY_SUFFIX}")
 
-    if(GRIMM_SIGN_MACOS_BINARY)
-        set(CPACK_BUNDLE_APPLE_CERT_APP "Developer ID Application: Grimm Development Limited (KNU2R94BJK)")
+    if(MWG_SIGN_MACOS_BINARY)
+        set(CPACK_BUNDLE_APPLE_CERT_APP "Developer ID Application: MWG Development Limited (KNU2R94BJK)")
     endif()
 elseif (LINUX)
     set(CPACK_GENERATOR "DEB")
-    set(CPACK_DEBIAN_PACKAGE_NAME "grimmwallet${GRIMM_SUFFIX_LOWER_CASE}")
+    set(CPACK_DEBIAN_PACKAGE_NAME "MWGwallet${MWG_SUFFIX_LOWER_CASE}")
     set(CPACK_DEBIAN_PACKAGE_VERSION ${PROJECT_VERSION})
-    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Grimm <mail@grimm-mw.com>")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "MWG <mail@MWG-mw.com>")
     set(CPACK_DEBIAN_PACKAGE_SECTION "Network")
 
 endif ()
 
-set(CPACK_PACKAGE_NAME "GrimmWallet${GRIMM_SUFFIX_UPPER_CASE}")
-set(CPACK_PACKAGE_VENDOR "Grimm Development Limited")
+set(CPACK_PACKAGE_NAME "MWGWallet${MWG_SUFFIX_UPPER_CASE}")
+set(CPACK_PACKAGE_VENDOR "MWG Development Limited")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "No one will ever know")
 set(CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${VERSION_REVISION}")
 set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "Grimm Wallet${GRIMM_DISPLAY_SUFFIX}")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "MWG Wallet${MWG_DISPLAY_SUFFIX}")
 
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/TERMS.txt")
 
 include(CPack)
 
-#if (GRIMM_SIGN_PACKAGE AND WIN32)
+#if (MWG_SIGN_PACKAGE AND WIN32)
 #    add_custom_target(signing ALL  COMMENT "Signing Package...")
 #
 #
 #     # Signing the installer
 #     add_custom_target(signing-installer)
-#     set(GRIMM_INSTALLER_NAME ${CPACK_NSIS_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_SYSTEM_NAME}.exe)
+#     set(MWG_INSTALLER_NAME ${CPACK_NSIS_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_SYSTEM_NAME}.exe)
 #
 #     add_custom_command(
 #         TARGET signing-installer
-#         COMMAND ${SIGNTOOL_EXECUTABLE} sign ${SIGNTOOL_OPTIONS} ${GRIMM_INSTALLER_NAME}
+#         COMMAND ${SIGNTOOL_EXECUTABLE} sign ${SIGNTOOL_OPTIONS} ${MWG_INSTALLER_NAME}
 #         ## Other optional options:
 #         # /tr timestampServerUrl
 #        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
