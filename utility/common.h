@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,11 +45,11 @@
 #	include <winsock2.h>
 #endif // WIN32
 
-#ifndef GRIMM_VERIFY
+#ifndef MWG_VERIFY
 #	ifdef  NDEBUG
-#		define GRIMM_VERIFY(x) ((void)(x))
+#		define MWG_VERIFY(x) ((void)(x))
 #	else //  NDEBUG
-#		define GRIMM_VERIFY(x) assert(x)
+#		define MWG_VERIFY(x) assert(x)
 #	endif //  NDEBUG
 #endif // verify
 
@@ -129,7 +130,7 @@ namespace Cast
 
 
 
-namespace grimm
+namespace MWG
 {
 	typedef uint64_t Timestamp;
 	typedef uint64_t Height;
