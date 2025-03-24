@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -113,9 +114,9 @@
 namespace std
 {
     template<>
-    struct hash<pair<grimm::Amount, grimm::Amount>>
+    struct hash<pair<MWG::Amount, MWG::Amount>>
     {
-        typedef pair<grimm::Amount, grimm::Amount> argument_type;
+        typedef pair<MWG::Amount, MWG::Amount> argument_type;
         typedef std::size_t result_type;
 
         result_type operator()(const argument_type& a) const noexcept
@@ -125,7 +126,7 @@ namespace std
     };
 }
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     using namespace std;
 
@@ -1160,10 +1161,10 @@ namespace grimm::wallet
                 }
                 m_DbTransaction.reset();
             }
-            GRIMM_VERIFY(SQLITE_OK == sqlite3_close(_db));
+            MWG_VERIFY(SQLITE_OK == sqlite3_close(_db));
             if (m_PrivateDB && _db != m_PrivateDB)
             {
-                GRIMM_VERIFY(SQLITE_OK == sqlite3_close(m_PrivateDB));
+                MWG_VERIFY(SQLITE_OK == sqlite3_close(m_PrivateDB));
                 m_PrivateDB = nullptr;
             }
             _db = nullptr;
@@ -1194,15 +1195,15 @@ namespace grimm::wallet
 	void IWalletDB::ImportRecovery(const std::string& path)
   {
 		IRecoveryProgress prog;
-		GRIMM_VERIFY(ImportRecovery(path, prog));
+		MWG_VERIFY(ImportRecovery(path, prog));
 	}
 
 	bool IWalletDB::ImportRecovery(const std::string& path, IRecoveryProgress& prog)
   {
-		grimm::RecoveryInfo::Reader rp;
+		MWG::RecoveryInfo::Reader rp;
 		rp.Open(path.c_str());
     uint64_t nTotal = rp.m_Stream.get_Remaining();
-		grimm::Key::IPKdf::Ptr pOwner = get_MasterKdf();
+		MWG::Key::IPKdf::Ptr pOwner = get_MasterKdf();
 
 		while (true)
 		{
@@ -2595,7 +2596,7 @@ namespace grimm::wallet
         WalletAddress createAddress(IWalletDB& walletDB)
         {
             WalletAddress newAddress;
-            newAddress.m_createTime = grimm::getTimestamp();
+            newAddress.m_createTime = MWG::getTimestamp();
             newAddress.m_OwnID = walletDB.AllocateKidRange(1);
             newAddress.m_walletID = generateWalletIDFromIndex(walletDB, newAddress.m_OwnID);
 
