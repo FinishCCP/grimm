@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +26,7 @@
     #include <netinet/ip.h>
 #endif // WIN32
 
-namespace grimm { namespace io {
+namespace MWG { namespace io {
 
 // IPv4 + port peer address
 struct Address {
@@ -120,8 +121,8 @@ std::ostream& operator<<(std::ostream& os, const Address& a);
 }} //namespaces
 
 namespace std {
-    template<> struct hash<grimm::io::Address> {
-        typedef grimm::io::Address argument_type;
+    template<> struct hash<MWG::io::Address> {
+        typedef MWG::io::Address argument_type;
         typedef std::size_t result_type;
 
         result_type operator()(const argument_type& a) const noexcept {
