@@ -8,7 +8,7 @@ client.connect(10000, '127.0.0.1', function() {
 			jsonrpc: '2.0',
 			id: 123,
 			method: 'edit_address',
-			params: {address: '29510b33fac0cb20695fd3b836d835451e600c4224d8fb335dc1a68271deb9b6b5b', action: 'expired'}
+			params: {address: '29510b33fac0cb20695fd3b836d835451e600c4224d8fb335dc1a68271deb9b6b5b', action: 'expired'} Check shavad
 		}) + '\n');
 });
 
