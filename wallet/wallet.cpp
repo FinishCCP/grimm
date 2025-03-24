@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +30,7 @@
 #include "litecoin/litecoind016.h"
 #include "litecoin/litecoin_side.h"
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     using namespace std;
     using namespace ECC;
@@ -183,9 +184,9 @@ namespace grimm::wallet
         m_litecoinBridge = make_shared<Litecoind016>(reactor, options);
     }
 
-    void Wallet::initSwapConditions(Amount grimmAmount, Amount swapAmount, AtomicSwapCoin swapCoin, bool isGrimmSide)
+    void Wallet::initSwapConditions(Amount MWGAmount, Amount swapAmount, AtomicSwapCoin swapCoin, bool isMWGSide)
     {
-        m_swapConditions.push_back(SwapConditions{ grimmAmount, swapAmount, swapCoin, isGrimmSide });
+        m_swapConditions.push_back(SwapConditions{ MWGAmount, swapAmount, swapCoin, isMWGSide });
     }
 
     TxID Wallet::transfer_money(const WalletID& from, const WalletID& to, Amount amount, Amount fee, bool sender, Height lifetime, Height responseTime, ByteBuffer&& message, bool saveReceiver)
@@ -267,7 +268,7 @@ namespace grimm::wallet
     }
 
     TxID Wallet::swap_coins(const WalletID& from, const WalletID& to, Amount amount, Amount fee, AtomicSwapCoin swapCoin,
-        Amount swapAmount, bool isGrimmSide/*=true*/, Height lifetime/* = kDefaultTxLifetime*/, Height responseTime/* = kDefaultTxResponseTime*/)
+        Amount swapAmount, bool isMWGSide/*=true*/, Height lifetime/* = kDefaultTxLifetime*/, Height responseTime/* = kDefaultTxResponseTime*/)
     {
         auto receiverAddr = m_WalletDB->getAddress(to);
 
@@ -290,13 +291,13 @@ namespace grimm::wallet
         // Must be reset on first Update when we already have correct current height.
         tx->SetParameter(TxParameterID::PeerResponseHeight, responseTime);
         tx->SetParameter(TxParameterID::MyID, from, false);
-        tx->SetParameter(TxParameterID::IsSender, isGrimmSide, false);
+        tx->SetParameter(TxParameterID::IsSender, isMWGSide, false);
         tx->SetParameter(TxParameterID::IsInitiator, true, false);
         tx->SetParameter(TxParameterID::Status, TxStatus::Pending, true);
 
         tx->SetParameter(TxParameterID::AtomicSwapCoin, swapCoin, false);
         tx->SetParameter(TxParameterID::AtomicSwapAmount, swapAmount, false);
-        tx->SetParameter(TxParameterID::AtomicSwapIsGrimmSide, isGrimmSide, false);
+        tx->SetParameter(TxParameterID::AtomicSwapIsMWGSide, isMWGSide, false);
 
         m_ActiveTransactions.emplace(txID, tx);
 
@@ -568,8 +569,8 @@ namespace grimm::wallet
                     return nullptr;
                 }
 
-                bool isGrimmSide = it->second->GetMandatoryParameter<bool>(TxParameterID::AtomicSwapIsGrimmSide);
-                return std::make_shared<BitcoinSide>(*it->second, m_bitcoinBridge, isGrimmSide);
+                bool isMWGSide = it->second->GetMandatoryParameter<bool>(TxParameterID::AtomicSwapIsMWGSide);
+                return std::make_shared<BitcoinSide>(*it->second, m_bitcoinBridge, isMWGSide);
             }
 
             if (swapCoin == AtomicSwapCoin::Litecoin)
@@ -580,8 +581,8 @@ namespace grimm::wallet
                     return nullptr;
                 }
 
-                bool isGrimmSide = it->second->GetMandatoryParameter<bool>(TxParameterID::AtomicSwapIsGrimmSide);
-                return std::make_shared<LitecoinSide>(*it->second, m_litecoinBridge, isGrimmSide);
+                bool isMWGSide = it->second->GetMandatoryParameter<bool>(TxParameterID::AtomicSwapIsMWGSide);
+                return std::make_shared<LitecoinSide>(*it->second, m_litecoinBridge, isMWGSide);
             }
         }
 
@@ -1134,14 +1135,14 @@ namespace grimm::wallet
             Amount amount = 0;
             Amount swapAmount = 0;
             AtomicSwapCoin swapCoin = AtomicSwapCoin::Bitcoin;
-            bool isGrimmSide = 0;
+            bool isMWGSide = 0;
 
             bool result = msg.GetParameter(TxParameterID::Amount, amount) &&
                 msg.GetParameter(TxParameterID::AtomicSwapAmount, swapAmount) &&
                 msg.GetParameter(TxParameterID::AtomicSwapCoin, swapCoin) &&
-                msg.GetParameter(TxParameterID::AtomicSwapIsGrimmSide, isGrimmSide);
+                msg.GetParameter(TxParameterID::AtomicSwapIsMWGSide, isMWGSide);
 
-            auto idx = std::find(m_swapConditions.begin(), m_swapConditions.end(), SwapConditions{ amount, swapAmount, swapCoin, isGrimmSide });
+            auto idx = std::find(m_swapConditions.begin(), m_swapConditions.end(), SwapConditions{ amount, swapAmount, swapCoin, isMWGSide });
 
             if (!result || idx == m_swapConditions.end())
             {
