@@ -1,4 +1,5 @@
 // Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +26,7 @@
 #include <numeric>
 #include "utility/logger.h"
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     using namespace ECC;
     using namespace std;
@@ -43,7 +44,7 @@ namespace grimm::wallet
         switch (reason)
         {
 #define MACRO(name, code, message) case name: return message;
-            GRIMM_TX_FAILURE_REASON_MAP(MACRO)
+            MWG_TX_FAILURE_REASON_MAP(MACRO)
 #undef MACRO
         }
         return "Unknown reason";
