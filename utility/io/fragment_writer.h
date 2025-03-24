@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 #include "buffer.h"
 #include <functional>
 
-namespace grimm { namespace io {
+namespace MWG { namespace io {
 
 /// For long messages, it collects raw bytes of unknown size (typically from serializer)
 /// and arranges them into fixed-length shared fragments to be forwarded to network.
