@@ -1,4 +1,5 @@
 // Copyright 2019 The Grimm Team
+// Copyright 2025 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,18 +17,18 @@
 
 #include "../common.h"
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
-    /*constexpr uint32_t kGrimmLockTimeInBlocks = 24 * 60;*/
+    /*constexpr uint32_t kMWGLockTimeInBlocks = 24 * 60;*/
     // TODO: Must be changed after tests!
-    constexpr uint32_t kGrimmLockTimeInBlocks = 140;
+    constexpr uint32_t kMWGLockTimeInBlocks = 140;
     constexpr Amount kMinFeeInCentum = 100;
 
     enum SubTxIndex : SubTxID
     {
-        GRIMM_LOCK_TX = 2,
-        GRIMM_REFUND_TX = 3,
-        GRIMM_REDEEM_TX = 4,
+        MWG_LOCK_TX = 2,
+        MWG_REFUND_TX = 3,
+        MWG_REDEEM_TX = 4,
         LOCK_TX = 5,
         REFUND_TX = 6,
         REDEEM_TX = 7
