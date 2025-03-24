@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 #include "utility/message_queue.h"
 #include "utility/helpers.h"
 
-namespace grimm {
+namespace MWG {
 
 /// Inter-thread bridge template
 template <typename Interface> class Bridge : public Interface {
