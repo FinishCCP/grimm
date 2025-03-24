@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +28,7 @@
 #define UNKNOWN_API_KEY -32002
 #define INVALID_ADDRESS -32003
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     constexpr Amount MinimumFee = 100;
     using json = nlohmann::json;
@@ -149,7 +150,7 @@ namespace grimm::wallet
         Amount fee;
         Amount swapAmount;
         wallet::AtomicSwapCoin swapCoin;
-        bool grimmSide;
+        bool MWGSide;
         wallet::WalletID address;
 
         struct Response
@@ -163,7 +164,7 @@ namespace grimm::wallet
         Amount amount;
         Amount swapAmount;
         wallet::AtomicSwapCoin swapCoin;
-        bool grimmSide;
+        bool MWGSide;
 
         struct Response {};
     };
@@ -267,7 +268,7 @@ namespace grimm::wallet
     {
         struct Response
         {
-            grimm::Height currentHeight = 0;
+            MWG::Height currentHeight = 0;
             Merkle::Hash currentStateHash;
             Merkle::Hash prevStateHash;
             Amount available = 0;
