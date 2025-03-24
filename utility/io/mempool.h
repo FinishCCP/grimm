@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-namespace grimm { namespace io {
+namespace MWG { namespace io {
 
 template <class T, size_t DATA_SIZE> class MemPool {
 public:
