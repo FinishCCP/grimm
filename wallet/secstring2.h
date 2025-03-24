@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <string>
 
-namespace grimm {
+namespace MWG {
 
 class SecString {
 public:
