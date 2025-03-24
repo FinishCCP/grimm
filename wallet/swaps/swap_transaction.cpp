@@ -21,7 +21,7 @@
 
 using namespace ECC;
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
 
 
@@ -62,15 +62,15 @@ namespace grimm::wallet
         switch (state)
         {
         case State::HandlingContractTX:
-            if (!IsGrimmSide())
+            if (!IsMWGSide())
             {
                 break;
             }
         case State::Initial:
         case State::Invitation:
-        case State::BuildingGrimmLockTX:
-        case State::BuildingGrimmRedeemTX:
-        case State::BuildingGrimmRefundTX:
+        case State::BuildingMWGLockTX:
+        case State::BuildingMWGRedeemTX:
+        case State::BuildingMWGRefundTX:
         {
             SetNextState(State::Cancelled);
             return;
@@ -86,26 +86,26 @@ namespace grimm::wallet
     {
         Height proofHeight = 0;
 
-        if (IsGrimmSide())
+        if (IsMWGSide())
         {
             bool isRolledback = false;
-            if (GetParameter(TxParameterID::KernelProofHeight, proofHeight, SubTxIndex::GRIMM_REFUND_TX)
+            if (GetParameter(TxParameterID::KernelProofHeight, proofHeight, SubTxIndex::MWG_REFUND_TX)
                 && proofHeight > height)
             {
-                SetParameter(TxParameterID::KernelProofHeight, Height(0), false, SubTxIndex::GRIMM_REFUND_TX);
-                SetParameter(TxParameterID::KernelUnconfirmedHeight, Height(0), false, SubTxIndex::GRIMM_REFUND_TX);
+                SetParameter(TxParameterID::KernelProofHeight, Height(0), false, SubTxIndex::MWG_REFUND_TX);
+                SetParameter(TxParameterID::KernelUnconfirmedHeight, Height(0), false, SubTxIndex::MWG_REFUND_TX);
 
-                SetState(State::SendingGrimmRefundTX);
+                SetState(State::SendingMWGRefundTX);
                 isRolledback = true;
             }
 
-            if (GetParameter(TxParameterID::KernelProofHeight, proofHeight, SubTxIndex::GRIMM_LOCK_TX)
+            if (GetParameter(TxParameterID::KernelProofHeight, proofHeight, SubTxIndex::MWG_LOCK_TX)
                 && proofHeight > height)
             {
-                SetParameter(TxParameterID::KernelProofHeight, Height(0), false, SubTxIndex::GRIMM_LOCK_TX);
-                SetParameter(TxParameterID::KernelUnconfirmedHeight, Height(0), false, SubTxIndex::GRIMM_LOCK_TX);
+                SetParameter(TxParameterID::KernelProofHeight, Height(0), false, SubTxIndex::MWG_LOCK_TX);
+                SetParameter(TxParameterID::KernelUnconfirmedHeight, Height(0), false, SubTxIndex::MWG_LOCK_TX);
 
-                SetState(State::SendingGrimmLockTX);
+                SetState(State::SendingMWGLockTX);
                 isRolledback = true;
             }
 
@@ -113,13 +113,13 @@ namespace grimm::wallet
         }
         else
         {
-            if (GetParameter(TxParameterID::KernelProofHeight, proofHeight, SubTxIndex::GRIMM_REDEEM_TX)
+            if (GetParameter(TxParameterID::KernelProofHeight, proofHeight, SubTxIndex::MWG_REDEEM_TX)
                 && proofHeight > height)
             {
-                SetParameter(TxParameterID::KernelProofHeight, Height(0), false, SubTxIndex::GRIMM_REDEEM_TX);
-                SetParameter(TxParameterID::KernelUnconfirmedHeight, Height(0), false, SubTxIndex::GRIMM_REDEEM_TX);
+                SetParameter(TxParameterID::KernelProofHeight, Height(0), false, SubTxIndex::MWG_REDEEM_TX);
+                SetParameter(TxParameterID::KernelUnconfirmedHeight, Height(0), false, SubTxIndex::MWG_REDEEM_TX);
 
-                SetState(State::SendingGrimmRedeemTX);
+                SetState(State::SendingMWGRedeemTX);
                 return true;
             }
         }
@@ -165,7 +165,7 @@ namespace grimm::wallet
             CheckSubTxFailures();
 
             State state = GetState(kDefaultSubTxID);
-            bool isGrimmOwner = IsGrimmSide();
+            bool isMWGOwner = IsMWGSide();
 
             if (Height minHeight = 0; (state == State::Initial) && IsInitiator() && !GetParameter(TxParameterID::MinHeight, minHeight))
             {
@@ -203,43 +203,43 @@ namespace grimm::wallet
                     }
                 }
 
-                SetNextState(State::BuildingGrimmLockTX);
+                SetNextState(State::BuildingMWGLockTX);
                 break;
             }
-            case State::BuildingGrimmLockTX:
+            case State::BuildingMWGLockTX:
             {
-                auto lockTxState = BuildGrimmLockTx();
+                auto lockTxState = BuildMWGLockTx();
                 if (lockTxState != SubTxState::Constructed)
                     break;
-                LOG_INFO() << GetTxID() << " Grimm LockTX constructed.";
-                SetNextState(State::BuildingGrimmRefundTX);
+                LOG_INFO() << GetTxID() << " MWG LockTX constructed.";
+                SetNextState(State::BuildingMWGRefundTX);
                 break;
             }
-            case State::BuildingGrimmRefundTX:
+            case State::BuildingMWGRefundTX:
             {
-                auto subTxState = BuildGrimmWithdrawTx(SubTxIndex::GRIMM_REFUND_TX, m_WithdrawTx);
+                auto subTxState = BuildMWGWithdrawTx(SubTxIndex::MWG_REFUND_TX, m_WithdrawTx);
                 if (subTxState != SubTxState::Constructed)
                     break;
 
                 m_WithdrawTx.reset();
-                LOG_INFO() << GetTxID() << " Grimm RefundTX constructed.";
-                SetNextState(State::BuildingGrimmRedeemTX);
+                LOG_INFO() << GetTxID() << " MWG RefundTX constructed.";
+                SetNextState(State::BuildingMWGRedeemTX);
                 break;
             }
-            case State::BuildingGrimmRedeemTX:
+            case State::BuildingMWGRedeemTX:
             {
-                auto subTxState = BuildGrimmWithdrawTx(SubTxIndex::GRIMM_REDEEM_TX, m_WithdrawTx);
+                auto subTxState = BuildMWGWithdrawTx(SubTxIndex::MWG_REDEEM_TX, m_WithdrawTx);
                 if (subTxState != SubTxState::Constructed)
                     break;
 
                 m_WithdrawTx.reset();
-                LOG_INFO() << GetTxID() << " Grimm RedeemTX constructed.";
+                LOG_INFO() << GetTxID() << " MWG RedeemTX constructed.";
                 SetNextState(State::HandlingContractTX);
                 break;
             }
             case State::HandlingContractTX:
             {
-                if (!isGrimmOwner)
+                if (!isMWGOwner)
                 {
                     if (!m_secondSide->SendLockTx())
                         break;
@@ -256,12 +256,12 @@ namespace grimm::wallet
                 }
 
                 LOG_INFO() << GetTxID() << " LockTX completed.";
-                SetNextState(State::SendingGrimmLockTX);
+                SetNextState(State::SendingMWGLockTX);
                 break;
             }
             case State::SendingRefundTX:
             {
-                assert(!isGrimmOwner);
+                assert(!isMWGOwner);
 
                 if (!m_secondSide->IsLockTimeExpired())
                 {
@@ -278,7 +278,7 @@ namespace grimm::wallet
             }
             case State::SendingRedeemTX:
             {
-                assert(isGrimmOwner);
+                assert(isMWGOwner);
                 if (!m_secondSide->SendRedeem())
                     break;
 
@@ -286,51 +286,51 @@ namespace grimm::wallet
                 SetNextState(State::CompleteSwap);
                 break;
             }
-            case State::SendingGrimmLockTX:
+            case State::SendingMWGLockTX:
             {
-                if (!m_LockTx && isGrimmOwner)
+                if (!m_LockTx && isMWGOwner)
                 {
-                    BuildGrimmLockTx();
+                    BuildMWGLockTx();
                 }
 
-                if (m_LockTx && !SendSubTx(m_LockTx, SubTxIndex::GRIMM_LOCK_TX))
+                if (m_LockTx && !SendSubTx(m_LockTx, SubTxIndex::MWG_LOCK_TX))
                     break;
 
-                if (!isGrimmOwner && m_secondSide->IsLockTimeExpired())
+                if (!isMWGOwner && m_secondSide->IsLockTimeExpired())
                 {
                     LOG_INFO() << GetTxID() << " Locktime is expired.";
                     SetNextState(State::SendingRefundTX);
                     break;
                 }
 
-                if (!CompleteSubTx(SubTxIndex::GRIMM_LOCK_TX))
+                if (!CompleteSubTx(SubTxIndex::MWG_LOCK_TX))
                     break;
 
-                LOG_INFO() << GetTxID() << " Grimm LockTX completed.";
-                SetNextState(State::SendingGrimmRedeemTX);
+                LOG_INFO() << GetTxID() << " MWG LockTX completed.";
+                SetNextState(State::SendingMWGRedeemTX);
                 break;
             }
-            case State::SendingGrimmRedeemTX:
+            case State::SendingMWGRedeemTX:
             {
-                if (isGrimmOwner)
+                if (isMWGOwner)
                 {
                     UpdateOnNextTip();
 
-                    if (IsGrimmLockTimeExpired())
+                    if (IsMWGLockTimeExpired())
                     {
                         // If we already got SecretPrivateKey for RedeemTx, don't send refundTx,
                         // because it looks like we got rollback and we just should rerun TX's.
                         NoLeak<uintBig> secretPrivateKey;
-                        if (!GetParameter(TxParameterID::AtomicSwapSecretPrivateKey, secretPrivateKey.V, SubTxIndex::GRIMM_REDEEM_TX))
+                        if (!GetParameter(TxParameterID::AtomicSwapSecretPrivateKey, secretPrivateKey.V, SubTxIndex::MWG_REDEEM_TX))
                         {
-                            LOG_INFO() << GetTxID() << " Grimm locktime expired.";
-                            SetNextState(State::SendingGrimmRefundTX);
+                            LOG_INFO() << GetTxID() << " MWG locktime expired.";
+                            SetNextState(State::SendingMWGRefundTX);
                             break;
                         }
                     }
 
                     // request kernel body for getting secretPrivateKey
-                    if (!GetKernelFromChain(SubTxIndex::GRIMM_REDEEM_TX))
+                    if (!GetKernelFromChain(SubTxIndex::MWG_REDEEM_TX))
                         break;
 
                     ExtractSecretPrivateKey();
@@ -340,27 +340,27 @@ namespace grimm::wallet
                 }
                 else
                 {
-                    if (!CompleteGrimmWithdrawTx(SubTxIndex::GRIMM_REDEEM_TX))
+                    if (!CompleteMWGWithdrawTx(SubTxIndex::MWG_REDEEM_TX))
                         break;
 
-                    LOG_INFO() << GetTxID() << " Grimm RedeemTX completed!";
+                    LOG_INFO() << GetTxID() << " MWG RedeemTX completed!";
                     SetNextState(State::CompleteSwap);
                 }
                 break;
             }
-            case State::SendingGrimmRefundTX:
+            case State::SendingMWGRefundTX:
             {
-                assert(isGrimmOwner);
-                if (!IsGrimmLockTimeExpired())
+                assert(isMWGOwner);
+                if (!IsMWGLockTimeExpired())
                 {
                     UpdateOnNextTip();
                     break;
                 }
 
-                if (!CompleteGrimmWithdrawTx(SubTxIndex::GRIMM_REFUND_TX))
+                if (!CompleteMWGWithdrawTx(SubTxIndex::MWG_REFUND_TX))
                     break;
 
-                LOG_INFO() << GetTxID() << " Grimm Refund TX completed!";
+                LOG_INFO() << GetTxID() << " MWG Refund TX completed!";
                 SetNextState(State::Refunded);
                 break;
             }
@@ -434,7 +434,7 @@ namespace grimm::wallet
         SetParameter(TxParameterID::InternalFailureReason, reason, false);
 
         State state = GetState(kDefaultSubTxID);
-        bool isGrimmSide = IsGrimmSide();
+        bool isMWGSide = IsMWGSide();
 
         switch (state)
         {
@@ -443,9 +443,9 @@ namespace grimm::wallet
         {
             break;
         }
-        case State::BuildingGrimmLockTX:
-        case State::BuildingGrimmRedeemTX:
-        case State::BuildingGrimmRefundTX:
+        case State::BuildingMWGLockTX:
+        case State::BuildingMWGRedeemTX:
+        case State::BuildingMWGRefundTX:
         {
             RollbackTx();
 
@@ -457,9 +457,9 @@ namespace grimm::wallet
 
             break;
         }
-        case State::SendingGrimmLockTX:
+        case State::SendingMWGLockTX:
         {
-            if (isGrimmSide)
+            if (isMWGSide)
             {
                 RollbackTx();
                 break;
@@ -470,9 +470,9 @@ namespace grimm::wallet
                 return;
             }
         }
-        case State::SendingGrimmRedeemTX:
+        case State::SendingMWGRedeemTX:
         {
-            if (isGrimmSide)
+            if (isMWGSide)
             {
                 assert(false && "Impossible case!");
                 return;
@@ -485,7 +485,7 @@ namespace grimm::wallet
         }
         case State::SendingRedeemTX:
         {
-            if (isGrimmSide)
+            if (isMWGSide)
             {
                 LOG_ERROR() << "";
                 return;
@@ -506,15 +506,15 @@ namespace grimm::wallet
 
     bool AtomicSwapTransaction::CheckExpired()
     {
-        if (IsGrimmSide())
+        if (IsMWGSide())
         {
 			uint8_t nRegistered = proto::TxStatus::Unspecified;
-            if (!GetParameter(TxParameterID::TransactionRegistered, nRegistered, SubTxIndex::GRIMM_LOCK_TX))
+            if (!GetParameter(TxParameterID::TransactionRegistered, nRegistered, SubTxIndex::MWG_LOCK_TX))
             {
                 Block::SystemState::Full state;
                 Height lockTxMaxHeight = MaxHeight;
 
-                if (GetParameter(TxParameterID::MaxHeight, lockTxMaxHeight, SubTxIndex::GRIMM_LOCK_TX) && GetTip(state) && state.m_Height > lockTxMaxHeight)
+                if (GetParameter(TxParameterID::MaxHeight, lockTxMaxHeight, SubTxIndex::MWG_LOCK_TX) && GetTip(state) && state.m_Height > lockTxMaxHeight)
                 {
                     LOG_INFO() << GetTxID() << " Transaction expired. Current height: " << state.m_Height << ", max kernel height: " << lockTxMaxHeight;
                     OnFailed(TxFailureReason::TransactionExpired, false);
@@ -540,9 +540,9 @@ namespace grimm::wallet
                 SetState(State::Failed);
                 break;
             }
-            case State::BuildingGrimmLockTX:
-            case State::BuildingGrimmRedeemTX:
-            case State::BuildingGrimmRefundTX:
+            case State::BuildingMWGLockTX:
+            case State::BuildingMWGRedeemTX:
+            case State::BuildingMWGRefundTX:
             {
                 RollbackTx();
                 SetState(State::Failed);
@@ -550,7 +550,7 @@ namespace grimm::wallet
             }
             case State::HandlingContractTX:
             {
-                if (IsGrimmSide())
+                if (IsMWGSide())
                 {
                     RollbackTx();
                     SetState(State::Failed);
@@ -558,12 +558,12 @@ namespace grimm::wallet
 
                 break;
             }
-            case State::SendingGrimmLockTX:
+            case State::SendingMWGLockTX:
             {
                 // nothing
                 break;
             }
-            case State::SendingGrimmRedeemTX:
+            case State::SendingMWGRedeemTX:
             {
                 // nothing
                 break;
@@ -580,11 +580,11 @@ namespace grimm::wallet
         return false;
     }
 
-    bool AtomicSwapTransaction::CompleteGrimmWithdrawTx(SubTxID subTxID)
+    bool AtomicSwapTransaction::CompleteMWGWithdrawTx(SubTxID subTxID)
     {
         if (!m_WithdrawTx)
         {
-            BuildGrimmWithdrawTx(subTxID, m_WithdrawTx);
+            BuildMWGWithdrawTx(subTxID, m_WithdrawTx);
         }
 
         if (m_WithdrawTx && !SendSubTx(m_WithdrawTx, subTxID))
@@ -600,13 +600,13 @@ namespace grimm::wallet
         return true;
     }
 
-    AtomicSwapTransaction::SubTxState AtomicSwapTransaction::BuildGrimmLockTx()
+    AtomicSwapTransaction::SubTxState AtomicSwapTransaction::BuildMWGLockTx()
     {
         // load state
         SubTxState lockTxState = SubTxState::Initial;
-        GetParameter(TxParameterID::State, lockTxState, SubTxIndex::GRIMM_LOCK_TX);
+        GetParameter(TxParameterID::State, lockTxState, SubTxIndex::MWG_LOCK_TX);
 
-        bool isGrimmOwner = IsGrimmSide();
+        bool isMWGOwner = IsMWGSide();
         auto fee = GetMandatoryParameter<Amount>(TxParameterID::Fee);
         auto lockTxBuilder = std::make_shared<LockTxBuilder>(*this, GetAmount(), fee);
 
@@ -614,12 +614,12 @@ namespace grimm::wallet
         {
             // TODO: check expired!
 
-            if (isGrimmOwner)
+            if (isMWGOwner)
             {
                 Height maxResponseHeight = 0;
                 if (GetParameter(TxParameterID::PeerResponseHeight, maxResponseHeight))
                 {
-                    LOG_INFO() << GetTxID() << "[" << static_cast<SubTxID>(SubTxIndex::GRIMM_LOCK_TX) << "]"
+                    LOG_INFO() << GetTxID() << "[" << static_cast<SubTxID>(SubTxIndex::MWG_LOCK_TX) << "]"
                         << " Max height for response: " << maxResponseHeight;
                 }
 
@@ -633,7 +633,7 @@ namespace grimm::wallet
         }
 
         lockTxBuilder->CreateInputs();
-        if (isGrimmOwner && lockTxBuilder->CreateOutputs())
+        if (isMWGOwner && lockTxBuilder->CreateOutputs())
         {
             return lockTxState;
         }
@@ -643,22 +643,22 @@ namespace grimm::wallet
 
         if (!lockTxBuilder->UpdateMaxHeight())
         {
-            OnSubTxFailed(TxFailureReason::MaxHeightIsUnacceptable, SubTxIndex::GRIMM_LOCK_TX, true);
+            OnSubTxFailed(TxFailureReason::MaxHeightIsUnacceptable, SubTxIndex::MWG_LOCK_TX, true);
             return lockTxState;
         }
 
         if (!lockTxBuilder->GetPeerPublicExcessAndNonce())
         {
-            if (lockTxState == SubTxState::Initial && isGrimmOwner)
+            if (lockTxState == SubTxState::Initial && isMWGOwner)
             {
                 if (!IsInitiator())
                 {
-                    // When swap started not from Grimm side, we should save MaxHeight
-                    SetParameter(TxParameterID::MaxHeight, lockTxBuilder->GetMaxHeight(), false, SubTxIndex::GRIMM_LOCK_TX);
+                    // When swap started not from MWG side, we should save MaxHeight
+                    SetParameter(TxParameterID::MaxHeight, lockTxBuilder->GetMaxHeight(), false, SubTxIndex::MWG_LOCK_TX);
                 }
 
                 SendLockTxInvitation(*lockTxBuilder);
-                SetState(SubTxState::Invitation, SubTxIndex::GRIMM_LOCK_TX);
+                SetState(SubTxState::Invitation, SubTxIndex::MWG_LOCK_TX);
                 lockTxState = SubTxState::Invitation;
             }
             return lockTxState;
@@ -669,12 +669,12 @@ namespace grimm::wallet
 
         if (lockTxState == SubTxState::Initial || lockTxState == SubTxState::Invitation)
         {
-            if (!lockTxBuilder->SharedUTXOProofPart2(isGrimmOwner))
+            if (!lockTxBuilder->SharedUTXOProofPart2(isMWGOwner))
             {
                 return lockTxState;
             }
-            SendMultiSigProofPart2(*lockTxBuilder, isGrimmOwner);
-            SetState(SubTxState::SharedUTXOProofPart2, SubTxIndex::GRIMM_LOCK_TX);
+            SendMultiSigProofPart2(*lockTxBuilder, isMWGOwner);
+            SetState(SubTxState::SharedUTXOProofPart2, SubTxIndex::MWG_LOCK_TX);
             lockTxState = SubTxState::SharedUTXOProofPart2;
             return lockTxState;
         }
@@ -686,7 +686,7 @@ namespace grimm::wallet
 
         if (!lockTxBuilder->IsPeerSignatureValid())
         {
-            OnSubTxFailed(TxFailureReason::InvalidPeerSignature, SubTxIndex::GRIMM_LOCK_TX, true);
+            OnSubTxFailed(TxFailureReason::InvalidPeerSignature, SubTxIndex::MWG_LOCK_TX, true);
             return lockTxState;
         }
 
@@ -694,16 +694,16 @@ namespace grimm::wallet
 
         if (lockTxState == SubTxState::SharedUTXOProofPart2)
         {
-            if (!lockTxBuilder->SharedUTXOProofPart3(isGrimmOwner))
+            if (!lockTxBuilder->SharedUTXOProofPart3(isMWGOwner))
             {
                 return lockTxState;
             }
-            SendMultiSigProofPart3(*lockTxBuilder, isGrimmOwner);
-            SetState(SubTxState::Constructed, SubTxIndex::GRIMM_LOCK_TX);
+            SendMultiSigProofPart3(*lockTxBuilder, isMWGOwner);
+            SetState(SubTxState::Constructed, SubTxIndex::MWG_LOCK_TX);
             lockTxState = SubTxState::Constructed;
         }
 
-        if (isGrimmOwner && lockTxState == SubTxState::Constructed)
+        if (isMWGOwner && lockTxState == SubTxState::Constructed)
         {
             // Create TX
             auto transaction = lockTxBuilder->CreateTransaction();
@@ -711,7 +711,7 @@ namespace grimm::wallet
             TxBase::Context context(pars);
             if (!transaction->IsValid(context))
             {
-                OnSubTxFailed(TxFailureReason::InvalidTransaction, SubTxIndex::GRIMM_LOCK_TX, true);
+                OnSubTxFailed(TxFailureReason::InvalidTransaction, SubTxIndex::MWG_LOCK_TX, true);
                 return lockTxState;
             }
 
@@ -722,7 +722,7 @@ namespace grimm::wallet
         return lockTxState;
     }
 
-    AtomicSwapTransaction::SubTxState AtomicSwapTransaction::BuildGrimmWithdrawTx(SubTxID subTxID, Transaction::Ptr& resultTx)
+    AtomicSwapTransaction::SubTxState AtomicSwapTransaction::BuildMWGWithdrawTx(SubTxID subTxID, Transaction::Ptr& resultTx)
     {
         SubTxState subTxState = GetSubTxState(subTxID);
 
@@ -739,7 +739,7 @@ namespace grimm::wallet
             SetParameter(TxParameterID::Fee, withdrawFee, subTxID);
         }
 
-        bool isTxOwner = (IsGrimmSide() && (SubTxIndex::GRIMM_REFUND_TX == subTxID)) || (!IsGrimmSide() && (SubTxIndex::GRIMM_REDEEM_TX == subTxID));
+        bool isTxOwner = (IsMWGSide() && (SubTxIndex::MWG_REFUND_TX == subTxID)) || (!IsMWGSide() && (SubTxIndex::MWG_REDEEM_TX == subTxID));
         SharedTxBuilder builder{ *this, subTxID, withdrawAmount, withdrawFee };
 
         if (!builder.GetSharedParameters())
@@ -776,7 +776,7 @@ namespace grimm::wallet
                 // invited participant
                 ConfirmSharedTxInvitation(builder);
 
-                if (subTxID == SubTxIndex::GRIMM_REFUND_TX)
+                if (subTxID == SubTxIndex::MWG_REFUND_TX)
                 {
                     SetState(SubTxState::Constructed, subTxID);
                     subTxState = SubTxState::Constructed;
@@ -785,9 +785,9 @@ namespace grimm::wallet
             return subTxState;
         }
 
-        if (subTxID == SubTxIndex::GRIMM_REDEEM_TX)
+        if (subTxID == SubTxIndex::MWG_REDEEM_TX)
         {
-            if (IsGrimmSide())
+            if (IsMWGSide())
             {
                 // save SecretPublicKey
                 {
@@ -828,7 +828,7 @@ namespace grimm::wallet
                 // Send BTC side partial sign with secret
                 auto partialSign = builder.GetPartialSignature();
                 Scalar secretPrivateKey;
-                GetParameter(TxParameterID::AtomicSwapSecretPrivateKey, secretPrivateKey.m_Value, SubTxIndex::GRIMM_REDEEM_TX);
+                GetParameter(TxParameterID::AtomicSwapSecretPrivateKey, secretPrivateKey.m_Value, SubTxIndex::MWG_REDEEM_TX);
                 partialSign += secretPrivateKey;
 
                 SetTxParameter msg;
@@ -881,21 +881,21 @@ namespace grimm::wallet
 
         if (proto::TxStatus::Ok != nRegistered)
         {
-            OnSubTxFailed(TxFailureReason::FailedToRegister, subTxID, subTxID == SubTxIndex::GRIMM_LOCK_TX);
+            OnSubTxFailed(TxFailureReason::FailedToRegister, subTxID, subTxID == SubTxIndex::MWG_LOCK_TX);
             return false;
         }
 
         return true;
     }
 
-    bool AtomicSwapTransaction::IsGrimmLockTimeExpired() const
+    bool AtomicSwapTransaction::IsMWGLockTimeExpired() const
     {
         Height lockTimeHeight = MaxHeight;
         GetParameter(TxParameterID::MinHeight, lockTimeHeight);
 
         Block::SystemState::Full state;
 
-        return GetTip(state) && state.m_Height > (lockTimeHeight + kGrimmLockTimeInBlocks);
+        return GetTip(state) && state.m_Height > (lockTimeHeight + kMWGLockTimeInBlocks);
     }
 
     bool AtomicSwapTransaction::CompleteSubTx(SubTxID subTxID)
@@ -909,7 +909,7 @@ namespace grimm::wallet
             return false;
         }
 
-        if ((SubTxIndex::GRIMM_REDEEM_TX == subTxID) || (SubTxIndex::GRIMM_REFUND_TX == subTxID))
+        if ((SubTxIndex::MWG_REDEEM_TX == subTxID) || (SubTxIndex::MWG_REFUND_TX == subTxID))
         {
             // store Coin in DB
             auto amount = GetMandatoryParameter<Amount>(TxParameterID::Amount, subTxID);
@@ -950,7 +950,7 @@ namespace grimm::wallet
 
         if (!hProof)
         {
-            Merkle::Hash kernelID = GetMandatoryParameter<Merkle::Hash>(TxParameterID::KernelID, SubTxIndex::GRIMM_REDEEM_TX);
+            Merkle::Hash kernelID = GetMandatoryParameter<Merkle::Hash>(TxParameterID::KernelID, SubTxIndex::MWG_REDEEM_TX);
             m_Gateway.get_kernel(GetTxID(), kernelID, subTxID);
             return false;
         }
@@ -976,15 +976,15 @@ namespace grimm::wallet
         return *m_IsSender;
     }
 
-    bool AtomicSwapTransaction::IsGrimmSide() const
+    bool AtomicSwapTransaction::IsMWGSide() const
     {
-        if (!m_IsGrimmSide.is_initialized())
+        if (!m_IsMWGSide.is_initialized())
         {
-            bool isGrimmSide = false;
-            GetParameter(TxParameterID::AtomicSwapIsGrimmSide, isGrimmSide);
-            m_IsGrimmSide = isGrimmSide;
+            bool isMWGSide = false;
+            GetParameter(TxParameterID::AtomicSwapIsMWGSide, isMWGSide);
+            m_IsMWGSide = isMWGSide;
         }
-        return *m_IsGrimmSide;
+        return *m_IsMWGSide;
     }
 
     void AtomicSwapTransaction::SendInvitation()
@@ -1007,7 +1007,7 @@ namespace grimm::wallet
             .AddParameter(TxParameterID::AtomicSwapCoin, swapCoin)
             .AddParameter(TxParameterID::AtomicSwapPeerPublicKey, swapPublicKey)
             .AddParameter(TxParameterID::AtomicSwapExternalLockTime, swapLockTime)
-            .AddParameter(TxParameterID::AtomicSwapIsGrimmSide, !IsGrimmSide())
+            .AddParameter(TxParameterID::AtomicSwapIsMWGSide, !IsMWGSide())
             .AddParameter(TxParameterID::PeerProtoVersion, s_ProtoVersion);
 
         if (!SendTxParameters(std::move(msg)))
@@ -1034,7 +1034,7 @@ namespace grimm::wallet
         SetTxParameter msg;
         msg.AddParameter(TxParameterID::AtomicSwapPeerPublicKey, swapPublicKey)
             .AddParameter(TxParameterID::Fee, lockBuilder.GetFee())
-            .AddParameter(TxParameterID::SubTxIndex, SubTxIndex::GRIMM_LOCK_TX)
+            .AddParameter(TxParameterID::SubTxIndex, SubTxIndex::MWG_LOCK_TX)
             .AddParameter(TxParameterID::PeerMaxHeight, lockBuilder.GetMaxHeight())
             .AddParameter(TxParameterID::PeerPublicExcess, lockBuilder.GetPublicExcess())
             .AddParameter(TxParameterID::PeerPublicNonce, lockBuilder.GetPublicNonce());
@@ -1048,7 +1048,7 @@ namespace grimm::wallet
     void AtomicSwapTransaction::SendMultiSigProofPart2(const LockTxBuilder& lockBuilder, bool isMultiSigProofOwner)
     {
         SetTxParameter msg;
-        msg.AddParameter(TxParameterID::SubTxIndex, SubTxIndex::GRIMM_LOCK_TX)
+        msg.AddParameter(TxParameterID::SubTxIndex, SubTxIndex::MWG_LOCK_TX)
             .AddParameter(TxParameterID::PeerSignature, lockBuilder.GetPartialSignature())
             .AddParameter(TxParameterID::PeerOffset, lockBuilder.GetOffset())
             .AddParameter(TxParameterID::PeerPublicSharedBlindingFactor, lockBuilder.GetPublicSharedBlindingFactor());
@@ -1078,7 +1078,7 @@ namespace grimm::wallet
         {
             auto bulletProof = lockBuilder.GetSharedProof();
             SetTxParameter msg;
-            msg.AddParameter(TxParameterID::SubTxIndex, SubTxIndex::GRIMM_LOCK_TX)
+            msg.AddParameter(TxParameterID::SubTxIndex, SubTxIndex::MWG_LOCK_TX)
                 .AddParameter(TxParameterID::PeerSharedBulletProofPart3, bulletProof.m_Part3);
 
             if (!SendTxParameters(std::move(msg)))
@@ -1149,7 +1149,7 @@ namespace grimm::wallet
 
     void AtomicSwapTransaction::ExtractSecretPrivateKey()
     {
-        auto subTxID = SubTxIndex::GRIMM_REDEEM_TX;
+        auto subTxID = SubTxIndex::MWG_REDEEM_TX;
         TxKernel::Ptr kernel = GetMandatoryParameter<TxKernel::Ptr>(TxParameterID::Kernel, subTxID);
 
         SharedTxBuilder builder{ *this, subTxID };
@@ -1172,7 +1172,7 @@ namespace grimm::wallet
         Scalar secretPrivateKey;
         secretPrivateKeyNative.Export(secretPrivateKey);
 
-        SetParameter(TxParameterID::AtomicSwapSecretPrivateKey, secretPrivateKey.m_Value, false, GRIMM_REDEEM_TX);
+        SetParameter(TxParameterID::AtomicSwapSecretPrivateKey, secretPrivateKey.m_Value, false, MWG_REDEEM_TX);
     }
 
 } // namespace
