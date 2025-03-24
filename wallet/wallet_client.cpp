@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,8 +22,8 @@ using namespace std;
 
 namespace
 {
-    using namespace grimm;
-    using namespace grimm::wallet;
+    using namespace MWG;
+    using namespace MWG::wallet;
 
 template<typename Observer, typename Notifier>
 struct ScopedSubscriber
@@ -222,7 +223,7 @@ struct WalletModelBridge : public Bridge<IWalletModelAsync>
 };
 }
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     WalletClient::WalletClient(IWalletDB::Ptr walletDB, const std::string& nodeAddr, io::Reactor::Ptr reactor)
         : m_walletDB(walletDB)
@@ -397,7 +398,7 @@ namespace grimm::wallet
         return m_nodeAddrStr;
     }
 
-    std::string WalletClient::exportOwnerKey(const grimm::SecString& pass) const
+    std::string WalletClient::exportOwnerKey(const MWG::SecString& pass) const
     {
         Key::IKdf::Ptr pKey = m_walletDB->get_ChildKdf(0);
         const ECC::HKdf& kdf = static_cast<ECC::HKdf&>(*pKey);
