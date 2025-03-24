@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +19,7 @@
 
 using json = nlohmann::json;
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     namespace
     {
@@ -318,7 +319,7 @@ namespace grimm::wallet
         checkJsonParam(params, "amount", id);
         checkJsonParam(params, "fee", id);
         checkJsonParam(params, "swapAmount", id);
-        checkJsonParam(params, "grimmSide", id);
+        checkJsonParam(params, "MWGSide", id);
         checkJsonParam(params, "address", id);
 
         if (params["amount"] < 0)
@@ -335,7 +336,7 @@ namespace grimm::wallet
         data.amount = params["amount"];
         data.fee = params["fee"];
         data.swapAmount = params["swapAmount"];
-        data.grimmSide = params["grimmSide"];
+        data.MWGSide = params["MWGSide"];
         data.address.FromHex(params["address"]);
         data.swapCoin = wallet::AtomicSwapCoin::Bitcoin;
 
@@ -354,7 +355,7 @@ namespace grimm::wallet
     {
         checkJsonParam(params, "amount", id);
         checkJsonParam(params, "swapAmount", id);
-        checkJsonParam(params, "grimmSide", id);
+        checkJsonParam(params, "MWGSide", id);
 
         if (params["amount"] < 0)
             throwInvalidJsonRpc(id);
@@ -366,7 +367,7 @@ namespace grimm::wallet
 
         data.amount = params["amount"];
         data.swapAmount = params["swapAmount"];
-        data.grimmSide = params["grimmSide"];
+        data.MWGSide = params["MWGSide"];
 
         data.swapCoin = wallet::AtomicSwapCoin::Bitcoin;
 
