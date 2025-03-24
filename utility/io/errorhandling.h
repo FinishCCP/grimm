@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +19,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace grimm { namespace io {
+namespace MWG { namespace io {
 
 /// Error codes from libuv + custom error codes
 enum ErrorCode {
@@ -53,7 +54,7 @@ const char* error_descr(ErrorCode errorCode);
 /// Formats error code to be shown by exception::what()
 std::string format_io_error(const char* _function, const char* _file, int _line, ErrorCode _code);
 
-/// Exception from grimm::io
+/// Exception from MWG::io
 struct Exception : public std::runtime_error {
 #ifdef SHOW_CODE_LOCATION
     std::string function;
