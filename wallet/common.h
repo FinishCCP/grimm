@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +24,7 @@
 #include "swaps/second_side.h"
 #include <algorithm>
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     enum class TxType : uint8_t
     {
@@ -91,7 +92,7 @@ namespace grimm::wallet
         Registering
     };
 
-#define GRIMM_TX_FAILURE_REASON_MAP(MACRO) \
+#define MWG_TX_FAILURE_REASON_MAP(MACRO) \
     MACRO(Unknown,                      0, "Unknown reason") \
     MACRO(Cancelled,                    1, "Transaction was cancelled") \
     MACRO(InvalidPeerSignature,         2, "Peer's signature is not valid ") \
@@ -117,7 +118,7 @@ namespace grimm::wallet
     enum TxFailureReason : int32_t
     {
 #define MACRO(name, code, _) name = code, 
-        GRIMM_TX_FAILURE_REASON_MAP(MACRO)
+        MWG_TX_FAILURE_REASON_MAP(MACRO)
 #undef MACRO
     };
 
@@ -249,7 +250,7 @@ namespace grimm::wallet
 
         IsSelfTx = 27,
        
-        AtomicSwapIsGrimmSide = 30,
+        AtomicSwapIsMWGSide = 30,
         AtomicSwapCoin = 31,
         AtomicSwapAmount = 32,
         AtomicSwapPublicKey = 33,
@@ -452,7 +453,7 @@ namespace grimm::wallet
     };
 }
 
-namespace grimm
+namespace MWG
 {
     std::ostream& operator<<(std::ostream& os, const wallet::PrintableAmount& amount);
     std::ostream& operator<<(std::ostream& os, const wallet::TxID& uuid);
@@ -460,7 +461,7 @@ namespace grimm
 
 namespace std
 {
-    string to_string(const grimm::wallet::WalletID&);
-    string to_string(const grimm::Merkle::Hash& hash);
-    string to_string(grimm::wallet::AtomicSwapCoin value);
+    string to_string(const MWG::wallet::WalletID&);
+    string to_string(const MWG::Merkle::Hash& hash);
+    string to_string(MWG::wallet::AtomicSwapCoin value);
 }
