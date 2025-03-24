@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +21,7 @@
 
 #include "second_side.h"
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     class LockTxBuilder;
 
@@ -61,17 +62,17 @@ namespace grimm::wallet
             Initial,
             Invitation,
 
-            BuildingGrimmLockTX,
-            BuildingGrimmRefundTX,
-            BuildingGrimmRedeemTX,
+            BuildingMWGLockTX,
+            BuildingMWGRefundTX,
+            BuildingMWGRedeemTX,
 
             HandlingContractTX,
             SendingRefundTX,
             SendingRedeemTX,
 
-            SendingGrimmLockTX,
-            SendingGrimmRefundTX,
-            SendingGrimmRedeemTX,
+            SendingMWGLockTX,
+            SendingMWGRefundTX,
+            SendingMWGRedeemTX,
 
             Cancelled,
 
@@ -114,30 +115,30 @@ namespace grimm::wallet
         void ConfirmSharedTxInvitation(const BaseTxBuilder& builder);
 
 
-        SubTxState BuildGrimmLockTx();
-        SubTxState BuildGrimmWithdrawTx(SubTxID subTxID, Transaction::Ptr& resultTx);
-        bool CompleteGrimmWithdrawTx(SubTxID subTxID);
+        SubTxState BuildMWGLockTx();
+        SubTxState BuildMWGWithdrawTx(SubTxID subTxID, Transaction::Ptr& resultTx);
+        bool CompleteMWGWithdrawTx(SubTxID subTxID);
                 
         bool SendSubTx(Transaction::Ptr transaction, SubTxID subTxID);
 
-        bool IsGrimmLockTimeExpired() const;
+        bool IsMWGLockTimeExpired() const;
 
-        // wait SubTX in GRIMM chain(request kernel proof), returns true if got kernel proof
+        // wait SubTX in MWG chain(request kernel proof), returns true if got kernel proof
         bool CompleteSubTx(SubTxID subTxID);
 
         bool GetKernelFromChain(SubTxID subTxID) const;
 
         Amount GetAmount() const;
         bool IsSender() const;
-        bool IsGrimmSide() const;
+        bool IsMWGSide() const;
 
         void OnSubTxFailed(TxFailureReason reason, SubTxID subTxID, bool notify = false);
         void CheckSubTxFailures();
         void ExtractSecretPrivateKey();
 
-        mutable boost::optional<bool> m_IsGrimmSide;
+        mutable boost::optional<bool> m_IsMWGSide;
         mutable boost::optional<bool> m_IsSender;
-        mutable boost::optional<grimm::Amount> m_Amount;
+        mutable boost::optional<MWG::Amount> m_Amount;
 
         Transaction::Ptr m_LockTx;
         Transaction::Ptr m_WithdrawTx;
