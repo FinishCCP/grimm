@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,11 +49,11 @@
 #include "version.h"
 
 using namespace std;
-using namespace grimm;
-using namespace grimm::wallet;
+using namespace MWG;
+using namespace MWG::wallet;
 using namespace ECC;
 
-namespace grimm
+namespace MWG
 {
     std::ostream& operator<<(std::ostream& os, Coin::Status s)
     {
@@ -116,15 +117,15 @@ namespace grimm
     {
         static const char* Initial = "initial";
         static const char* Invitation = "invitation";
-        static const char* BuildingGrimmLockTX = "building Grimm LockTX";
-        static const char* BuildingGrimmRefundTX = "building Grimm RefundTX";
-        static const char* BuildingGrimmRedeemTX = "building Grimm RedeemTX";
+        static const char* BuildingMWGLockTX = "building MWG LockTX";
+        static const char* BuildingMWGRefundTX = "building MWG RefundTX";
+        static const char* BuildingMWGRedeemTX = "building MWG RedeemTX";
         static const char* HandlingContractTX = "handling LockTX";
         static const char* SendingRefundTX = "sending RefundTX";
         static const char* SendingRedeemTX = "sending RedeemTX";
-        static const char* SendingGrimmLockTX = "sending Grimm LockTX";
-        static const char* SendingGrimmRefundTX = "sending Grimm RefundTX";
-        static const char* SendingGrimmRedeemTX = "sending Grimm RedeemTX";
+        static const char* SendingMWGLockTX = "sending MWG LockTX";
+        static const char* SendingMWGRefundTX = "sending MWG RefundTX";
+        static const char* SendingMWGRedeemTX = "sending MWG RedeemTX";
         static const char* Completed = "completed";
         static const char* Cancelled = "cancelled";
         static const char* Aborted = "aborted";
@@ -140,24 +141,24 @@ namespace grimm
             return Initial;
         case wallet::AtomicSwapTransaction::State::Invitation:
             return Invitation;
-        case wallet::AtomicSwapTransaction::State::BuildingGrimmLockTX:
-            return BuildingGrimmLockTX;
-        case wallet::AtomicSwapTransaction::State::BuildingGrimmRefundTX:
-            return BuildingGrimmRefundTX;
-        case wallet::AtomicSwapTransaction::State::BuildingGrimmRedeemTX:
-            return BuildingGrimmRedeemTX;
+        case wallet::AtomicSwapTransaction::State::BuildingMWGLockTX:
+            return BuildingMWGLockTX;
+        case wallet::AtomicSwapTransaction::State::BuildingMWGRefundTX:
+            return BuildingMWGRefundTX;
+        case wallet::AtomicSwapTransaction::State::BuildingMWGRedeemTX:
+            return BuildingMWGRedeemTX;
         case wallet::AtomicSwapTransaction::State::HandlingContractTX:
             return HandlingContractTX;
         case wallet::AtomicSwapTransaction::State::SendingRefundTX:
             return SendingRefundTX;
         case wallet::AtomicSwapTransaction::State::SendingRedeemTX:
             return SendingRedeemTX;
-        case wallet::AtomicSwapTransaction::State::SendingGrimmLockTX:
-            return SendingGrimmLockTX;
-        case wallet::AtomicSwapTransaction::State::SendingGrimmRefundTX:
-            return SendingGrimmRefundTX;
-        case wallet::AtomicSwapTransaction::State::SendingGrimmRedeemTX:
-            return SendingGrimmRedeemTX;
+        case wallet::AtomicSwapTransaction::State::SendingMWGLockTX:
+            return SendingMWGLockTX;
+        case wallet::AtomicSwapTransaction::State::SendingMWGRefundTX:
+            return SendingMWGRefundTX;
+        case wallet::AtomicSwapTransaction::State::SendingMWGRedeemTX:
+            return SendingMWGRedeemTX;
         case wallet::AtomicSwapTransaction::State::CompleteSwap:
             return Completed;
         case wallet::AtomicSwapTransaction::State::Cancelled:
@@ -612,7 +613,7 @@ namespace
             cout << "TRANSACTIONS\n\n  |"
                 << left << setw(columnWidths[0]) << " datetime" << " |"
                 << left << setw(columnWidths[1]) << " direction" << " |"
-                << right << setw(columnWidths[2]) << " amount, GRIMM" << " |"
+                << right << setw(columnWidths[2]) << " amount, MWG" << " |"
                 << left << setw(columnWidths[3]) << " status" << " |"
                 << setw(columnWidths[4]) << " ID" << " |"
                 << setw(columnWidths[5]) << " kernel ID" << " |" << endl;
@@ -643,7 +644,7 @@ namespace
 
             cout << "SWAP TRANSACTIONS\n\n  |"
                 << left << setw(columnWidths[0]) << " datetime" << " |"
-                << right << setw(columnWidths[1]) << " amount, GRIMM" << " |"
+                << right << setw(columnWidths[1]) << " amount, MWG" << " |"
                 << right << setw(columnWidths[2]) << " swap amount" << " |"
                 << left << setw(columnWidths[3]) << " swap type" << " |"
                 << left << setw(columnWidths[4]) << " status" << " |"
@@ -653,14 +654,14 @@ namespace
             {
                 Amount swapAmount = 0;
                 storage::getTxParameter(*walletDB, tx.m_txId, wallet::kDefaultSubTxID, wallet::TxParameterID::AtomicSwapAmount, swapAmount);
-                bool isGrimmSide = false;
-                storage::getTxParameter(*walletDB, tx.m_txId, wallet::kDefaultSubTxID, wallet::TxParameterID::AtomicSwapIsGrimmSide, isGrimmSide);
+                bool isMWGSide = false;
+                storage::getTxParameter(*walletDB, tx.m_txId, wallet::kDefaultSubTxID, wallet::TxParameterID::AtomicSwapIsMWGSide, isMWGSide);
 
                 AtomicSwapCoin swapCoin = AtomicSwapCoin::Unknown;
                 storage::getTxParameter(*walletDB, tx.m_txId, wallet::kDefaultSubTxID, wallet::TxParameterID::AtomicSwapCoin, swapCoin);
 
                 stringstream ss;
-                ss << (isGrimmSide ? "Grimm" : getAtomicSwapCoinText(swapCoin)) << " <--> " << (!isGrimmSide ? "Grimm" : getAtomicSwapCoinText(swapCoin));
+                ss << (isMWGSide ? "MWG" : getAtomicSwapCoinText(swapCoin)) << " <--> " << (!isMWGSide ? "MWG" : getAtomicSwapCoinText(swapCoin));
 
                 cout << "   "
                     << " " << left << setw(columnWidths[0]) << format_timestamp("%Y.%m.%d %H:%M:%S", tx.m_createTime * 1000, false)
@@ -676,7 +677,7 @@ namespace
         const array<uint8_t, 6> columnWidths{ { 49, 14, 14, 18, 30, 8} };
         cout << "  |"
             << left << setw(columnWidths[0]) << " ID" << " |"
-            << right << setw(columnWidths[1]) << " grimm" << " |"
+            << right << setw(columnWidths[1]) << " MWG" << " |"
             << setw(columnWidths[2]) << " centum" << " |"
             << left << setw(columnWidths[3]) << " maturity" << " |"
             << setw(columnWidths[4]) << " status" << " |"
@@ -757,7 +758,7 @@ namespace
             std::string sTxt;
             sTxt.resize(res.size() * 2);
 
-            grimm::to_hex(&sTxt.front(), res.data(), res.size());
+            MWG::to_hex(&sTxt.front(), res.data(), res.size());
             LOG_INFO() << "Exported form: " << sTxt;
         }
 
@@ -779,7 +780,7 @@ namespace
         return 0;
     }
 
-    int ExportMinerKey(const po::variables_map& vm, const IWalletDB::Ptr& walletDB, const grimm::SecString& pass)
+    int ExportMinerKey(const po::variables_map& vm, const IWalletDB::Ptr& walletDB, const MWG::SecString& pass)
     {
         uint32_t subKey = vm[cli::KEY_SUBKEY].as<Nonnegative<uint32_t>>().value;
         if (subKey < 1)
@@ -800,7 +801,7 @@ namespace
         return 0;
     }
 
-    int ExportOwnerKey(const IWalletDB::Ptr& walletDB, const grimm::SecString& pass)
+    int ExportOwnerKey(const IWalletDB::Ptr& walletDB, const MWG::SecString& pass)
     {
         Key::IKdf::Ptr pKey = walletDB->get_ChildKdf(0);
         const ECC::HKdf& kdf = static_cast<ECC::HKdf&>(*pKey);
@@ -905,7 +906,7 @@ namespace
             return false;
         }
 
-        signedAmount *= Rules::Coin; // convert grimms to coins
+        signedAmount *= Rules::Coin; // convert MWGs to coins
 
         amount = static_cast<ECC::Amount>(std::round(signedAmount));
         if (amount == 0)
@@ -931,7 +932,7 @@ static const unsigned LOG_ROTATION_PERIOD_SEC = 3*60*60; // 3 hours
 
 int main_impl(int argc, char* argv[])
 {
-    grimm::Crash::InstallHandler(NULL);
+    MWG::Crash::InstallHandler(NULL);
 
     try
     {
@@ -940,7 +941,7 @@ int main_impl(int argc, char* argv[])
         po::variables_map vm;
         try
         {
-            vm = getOptions(argc, argv, "grimm-wallet.cfg", options, true);
+            vm = getOptions(argc, argv, "MWG-wallet.cfg", options, true);
         }
         catch (const po::invalid_option_value& e)
         {
@@ -991,7 +992,7 @@ int main_impl(int argc, char* argv[])
 #define LOG_FILES_PREFIX "wallet_"
 
         const auto path = boost::filesystem::system_complete(LOG_FILES_DIR);
-        auto logger = grimm::Logger::create(logLevel, logLevel, fileLogLevel, LOG_FILES_PREFIX, path.string());
+        auto logger = MWG::Logger::create(logLevel, logLevel, fileLogLevel, LOG_FILES_PREFIX, path.string());
 
         try
         {
@@ -1062,7 +1063,7 @@ int main_impl(int argc, char* argv[])
                         return 0;
                     }
 
-                    LOG_INFO() << "Grimm Wallet " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
+                    LOG_INFO() << "MWG Wallet " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
                     LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
 
                     bool coldWallet = vm.count(cli::COLD_WALLET) > 0;
@@ -1078,7 +1079,7 @@ int main_impl(int argc, char* argv[])
 
                     if (!WalletDB::isInitialized(walletPath) && (command != cli::INIT && command != cli::RESTORE))
                     {
-                        LOG_ERROR() << "Please initialize your wallet first... \nExample: grimm-wallet --command=init";
+                        LOG_ERROR() << "Please initialize your wallet first... \nExample: MWG-wallet --command=init";
                         return -1;
                     }
                     else if (WalletDB::isInitialized(walletPath) && (command == cli::INIT || command == cli::RESTORE))
@@ -1104,7 +1105,7 @@ int main_impl(int argc, char* argv[])
                     LOG_INFO() << "starting a wallet...";
 
                     SecString pass;
-                    if (!grimm::read_wallet_pass(pass, vm))
+                    if (!MWG::read_wallet_pass(pass, vm))
                     {
                         LOG_ERROR() << "Please, provide password for the wallet.";
                         return -1;
@@ -1112,7 +1113,7 @@ int main_impl(int argc, char* argv[])
 
                     if ((command == cli::INIT || command == cli::RESTORE) && vm.count(cli::PASS) == 0)
                     {
-                        if (!grimm::confirm_wallet_pass(pass))
+                        if (!MWG::confirm_wallet_pass(pass))
                         {
                             LOG_ERROR() << "Passwords do not match";
                             return -1;
@@ -1434,7 +1435,7 @@ int main_impl(int argc, char* argv[])
                             }
 
                             Amount swapAmount = vm[cli::SWAP_AMOUNT].as<Positive<Amount>>().value;
-                            bool isGrimmSide = (vm.count(cli::SWAP_GRIMM_SIDE) != 0);
+                            bool isMWGSide = (vm.count(cli::SWAP_MWG_SIDE) != 0);
 
                             if (command == cli::SWAP_INIT)
                             {
@@ -1452,7 +1453,7 @@ int main_impl(int argc, char* argv[])
                                 WalletAddress senderAddress = CreateNewAddress(walletDB, "");
 
                                 currentTxID = wallet.swap_coins(senderAddress.m_walletID, receiverWalletID,
-                                    move(amount), move(fee), swapCoin, swapAmount, isGrimmSide);
+                                    move(amount), move(fee), swapCoin, swapAmount, isMWGSide);
                             }
 
                             if (command == cli::SWAP_LISTEN)
@@ -1465,7 +1466,7 @@ int main_impl(int argc, char* argv[])
 
                                 auto signedAmount = vm[cli::AMOUNT].as<Positive<double>>().value;
 
-                                signedAmount *= Rules::Coin; // convert grimms to coins
+                                signedAmount *= Rules::Coin; // convert MWGs to coins
 
                                 amount = static_cast<ECC::Amount>(std::round(signedAmount));
                                 if (amount == 0)
@@ -1474,7 +1475,7 @@ int main_impl(int argc, char* argv[])
                                     return false;
                                 }
 
-                                wallet.initSwapConditions(amount, swapAmount, swapCoin, isGrimmSide);
+                                wallet.initSwapConditions(amount, swapAmount, swapCoin, isMWGSide);
                             }
                         }
 
