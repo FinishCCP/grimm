@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,12 +24,12 @@ int main()
         in.m_X.m_pData[0] = 123;
         in.m_Y = 1;
 
-        grimm::Serializer ser;
+        MWG::Serializer ser;
         ser & in;
 
         auto [buf, size] = ser.buffer();
 
-        grimm::Deserializer des;
+        MWG::Deserializer des;
         des.reset(buf, size);
 
         ECC::Point out;
