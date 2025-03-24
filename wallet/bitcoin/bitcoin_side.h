@@ -1,4 +1,6 @@
 // Copyright 2019 The Grimm Team
+// Copyright 2025 The MWG Team
+
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,12 +24,12 @@
 
 #include <memory>
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     class BitcoinSide : public SecondSide, public std::enable_shared_from_this<BitcoinSide>
     {
     public:
-        BitcoinSide(BaseTransaction& tx, std::shared_ptr<IBitcoinBridge> bitcoinBridge, bool isGrimmSide);
+        BitcoinSide(BaseTransaction& tx, std::shared_ptr<IBitcoinBridge> bitcoinBridge, bool isMWGSide);
 
         bool Initialize() override;
         bool InitLockTime() override;
