@@ -1,4 +1,5 @@
 // Copyright 2019 The Grimm Team
+// Copyright 2025 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,10 +18,10 @@
 
 using namespace ECC;
 
-namespace grimm::wallet
+namespace MWG::wallet
 {
     LockTxBuilder::LockTxBuilder(BaseTransaction& tx, Amount amount, Amount fee)
-        : BaseTxBuilder(tx, SubTxIndex::GRIMM_LOCK_TX, { amount }, fee)
+        : BaseTxBuilder(tx, SubTxIndex::MWG_LOCK_TX, { amount }, fee)
     {
         Height minHeight = 0;
         if (!m_Tx.GetParameter(TxParameterID::MinHeight, minHeight, m_SubTxID))
@@ -141,11 +142,11 @@ namespace grimm::wallet
 
             CoinIDList sharedInputs;
             sharedInputs.push_back(m_SharedCoin.m_ID);
-            m_Tx.SetParameter(TxParameterID::InputCoins, sharedInputs, static_cast<SubTxID>(SubTxIndex::GRIMM_REDEEM_TX));
-            m_Tx.SetParameter(TxParameterID::InputCoins, sharedInputs, static_cast<SubTxID>(SubTxIndex::GRIMM_REFUND_TX));
+            m_Tx.SetParameter(TxParameterID::InputCoins, sharedInputs, static_cast<SubTxID>(SubTxIndex::MWG_REDEEM_TX));
+            m_Tx.SetParameter(TxParameterID::InputCoins, sharedInputs, static_cast<SubTxID>(SubTxIndex::MWG_REFUND_TX));
 
             // blindingFactor = sk + sk1
-            grimm::SwitchCommitment switchCommitment;
+            MWG::SwitchCommitment switchCommitment;
             switchCommitment.Create(m_SharedBlindingFactor, *m_Tx.GetWalletDB()->get_ChildKdf(m_SharedCoin.m_ID.m_SubIdx), m_SharedCoin.m_ID);
             m_Tx.SetParameter(TxParameterID::SharedBlindingFactor, m_SharedBlindingFactor, m_SubTxID);
 
@@ -209,7 +210,7 @@ namespace grimm::wallet
         {
             ECC::RangeProof::CreatorParams creatorParams;
             creatorParams.m_Kidv = m_SharedCoin.m_ID;
-            grimm::Output::GenerateSeedKid(creatorParams.m_Seed.V, GetSharedCommitment(), *m_Tx.GetWalletDB()->get_MasterKdf());
+            MWG::Output::GenerateSeedKid(creatorParams.m_Seed.V, GetSharedCommitment(), *m_Tx.GetWalletDB()->get_MasterKdf());
             m_CreatorParams = creatorParams;
         }
         return m_CreatorParams.get();
