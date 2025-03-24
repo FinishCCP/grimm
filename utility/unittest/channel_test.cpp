@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +19,7 @@
 #include <assert.h>
 
 using namespace std;
-using namespace grimm;
+using namespace MWG;
 
 static const string testStr("some moveble data");
 
