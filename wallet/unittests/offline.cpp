@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+// Copyright 2025 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +21,7 @@
 #include <future>
 #include <boost/filesystem.hpp>
 
-namespace grimm {
+namespace MWG {
     using namespace wallet;
 struct WalletDBObserver : IWalletDbObserver {
     void onCoinsChanged() {
@@ -107,7 +108,7 @@ WaitHandle run_node(const NodeParams& params) {
         std::launch::async,
         [&params, reactor]() {
             io::Reactor::Scope scope(*reactor);
-            grimm::Node node;
+            MWG::Node node;
 
             node.m_Cfg.m_Listen.port(params.nodeAddress.port());
             node.m_Cfg.m_Listen.ip(params.nodeAddress.ip());
@@ -147,7 +148,7 @@ void cleanup_files() {
 
 void test_offline(bool twoNodes) {
     cleanup_files();
-    using namespace grimm;
+    using namespace MWG;
 
     io::Address nodeAddress, node2Address;
     nodeAddress = io::Address::localhost().port(NODE_PORT);
@@ -232,7 +233,7 @@ int test_two_nodes() {
 } //namespace
 
 int main(int argc, char* argv[]) {
-    using namespace grimm;
+    using namespace MWG;
 
     int logLevel = LOG_LEVEL_DEBUG;
 #if LOG_VERBOSE_ENABLED
