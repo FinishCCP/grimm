@@ -10,7 +10,7 @@ client.connect(10000, '127.0.0.1', function() {
 			method: 'validate_address',
 			params: 
 			{
-			    "address": "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67"
+			    "address": "472e17b0419055ffee3b3813b98ae671579b0ac0dcd6f1a23b11a75ab148cc67" check shavad
 			}
 		}) + '\n');
 });
