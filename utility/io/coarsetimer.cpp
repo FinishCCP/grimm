@@ -1,4 +1,5 @@
 // Copyright 2018 The Beam Team / Copyright 2019 The Grimm Team
+//Copyright 2019 The MWG Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,7 +22,7 @@
 #endif
 #include "utility/logger.h"
 
-namespace grimm { namespace io {
+namespace MWG { namespace io {
 
 CoarseTimer::Ptr CoarseTimer::create(Reactor& reactor, unsigned resolutionMsec, const Callback& cb) {
     assert(cb);
