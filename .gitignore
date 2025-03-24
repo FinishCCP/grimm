@@ -57,8 +57,8 @@ release/
 cmake-build-*/
 
 wallet/unittests/wallet_test
-grimm/grimm
-grimm/unittests/node_test
+MWG/MWG
+MWG/unittests/node_test
 bin/address_test
 bin/asyncevent_test
 bin/reactor_test
@@ -96,14 +96,14 @@ CMakeSettings.json
 /p2p/unittest/twopeers_test
 /utility/unittest/bridge_test
 /utility/unittest/config_test
-grimm/wallet.dat
+MWG/wallet.dat
 3rdparty/opencl-miner/equihash_150_5.dat
-ui/grimm.rc
-ui/grimm.png
-ui/grimm.icns
+ui/MWG.rc
+ui/MWG.png
+ui/MWG.icns
 ui/icon.ico
 ui/Info.plist
-ui/grimm.desktop
+ui/MWG.desktop
 ui/*.qm
 ui/translations.qrc
-grimm_version.gen
+MWG_version.gen
