@@ -4,7 +4,7 @@
 - [Website grimmw.com](https://grimmw.com)
 ### Current status
 
-#### Mainnet online. First block "timestamp":1564997815 Aug. 5th, 2019 @ 9:36am (UTC) [mainnet branch](https://github.com/freenetcoder/grimm/tree/mainnet)
+#### Mainnet online. First block "timestamp":1564997815 Aug. 5th, 2025 @ 9:36am (UTC) [mainnet branch](https://github.com/freenetcoder/grimm/tree/mainnet)
 
 #### Testnet online [testnet branch](https://github.com/freenetcoder/grimm/tree/testnet)
 
